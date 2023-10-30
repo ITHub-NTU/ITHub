@@ -67,6 +67,29 @@ CREATE TABLE `TblTaiLieu` (
   `trangThaiTL` ENUM('daduyet', 'chuaduyet') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE `TblTLYeuThich` (
+  `maTL` varchar(10) NOT NULL,
+  `taiKhoan` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `TblTLViPham` (
+  `maTL` varchar(10) NOT NULL,
+  `maLoaiVP` varchar(10) NOT NULL,
+  `taiKhoan` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `TblChuDeBV` (
+  `maCD` varchar(10) NOT NULL,
+  `tenCD` varchar(255) NOT NULL,
+  `anhCD` varchar(255) NOT NULL,
+  `trangThaiCD` ENUM('khoa', 'hoatdong') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `TblBVYeuThich` (
+  `maBV` varchar(10) NOT NULL,
+  `taiKhoan` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 ALTER TABLE `TblTaiLieu`
 	ADD PRIMARY KEY (`maTL`);
 
