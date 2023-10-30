@@ -52,6 +52,11 @@ CREATE TABLE `TblDinhDangTL` (
   `tenDD` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+INSERT INTO `tbldinhdangtl` (`maDD`, `tenDD`) VALUES 
+('DD00000001', 'PPTX'), 
+('DD00000002', 'PDF'), 
+('DD00000003', 'DOCX');
+
 CREATE TABLE `TblTaiLieu` (
   `maTL` varchar(10) NOT NULL,
   `maLoaiTL` varchar(10) NOT NULL,
@@ -65,6 +70,14 @@ CREATE TABLE `TblTaiLieu` (
   `anhTL` varchar(255) NOT NULL,
   `trangThaiTL` ENUM('daduyet', 'chuaduyet') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO TblTaiLieu (maTL, maLoaiTL, taiKhoan, maDD, tenTL, moTaTL, fileTL, ngayDangTL, ngayDuyetTL, anhTL, trangThaiTL)
+VALUES
+ ('TL00000001', 'PLTL000001', 'kabee', 'DD00000002', 'Giáo trình hệ quản trị cơ sở dữ liệu', 'Các trúc này bao gồm ít nhất một tập tin dữ liệu (data file) và một tập tin viết thao tác (transaction log file). Hiểu cách thức Microsoft SQL Server.', 'upload-tailieu/hqtcsdl.pdf','2023-09-21 08:45:23', '2023-10-08 08:50:23', 'hqtcsdl.jpg', 'daduyet'),
+
+ ('TL00000002', 'PLTL000002', 'kabee', 'DD00000002', 'Hướng dẫn lập trình Python', 'Hướng dẫn lập trình Python từ cơ bản đến nâng cao. Bao gồm ví dụ và bài tập thực hành.', 'upload-tailieu/python.pdf', '2023-09-21 08:45:23', '2023-10-08 08:50:23', 'python.jpg', 'daduyet'),
+
+ ('TL00000003', 'PLTL000003', 'kabee', 'DD00000002', 'Đồ án môn Toán rời rạc', 'Bài tập và đồ án môn Toán rời rạc cho sinh viên ngành Công nghệ thông tin.', 'upload-tailieu/trr.pdf','2023-09-21 08:45:23', '2023-10-08 08:50:23', 'trr.jpg', 'daduyet');
 
 CREATE TABLE `TblTLYeuThich` (
   `maTL` varchar(10) NOT NULL,
@@ -108,17 +121,6 @@ CREATE TABLE `TblBVViPham` (
   `taiKhoan` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-
-CREATE TABLE `TblThongBao` (
-  `maTB` INT(128) NOT NULL,
-  `taiKhoan` varchar(10) NOT NULL,
-  `noiDungTB` text NOT NULL,
-  `ngayDangTB` datetime NOT NULL DEFAULT current_timestamp(),
-  `trangThaiTB` int(1) NOT NULL,
-  `trangThaiXemTB` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-
 CREATE TABLE `TblThaoLuanBV` (
   `maTLBV` varchar(10) NOT NULL,
   `maBV` varchar(10) NOT NULL,
@@ -129,7 +131,6 @@ CREATE TABLE `TblThaoLuanBV` (
   `ngayDangTLBV` datetime NOT NULL DEFAULT current_timestamp(),
   `ngayChinhSuaTLBV` datetime NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 
 CREATE TABLE `TblTLBVViPham` (
   `maTLBV` varchar(10) NOT NULL,
@@ -150,6 +151,21 @@ CREATE TABLE `TblQuanTriBV` (
 CREATE TABLE `TblTheoDoiChuDe` (
   `taiKhoan` varchar(10) NOT NULL,
   `maCD` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `TblTheoDoiChuDe` (`taiKhoan`, `maCD`)
+VALUES
+('kabee', 'CD00000001'),
+('hienHuynh', 'CD00000002'),
+('kabee', 'CD00000003');
+
+CREATE TABLE `TblThongBao` (
+  `maTB` INT(128) NOT NULL,
+  `taiKhoan` varchar(10) NOT NULL,
+  `noiDungTB` text NOT NULL,
+  `ngayDangTB` datetime NOT NULL DEFAULT current_timestamp(),
+  `trangThaiTB` int(1) NOT NULL,
+  `trangThaiXemTB` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --Primary Key
