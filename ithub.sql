@@ -84,11 +84,22 @@ CREATE TABLE `TblTLYeuThich` (
   `taiKhoan` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+INSERT INTO `TblTLYeuThich` (`maTL`, `taiKhoan`) VALUES
+('TL00000001', 'ducnhong'),
+('TL00000001', 'hienhuynh'),
+('TL00000001', 'kabee'),
+('TL00000002', 'ducnhong'),
+('TL00000002', 'phuongha'),
+('TL00000003', 'kabee'),
+('TL00000003', 'thienlan');
+
 CREATE TABLE `TblTLViPham` (
   `maTL` varchar(10) NOT NULL,
   `maLoaiVP` varchar(10) NOT NULL,
   `taiKhoan` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
 
 CREATE TABLE `TblChuDeBV` (
   `maCD` varchar(10) NOT NULL,
@@ -96,6 +107,11 @@ CREATE TABLE `TblChuDeBV` (
   `anhCD` varchar(255) NOT NULL,
   `trangThaiCD` ENUM('khoa', 'hoatdong') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `TblChuDeBV` (`maCD`, `tenCD`, `anhCD`, `trangThaiCD`) VALUES 
+('CD00000001', 'Lập trình', 'chude1.png', 'hoatdong'), 
+('CD00000002', 'Android', 'chude2.png', 'khoa'), 
+('CD00000003', 'Thủ thuật', 'chude3.png', 'hoatdong');
 
 CREATE TABLE `TblBaiViet` (
   `maBV` varchar(10) NOT NULL,
@@ -114,6 +130,16 @@ CREATE TABLE `TblBVYeuThich` (
   `maBV` varchar(10) NOT NULL,
   `taiKhoan` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `TblBVYeuThich` (`maBV`, `taiKhoan`) VALUES
+('BV00000001', 'ducnhong'),
+('BV00000001', 'kabee'),
+('BV00000001', 'phuongha'),
+('BV00000002', 'hienhuynh'),
+('BV00000002', 'kabee'),
+('BV00000002', 'thienlan'),
+('BV00000003', 'phuongha'),
+('BV00000003', 'thienlan');
 
 CREATE TABLE `TblBVViPham` (
   `maBV` varchar(10) NOT NULL,
