@@ -216,4 +216,22 @@ ALTER TABLE `TblTaiLieu`
 	FOREIGN KEY (`maDD`) REFERENCES `TblDinhDangTL` (`maDD`),
 	ADD CONSTRAINT `fk_TblNguoiDung_taiKhoan_TblTaiLieu`
 	FOREIGN KEY (`taiKhoan`) REFERENCES `TblNguoiDung` (`taiKhoan`);
+ALTER TABLE `TblTLYeuThich`
+	ADD CONSTRAINT `fk_TblTaiLieu_maTL_TblTLYeuThich`
+	FOREIGN KEY (`maTL`) REFERENCES `TblTaiLieu` (`maTL`),
+	ADD CONSTRAINT `fk_TblNguoiDung_taiKhoan_TblTLYeuThich`
+	FOREIGN KEY (`taiKhoan`) REFERENCES `TblNguoiDung` (`taiKhoan`);
 
+ALTER TABLE `TblTLViPham`
+	ADD CONSTRAINT `fk_TblTaiLieu_maTL_TblTLViPham`
+	FOREIGN KEY (`maTL`) REFERENCES `TblTaiLieu` (`maTL`),
+	ADD CONSTRAINT `fk_TblLoaiViPham_maLoaiVP_TblTLViPham`
+	FOREIGN KEY (`maLoaiVP`) REFERENCES `TblLoaiViPham` (`maLoaiVP`),
+  ADD CONSTRAINT `fk_TblNguoiDung_taiKhoan_TblTLViPham`
+	FOREIGN KEY (`taiKhoan`) REFERENCES `TblNguoiDung` (`taiKhoan`);
+
+ALTER TABLE `TblBVYeuThich`
+	ADD CONSTRAINT `fk_TblBaiViet_maTL_TblBVYeuThich`
+	FOREIGN KEY (`maBV`) REFERENCES `TblBaiViet` (`maBV`),
+	ADD CONSTRAINT `fk_TblNguoiDung_taiKhoan_TblBVYeuThich`
+	FOREIGN KEY (`taiKhoan`) REFERENCES `TblNguoiDung` (`taiKhoan`);
