@@ -1,8 +1,8 @@
-CREATE DATABASE `ithub`;
+CREATE DATABASE `ithubdemo`;
 
-USE `ithub`;
+USE `ithubdemo`;
 
---Create Table
+/*Create Table*/
 
 CREATE TABLE `TblNguoiDung` (
   `taiKhoan` varchar(50) NOT NULL,
@@ -216,7 +216,7 @@ CREATE TABLE `TblThongBao` (
   `trangThaiXemTB` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---Primary Key
+/*Primary Key*/
 
 ALTER TABLE `TblNguoiDung`
 	ADD PRIMARY KEY (`taiKhoan`);
@@ -271,7 +271,7 @@ ALTER TABLE `TblQuanTriBV`
 ALTER TABLE `TblTheoDoiChuDe`
 	ADD PRIMARY KEY (`taiKhoan`, `maCD`);
 
---Foreign Key
+/*Foreign Key*/
 
 ALTER TABLE `TblTaiLieu`
 	ADD CONSTRAINT `fk_TblLoaiTaiLieu_maLoaiTL_TblTaiLieu`
