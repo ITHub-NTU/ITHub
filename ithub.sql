@@ -45,6 +45,25 @@ INSERT INTO `tblloaitailieu` (`maLoaiTL`, `tenLoaiTL`) VALUES
 ('PLTL000002', 'Lập trình'), 
 ('PLTL000003', 'Đồ án');
 
+CREATE TABLE `TblDinhDangTL` (
+  `maDD` varchar(10) NOT NULL,
+  `tenDD` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `TblTaiLieu` (
+  `maTL` varchar(10) NOT NULL,
+  `maLoaiTL` varchar(10) NOT NULL,
+  `taiKhoan` varchar(50) NOT NULL,
+  `maDD` varchar(10) NOT NULL,
+  `tenTL` varchar(255) NOT NULL,
+  `moTaTL` text NOT NULL,
+  `fileTL` varchar(255) NOT NULL,
+  `ngayDangTL` datetime NOT NULL DEFAULT current_timestamp(),
+  `ngayDuyetTL` datetime NULL,
+  `anhTL` varchar(255) NOT NULL,
+  `trangThaiTL` ENUM('daduyet', 'chuaduyet') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 ALTER TABLE `TblNguoiDung`
 	ADD PRIMARY KEY (`taiKhoan`);
 ALTER TABLE `TblLoaiViPham`
