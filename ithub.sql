@@ -50,6 +50,9 @@ CREATE TABLE `TblDinhDangTL` (
   `tenDD` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+ALTER TABLE `TblDinhDangTL`
+	ADD PRIMARY KEY (`maDD`);
+
 CREATE TABLE `TblTaiLieu` (
   `maTL` varchar(10) NOT NULL,
   `maLoaiTL` varchar(10) NOT NULL,
@@ -63,6 +66,9 @@ CREATE TABLE `TblTaiLieu` (
   `anhTL` varchar(255) NOT NULL,
   `trangThaiTL` ENUM('daduyet', 'chuaduyet') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+ALTER TABLE `TblTaiLieu`
+	ADD PRIMARY KEY (`maTL`);
 
 ALTER TABLE `TblNguoiDung`
 	ADD PRIMARY KEY (`taiKhoan`);
