@@ -52,9 +52,6 @@ CREATE TABLE `TblDinhDangTL` (
   `tenDD` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-ALTER TABLE `TblDinhDangTL`
-	ADD PRIMARY KEY (`maDD`);
-
 CREATE TABLE `TblTaiLieu` (
   `maTL` varchar(10) NOT NULL,
   `maLoaiTL` varchar(10) NOT NULL,
@@ -157,9 +154,6 @@ CREATE TABLE `TblTheoDoiChuDe` (
 
 --Primary Key
 
-ALTER TABLE `TblTaiLieu`
-	ADD PRIMARY KEY (`maTL`);
-
 ALTER TABLE `TblNguoiDung`
 	ADD PRIMARY KEY (`taiKhoan`);
 
@@ -168,6 +162,12 @@ ALTER TABLE `TblLoaiViPham`
 
 ALTER TABLE `TblLoaiTaiLieu`
 	ADD PRIMARY KEY (`maLoaiTL`);
+
+ALTER TABLE `TblDinhDangTL`
+	ADD PRIMARY KEY (`maDD`);
+
+ALTER TABLE `TblTaiLieu`
+	ADD PRIMARY KEY (`maTL`);
 
 ALTER TABLE `TblTLYeuThich`
 	ADD PRIMARY KEY (`maTL`, `taiKhoan`);
@@ -206,3 +206,14 @@ ALTER TABLE `TblQuanTriBV`
 
 ALTER TABLE `TblTheoDoiChuDe`
 	ADD PRIMARY KEY (`taiKhoan`, `maCD`);
+
+--Foreign Key
+
+ALTER TABLE `TblTaiLieu`
+	ADD CONSTRAINT `fk_TblLoaiTaiLieu_maLoaiTL_TblTaiLieu`
+	FOREIGN KEY (`maLoaiTL`) REFERENCES `TblLoaiTaiLieu` (`maLoaiTL`),
+	ADD CONSTRAINT `fk_TblDinhDangTL_maDD_TblTaiLieu`
+	FOREIGN KEY (`maDD`) REFERENCES `TblDinhDangTL` (`maDD`),
+	ADD CONSTRAINT `fk_TblNguoiDung_taiKhoan_TblTaiLieu`
+	FOREIGN KEY (`taiKhoan`) REFERENCES `TblNguoiDung` (`taiKhoan`);
+
