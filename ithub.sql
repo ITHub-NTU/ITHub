@@ -2,6 +2,8 @@ CREATE DATABASE `ithub`;
 
 USE `ithub`;
 
+--Create Table
+
 CREATE TABLE `TblNguoiDung` (
   `taiKhoan` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
@@ -85,17 +87,61 @@ CREATE TABLE `TblChuDeBV` (
   `trangThaiCD` ENUM('khoa', 'hoatdong') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE `TblBaiViet` (
+  `maBV` varchar(10) NOT NULL,
+  `maCD` varchar(10) NOT NULL,
+  `taiKhoan` varchar(50) NOT NULL,
+  `tenBV` varchar(255) NOT NULL,
+  `noiDungBV` text NOT NULL,
+  `trangThaiBV` ENUM('daduyet', 'chuaduyet', 'chinhsua', 'khoa') NOT NULL,
+  `ngayDangBV` datetime NOT NULL DEFAULT current_timestamp(),
+  `ngayDuyetBV` datetime NULL,
+  `ngayChinhSuaBV` datetime NULL,
+  `luotXem` bigint NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 CREATE TABLE `TblBVYeuThich` (
   `maBV` varchar(10) NOT NULL,
   `taiKhoan` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `TblBVViPham` (
+  `maBV` varchar(10) NOT NULL,
+  `maLoaiVP` varchar(10) NOT NULL,
+  `taiKhoan` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `TblThongBao` (
+  `maTB` INT(128) NOT NULL,
+  `taiKhoan` varchar(10) NOT NULL,
+  `noiDungTB` text NOT NULL,
+  `ngayDangTB` datetime NOT NULL DEFAULT current_timestamp(),
+  `trangThaiTB` int(1) NOT NULL,
+  `trangThaiXemTB` int(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--Primary Key
 
 ALTER TABLE `TblTaiLieu`
 	ADD PRIMARY KEY (`maTL`);
 
 ALTER TABLE `TblNguoiDung`
 	ADD PRIMARY KEY (`taiKhoan`);
+
 ALTER TABLE `TblLoaiViPham`
 	ADD PRIMARY KEY (`maLoaiVP`);
+
 ALTER TABLE `TblLoaiTaiLieu`
 	ADD PRIMARY KEY (`maLoaiTL`);
+
+ALTER TABLE `TblBaiViet`
+	ADD PRIMARY KEY (`maBV`);
+
+ALTER TABLE `TblBVViPham`
+	ADD PRIMARY KEY (`maBV`, `maLoaiVP`, `taiKhoan`);
+
+ALTER TABLE `tblThongBao`
+  ADD PRIMARY KEY (`maTB`);
+
+ALTER TABLE `tblThongBao`
+  MODIFY `maTB` int(128) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
