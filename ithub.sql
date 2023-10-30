@@ -1,6 +1,6 @@
-CREATE DATABASE `ithubdemo`;
+CREATE DATABASE `ithub`;
 
-USE `ithubdemo`;
+USE `ithub`;
 
 /*Create Table*/
 
