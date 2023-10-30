@@ -250,6 +250,39 @@ ALTER TABLE `TblBVViPham`
   ADD CONSTRAINT `fk_TblNguoiDung_taiKhoan_TblBVViPham`
 	FOREIGN KEY (`taiKhoan`) REFERENCES `TblNguoiDung` (`taiKhoan`);
 
+ALTER TABLE `TblThaoLuanBV`
+	ADD CONSTRAINT `fk_TblBaiViet_maTL_TblThaoLuanBV`
+	FOREIGN KEY (`maBV`) REFERENCES `TblBaiViet` (`maBV`),
+	ADD CONSTRAINT `fk_TblNguoiDung_taiKhoan_TblThaoLuanBV`
+	FOREIGN KEY (`taiKhoan`) REFERENCES `TblNguoiDung` (`taiKhoan`);
+
+ALTER TABLE `TblTLBVViPham`
+	ADD CONSTRAINT `fk_TblThaoLuanBV_maTLBV_TblTLBVViPham`
+	FOREIGN KEY (`maTLBV`) REFERENCES `TblThaoLuanBV` (`maTLBV`),
+	ADD CONSTRAINT `fk_TblLoaiViPham_maLoaiVP_TblTLBVViPham`
+	FOREIGN KEY (`maLoaiVP`) REFERENCES `TblLoaiViPham` (`maLoaiVP`),
+  ADD CONSTRAINT `fk_TblNguoiDung_taiKhoan_TblTLBVViPham`
+	FOREIGN KEY (`taiKhoan`) REFERENCES `TblNguoiDung` (`taiKhoan`);;
+
+ALTER TABLE `TblQuanTriTL`
+	ADD CONSTRAINT `fk_TblNguoiDung_taiKhoan_TblQuanTriTL`
+	FOREIGN KEY (`maQuanTri`) REFERENCES `TblNguoiDung` (`taiKhoan`),
+	ADD CONSTRAINT `fk_TblLoaiTaiLieu_maLoaiTL_TblQuanTriTL`
+	FOREIGN KEY (`maLoaiTL`) REFERENCES `TblLoaiTaiLieu` (`maLoaiTL`);
+
+ALTER TABLE `TblQuanTriBV`
+	ADD CONSTRAINT `fk_TblNguoiDung_taiKhoan_TblQuanTriBV`
+	FOREIGN KEY (`maQuanTri`) REFERENCES `TblNguoiDung` (`taiKhoan`),
+	ADD CONSTRAINT `fk_TblChuDeBV_maLoaiTL_TblQuanTriBV`
+	FOREIGN KEY (`maCD`) REFERENCES `TblChuDeBV` (`maCD`);
+
+ALTER TABLE `TblTheoDoiChuDe`
+	ADD CONSTRAINT `fk_TblNguoiDung_taiKhoan_TblTheoDoiChuDe`
+	FOREIGN KEY (`taiKhoan`) REFERENCES `TblNguoiDung` (`taiKhoan`),
+	ADD CONSTRAINT `fk_TblChuDeBV_maLoaiTL_TblTheoDoiChuDe`
+	FOREIGN KEY (`maCD`) REFERENCES `TblChuDeBV` (`maCD`);
+
+
 ALTER TABLE `TblThongBao`
 	ADD CONSTRAINT `fk_TblNguoiDung_taiKhoan_TblThongBao`
 	FOREIGN KEY (`taiKhoan`) REFERENCES `TblNguoiDung` (`taiKhoan`);
