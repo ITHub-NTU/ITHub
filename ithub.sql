@@ -163,6 +163,11 @@ CREATE TABLE `TblThaoLuanBV` (
   `ngayChinhSuaTLBV` datetime NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+INSERT INTO `TblThaoLuanBV` (`maTLBV`, `maBV`, `maPhanHoi`, `taiKhoan`, `noiDungTLBV`, `trangThaiTLBV`, `ngayDangTLBV`, `ngayChinhSuaTLBV`) VALUES
+('TL00000001', 'BV00000001', '0',	'kabee',	'Làm thế nào để xác định lỗi "segmentation fault" trong chương trình C của bạn?',	'chinhsua',	'2023-10-08 08:45:23',	'2023-10-08 10:28:56'),
+('TL00000002',	'BV00000001',	'TL00000001',	'kabee',	'Để xác định lỗi "segmentation fault" trong chương trình C của bạn, bạn nên sử dụng các công cụ như GDB hoặc Valgrind để gỡ lỗi và xem thông báo lỗi chi tiết.',	'dadang',	'2023-10-09 10:27:43',	NULL);
+
+
 CREATE TABLE `TblTLBVViPham` (
   `maTLBV` varchar(10) NOT NULL,
   `maLoaiVP` varchar(10) NOT NULL,
@@ -174,10 +179,22 @@ CREATE TABLE `TblQuanTriTL` (
   `maLoaiTL` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+INSERT INTO `TblQuanTriTL` (`maQuanTri`, `maLoaiTL`)
+VALUES
+('kabee', 'PLTL000001'),
+('kabee', 'PLTL000002'),
+('kabee', 'PLTL000003');
+
 CREATE TABLE `TblQuanTriBV` (
   `maQuanTri` varchar(50) NOT NULL,
   `maCD` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `TblQuanTriBV` (`maQuanTri`, `maCD`)
+VALUES
+('kabee', 'CD00000001'),
+('kabee', 'CD00000002'),
+('kabee', 'CD00000003');
 
 CREATE TABLE `TblTheoDoiChuDe` (
   `taiKhoan` varchar(10) NOT NULL,
