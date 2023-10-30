@@ -111,6 +111,7 @@ CREATE TABLE `TblBVViPham` (
   `taiKhoan` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+
 CREATE TABLE `TblThongBao` (
   `maTB` INT(128) NOT NULL,
   `taiKhoan` varchar(10) NOT NULL,
@@ -118,6 +119,40 @@ CREATE TABLE `TblThongBao` (
   `ngayDangTB` datetime NOT NULL DEFAULT current_timestamp(),
   `trangThaiTB` int(1) NOT NULL,
   `trangThaiXemTB` int(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+CREATE TABLE `TblThaoLuanBV` (
+  `maTLBV` varchar(10) NOT NULL,
+  `maBV` varchar(10) NOT NULL,
+  `maPhanHoi` varchar(10) NOT NULL DEFAULT '0',
+  `taiKhoan` varchar(50) NOT NULL,
+  `noiDungTLBV` text NOT NULL,
+  `trangThaiTLBV` ENUM('dadang', 'chinhsua', 'khoa') NOT NULL,
+  `ngayDangTLBV` datetime NOT NULL DEFAULT current_timestamp(),
+  `ngayChinhSuaTLBV` datetime NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+CREATE TABLE `TblTLBVViPham` (
+  `maTLBV` varchar(10) NOT NULL,
+  `maLoaiVP` varchar(10) NOT NULL,
+  `taiKhoan` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `TblQuanTriTL` (
+  `maQuanTri` varchar(50) NOT NULL,
+  `maLoaiTL` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `TblQuanTriBV` (
+  `maQuanTri` varchar(50) NOT NULL,
+  `maCD` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `TblTheoDoiChuDe` (
+  `taiKhoan` varchar(10) NOT NULL,
+  `maCD` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --Primary Key
@@ -157,3 +192,17 @@ ALTER TABLE `tblThongBao`
 
 ALTER TABLE `tblThongBao`
   MODIFY `maTB` int(128) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+ALTER TABLE `TblThaoLuanBV`
+	ADD PRIMARY KEY (`maTLBV`);
+ALTER TABLE `TblTLBVViPham`
+	ADD PRIMARY KEY (`maTLBV`, `maLoaiVP`, `taiKhoan`);
+
+ALTER TABLE `TblQuanTriTL`
+	ADD PRIMARY KEY (`maQuanTri`, `maLoaiTL`);
+
+ALTER TABLE `TblQuanTriBV`
+	ADD PRIMARY KEY (`maQuanTri`, `maCD`);
+
+ALTER TABLE `TblTheoDoiChuDe`
+	ADD PRIMARY KEY (`taiKhoan`, `maCD`);
