@@ -134,8 +134,20 @@ ALTER TABLE `TblLoaiViPham`
 ALTER TABLE `TblLoaiTaiLieu`
 	ADD PRIMARY KEY (`maLoaiTL`);
 
+ALTER TABLE `TblTLYeuThich`
+	ADD PRIMARY KEY (`maTL`, `taiKhoan`);
+
+ALTER TABLE `TblTLViPham`
+	ADD PRIMARY KEY (`maTL`, `maLoaiVP`, `taiKhoan`);
+
+ALTER TABLE `TblChuDeBV`
+	ADD PRIMARY KEY (`maCD`);
+
 ALTER TABLE `TblBaiViet`
 	ADD PRIMARY KEY (`maBV`);
+
+ALTER TABLE `TblBVYeuThich`
+	ADD PRIMARY KEY (`maBV`, `taiKhoan`);
 
 ALTER TABLE `TblBVViPham`
 	ADD PRIMARY KEY (`maBV`, `maLoaiVP`, `taiKhoan`);
