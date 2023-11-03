@@ -33,7 +33,9 @@
                 return $categoryDetails;
             }
         }
-        //
+        
+        
+
         public function laySoLuongTaiLieu(){
             if($this->maLoaiTL){
                 $sqlQuery = "
@@ -49,8 +51,6 @@
                 return $categoryDetails['soLuongTaiLieu'];
             }
         }
-
-
     }
 
 ?>
