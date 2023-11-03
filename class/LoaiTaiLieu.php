@@ -34,32 +34,21 @@
             }
         }
         
-        // public function themTaiLieu($maTL, $maLoaiTL, $taiKhoan, $maDD, $tenTL, $moTaTL, $fileTL, $trangThaiTL, $ngayDuyetTL) {
-	// 	$query = "INSERT INTO " . $this->tbltailieu . " (maTL, maLoaiTL, taiKhoan, maDD, tenTL, moTaTL, fileTL, trangThaiTL, ngayDuyetTL) 
-	// 			  VALUES ('$maTL','$maLoaiTL', '$taiKhoan', '$maDD', '$tenTL', '$moTaTL', '$fileTL', '$trangThaiTL', '$ngayDuyetTL')";
-	
-	// 	$stmt = $this->conn->prepare($query);
-	
-	// 	if ($stmt->execute()) {
-	// 		return true;
-	// 	}
-	
-	// 	return false;
-	// }
-    public function themTaiLieu($maTL, $maLoaiTL, $taiKhoan, $maDD, $tenTL, $moTaTL, $fileTL, $trangThaiTL, $ngayDuyetTL) {
-        $query = "INSERT INTO " . $this->tbltailieu . " (maTL, maLoaiTL, taiKhoan, maDD, tenTL, moTaTL, fileTL, trangThaiTL, ngayDuyetTL) 
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-        $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("sssssssss", $maTL, $maLoaiTL, $taiKhoan, $maDD, $tenTL, $moTaTL, $fileTL, $trangThaiTL, $ngayDuyetTL);
-
-        
-        if ($stmt->execute()) {
-            return true;
+        public function laySoLuongTaiLieu(){
+            if($this->maLoaiTL){
+                $sqlQuery = "
+                    SELECT count(*) as soLuongTaiLieu
+                    FROM ".$this->tblLoaiTaiLieu." as p
+                    LEFT JOIN ".$this->tblLoaiTaiLieu." as t ON p.maLoaiTL = t.maLoaiTL
+                    WHERE p.maLoaiTL = '".$this->maLoaiTL."' ";
+                
+                $stmt = $this->$conn->prepare($sqlQuery);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                $categoryDetails = $result->fetch_assoc();
+                return $categoryDetails['soLuongTaiLieu'];
+            }
         }
-        
-        return false;
-    }
 
 
     }
