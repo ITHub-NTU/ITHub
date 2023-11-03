@@ -178,5 +178,17 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     </body>
     </html>
+    <script>
+        var sortArrow = document.querySelector('#sort-tenTL .bi-sort-alpha-up');
+        sortArrow.addEventListener('click', function() {
+            sortArrow.classList.toggle('bi-sort-alpha-down');
+        });
 
+        var sortArrows = document.querySelectorAll('.bi-sort-alpha-up');
+        sortArrows.forEach(function(arrow) {
+            arrow.addEventListener('click', function() {
+                arrow.classList.toggle('bi-sort-alpha-down');
+            });
+        });
+    </script>
 <?php include('../inc/footer.php'); ?>
