@@ -1,4 +1,4 @@
-<?php 
+﻿<?php 
 
 class TaiLieu {
     private $conn;
@@ -100,6 +100,19 @@ class TaiLieu {
         
         return false;
     }
-   
+   // thêm tài liêu yêu thích vào bảng tài liệu yêu thích
+   public function themTaiLieuYeuThich($maTL, $taiKhoan) {
+    $query = "INSERT INTO " . $this->tblTaiLieuYeuThich . " (maTL, taiKhoan) VALUES (?, ?)";
+
+    $stmt = $this->conn->prepare($query);
+    $stmt->bind_param("ss", $maTL, $taiKhoan);
+
+    if ($stmt->execute()) {
+        return true;
+    } else {
+        // Handle any errors here
+        return false;
+        }
+    }
 }
 ?>
