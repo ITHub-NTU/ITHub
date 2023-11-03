@@ -60,10 +60,10 @@ $chiTietTaiLieu = $taiLieu->getChiTietTaiLieu();
                             
                             <div class="row">
                                 <div class="col-lg-2">
-                                    <a class="text-light btn btn-primary " href="<?php echo $chiTietTaiLieu['fileTL']; ?>">Tải về</a>
+                                    <a href="download-pdf.php?pdf=<?php echo $chiTietTaiLieu['fileTL']; ?>" class="btn btn-primary">Tải về</a>
                                 </div>
                                 <div class="col-lg-2">
-                                    <button class="btn btn-primary">Yêu thích</button>
+                                    <button class="btn btn-primary">Thích</button>
                                 </div>
                             </div>
                             <div class="row">
