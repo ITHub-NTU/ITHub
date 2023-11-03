@@ -87,5 +87,22 @@
 				return $categoryDetails;
 			}
 		}
+		public function layDSChuDeBVQT(){	
+		if($this->maQuanTri){
+				$sqlQuery = "
+					SELECT a.*, b.tenCD
+					FROM ".$this->tblQuanTriBV." AS a
+					JOIN ".$this->tblChuDeBV." AS b ON a.maCD = b.maCD 
+					WHERE a.maQuanTri = '".$this->maQuanTri."'
+					ORDER BY b.tenCD ASC";
+				
+				$stmt = $this->conn->prepare($sqlQuery);
+				$stmt->execute();
+				$result = $stmt->get_result();			
+				return $result;	
+			}
+			
+		}
+		
 	}
 ?>
