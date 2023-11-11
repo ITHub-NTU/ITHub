@@ -18,7 +18,26 @@ include('../inc/header.php');
 		$maCD = $_GET['maCD'];
 	}
 
-//--------------------------------------------
+	if(isset($_SESSION['taiKhoan'])){
+		$tblChuDeBV->taiKhoan = $_SESSION['taiKhoan'];
+		$tblChuDeBV->maCDTD = $maCD;
+		$theodoi = $tblChuDeBV->kiemTraTheoDoiChuDe();
+	}
+	else
+		$theodoi = false;
+	if(isset($_POST['theodoichude'])){
+		if(isset($_SESSION['taiKhoan'])){
+			$maCD = $_POST['theodoichude'];
+			$tblChuDeBV->maCDTD = $maCD;
+			$tblChuDeBV->taiKhoan = $_SESSION['taiKhoan'];
+			$tblChuDeBV->maCDTD = $maCD;
+			$tblChuDeBV->thayDoiTheoDoiChuDe($theodoi);
+			$theodoi = $tblChuDeBV->kiemTraTheoDoiChuDe();
+		}
+		else{
+			header('Location: ../nguoidung/dangnhap.php');
+		}
+	}
 	
 	$tblChuDeBV->maCD = $maCD ;
     $chuDeBV = $tblChuDeBV->layChuDeBV();
@@ -63,7 +82,31 @@ include('../inc/header.php');
 	<div class="card" style="background-color:cadetblue;">
 		<div class="d-flex card-header">
 			<h5 class="" ><?php echo $chuDeBV['tenCD'] ?></h5>
-		//-----------------------------------	
+		<?php 
+			if(isset($_SESSION['taiKhoan'])){
+				if($theodoi){
+					echo '
+					<form method="post" style="margin-left: auto">
+						<button class="btn btn-success " value ="'.$maCD.'" name="theodoichude">Hủy theo dõi</button>
+					</form>
+					';
+				}
+				else{
+					echo '
+					<form method="post" style="margin-left: auto">
+						<button class="btn btn-success " value ="'.$maCD.'" name="theodoichude">Theo dõi</button>
+					</form>
+					';
+				}
+			}
+			else{
+				echo '
+					<form method="post" style="margin-left: auto">
+						<button class="btn btn-success " value ="'.$maCD.'" name="theodoichude">Theo dõi</button>
+					</form>
+					';
+			}
+		?>
 		$tblBaiViet->maCD = $_GET['maCD'];
 		$result = $tblBaiViet->layDanhSachBaiViet();
 		$numRows = $result->num_rows;
