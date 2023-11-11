@@ -2,13 +2,13 @@
 include_once '../config/Database.php';
 include_once '../class/ChuDeBV.php';
 include_once '../class/BaiViet.php';
-//----------------------------------------------------------
+include_once '../class/ThongBao.php';
 include_once '../class/TienIch.php';
 $database = new Database();
 $db = $database->getConnection();
 $tienIch = new TienIch();
 $tblChuDeBV = new ChuDeBV($db);
-//----------------------------------------------------------
+$tblThongBao = new ThongBao($db);
 $maBV = $tienIch->autoIncrement('tblbaiviet', 'maBV', 'BV00000001');
 $_SESSION['maBV'] = $maBV;
 $tblBaiViet = new BaiViet($db);
@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $ngayDuyetBV = NULL; 
         $ngayChinhSuaBV = NULL; 
         if ($tblBaiViet->themBaiViet($maBV,$maCD, $taiKhoan, $tenBV, $noiDungBV, $trangThaiBV, $ngayDuyetBV, $ngayChinhSuaBV)) {
-            //------------------------------------------------------
+            $tblThongBao->themTBBV($taiKhoan,'admin', $maCD, $maBV);
             header("Location:chudebaiviet.php");
         }
     }
