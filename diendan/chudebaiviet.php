@@ -15,6 +15,39 @@ include('../inc/header.php');
 ?>
 
 <?php include("../inc/navbar.php"); ?>
+<div class="row">
+	<div class="col-md-3">
+		<button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-warning text-white" style="margin-bottom: 5px;">Thêm bài viết</button>
+	</div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Đăng bài viết vào chủ đề...</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+	  	<ul class="list-group">
+          <?php
+          // Lấy danh sách các chủ đề từ cơ sở dữ liệu và hiển thị chúng
+          $database = new Database();
+          $db = $database->getConnection();
+          $tblChuDeBV = new ChuDeBV($db);
+          $result = $tblChuDeBV->layDSChuDeBV();
+
+          while ($chuDeBV = $result->fetch_assoc()) {
+			$maCD = $chuDeBV['maCD'];
+            echo '<li class="list-group-item"><a style="text-decoration: none; color: black" class="chude-link" href="thembaiviet.php?maCD='.$maCD.'">' . $chuDeBV['tenCD'] . '</a></li>';
+          }
+          ?>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Modal -->
 <div class="col-md-9">
 	<div class="card">
 		<h5 class="card-header" style="background-color:cadetblue;">Chủ đề bài viết</h5>
