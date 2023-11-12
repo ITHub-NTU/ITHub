@@ -7,10 +7,14 @@ if (isset($_GET['pdf'])) {
         header('Content-Type: application/pdf');
         header('Content-Disposition: attachment; filename="' . basename($pdfFilePath) . '"');
         readfile($pdfFilePath);
-    } else {
-        echo 'Lỗi: Tệp PDF không tồn tại.';
+        exit; // Kết thúc chương trình sau khi tải xong
     }
-} else {
-    echo 'Lỗi: Không tìm thấy tệp PDF để tải về.';
+    // Tệp không tồn tại, chuyển hướng
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    exit;
 }
+// Không phải file pdf, không có tham số 'pdf'
+// Chuyển hướng về trang chính
+header('Location: index.php');
+exit;
 ?>
