@@ -164,6 +164,12 @@
                                                 <i class="fa fa-plus mt-3" aria-hidden="true"> Tiếp tục đọc</i>
                                             </a>
                                         </div>
+                                        <div>
+                                        <div class="col-lg-2">
+                                            <a href="download-pdf.php?pdf=<?php echo $taiLieu['fileTL']; ?>" class="fa fa-plus mt-3">Tải về</a>
+                                        </div>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
