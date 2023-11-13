@@ -1,16 +1,22 @@
-﻿<?php
+<?php
+$currentPage = basename($_SERVER['PHP_SELF']);
+if($currentPage == 'trangchu.php') {
+    $path = '../ITHub/';
+} else {
+    $path = '../';
+}
+
 require ('C:/xampp/phpMyAdmin/vendor/autoload.php');
 
-require ('../phpmailer/phpmailer/src/Exception.php');
+require($path.'phpmailer/phpmailer/src/Exception.php');
 
-require ('../phpmailer/phpmailer/src/PHPMailer.php');
+require ($path.'phpmailer/phpmailer/src/PHPMailer.php');
 
-require ('../phpmailer/phpmailer/src/SMTP.php');
+require ($path.'phpmailer/phpmailer/src/SMTP.php');
 
 use phpmailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
-
 
 class NguoiDung {	
 	private $tblNguoiDung = 'tblnguoidung';	
@@ -307,19 +313,23 @@ class NguoiDung {
     }
 
     public function logOut(){
+        $currentPage = basename($_SERVER['PHP_SELF']);
+        $taiKhoan = $_SESSION['taiKhoan'];
         session_unset();
         session_destroy();
-        $sql = "UPDATE '. $this->tblNguoiDung .' SET trangThai = 'dunghoatdong' WHERE taiKhoan = ?";
+        $sql = "UPDATE " . $this->tblNguoiDung . " SET trangThai = 'dunghoatdong' WHERE taiKhoan = ?";
+
 
         $stmt = $this->conn->prepare($sql);
     
         if ($stmt) {
-            $taiKhoan = $_SESSION['taiKhoan'];
+            
     
             $stmt->bind_param("s", $taiKhoan);
             $stmt->execute();
     
             $stmt->close();
+            header('Location:'.$currentPage);
         } else {
             echo "Lỗi truy vấn: ";
         }
@@ -525,6 +535,26 @@ class NguoiDung {
         } else {
             die("Lỗi thực hiện truy vấn: " . $stmt->error);
             return false;
+        }
+    }
+
+    public function setVerificationCode() {
+        $_SESSION['expectedVerificationCode'] = mt_rand(100000, 999999); 
+        $_SESSION['verificationCodeExpiration'] = time() + 60; 
+    }
+
+
+
+    public function resendVerificationCode($email) {
+        $this->setGenerateVerificationCode();
+        $verificationCode = $_SESSION['expectedVerificationCode'];
+        $this->saveEmailToSession($email);
+        $result = $this->sendVerificationEmail($email, $verificationCode);
+        if ($result === true) {
+            header('Location: verifycpassword.php');
+            exit;
+        } else {
+            return 'Lỗi thực thi!';
         }
     }
 
