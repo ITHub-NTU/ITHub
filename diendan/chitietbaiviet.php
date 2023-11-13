@@ -3,16 +3,22 @@ include_once '../config/Database.php';
 include_once '../class/BaiViet.php';
 include_once '../class/ThaoLuanBV.php';
 include_once '../class/TienIch.php';
+include_once '../class/ThongBao.php'; //
+include_once '../class/NguoiDung.php'; 
+
 $database = new Database();
 $db = $database->getConnection();
 $tienIch = new TienIch();
 $tblBaiViet = new BaiViet($db);
 $tblThaoLuanBV = new ThaoLuanBV($db);
+$tblThongBao = new ThongBao($db); //
+$tblNguoiDung = new NguoiDung($db);
 if(!isset($_SESSION['hoatdong']))
 {
-header("location: ../dangnhap.php");
+header("location: ../nguoidung/dangnhap.php");
 }
 $taiKhoan = $_SESSION['taiKhoan'];
+$userinfo = $tblNguoiDung->getUserInfoByTaiKhoan($taiKhoan);
 include('../inc/header.php');
 ?>
 <?php include("../inc/navbar.php");
@@ -85,6 +91,17 @@ if (isset($_POST['thaoluan'])) {
     $noiDungBV = $_POST['noiDungBV'];
     $tblBaiViet->chinhSuaBaiViet($tenBV, $noiDungBV);
     header("Location: ./chudebaiviet.php");
+  }
+  if(isset($_POST['xoaBaiViet'])){
+    if(isset($_POST['maBV'])){
+      $maBV = $_POST['maBV'];
+      $tblBaiViet->maBV = $maBV;
+      $tblBaiViet->xoaBaiViet();
+      header("Location: ./chudebaiviet.php");
+    }
+    else{
+      header('Location: 404notfound.php');
+    }
   }
 ?>
 <style>
@@ -169,9 +186,27 @@ if (isset($_POST['thaoluan'])) {
     <h5 class="card-header"><?php echo $chiTietBaiViet['tenBV']; ?></h5>
     <div class="row g-0">
         <div class="col-md-3 card" style="border-top-right-radius: 0; border-bottom-right-radius: 0; border-top-left-radius: 0">
-            <img src="../image/<?php if(isset( $chiTietBaiViet['anhDaiDien'])) echo $chiTietBaiViet['anhDaiDien'];  ?>" style="width:5em" class="card-img-top mx-auto  mt-2" alt="...">
+            <img src="../image/<?php if(isset( $chiTietBaiViet['anhDaiDien'])) echo $chiTietBaiViet['anhDaiDien'];  ?>" style="width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;" class="card-img-top mx-auto  mt-2" alt="...">
             <div class="card-body mx-auto">
-              <h5 class="card-title"><a href="#" class="text-decoration-none"><?php if(isset( $chiTietBaiViet['taiKhoan'])) echo $chiTietBaiViet['taiKhoan']; ?></a></h5>
+              <h5 style="text-align: center;" class="card-title"><a href="#" class="text-decoration-none "><?php if(isset( $chiTietBaiViet['taiKhoan'])) echo $chiTietBaiViet['taiKhoan']; ?></a></h5>
+              <?php if(isset( $chiTietBaiViet['quyen'])) {
+                if($chiTietBaiViet['quyen']=='quantrivien')
+                  echo '
+                  <span style="background-color: green; color:white;  border-radius: 5px; padding:2px 4px">
+                    Quản trị viên
+                  </span>
+                  ';
+                else
+                  echo '
+                    <span style="background-color: gray; color:white;  border-radius: 5px; padding:2px 4px">
+                      Người dùng
+                    </span>
+                    ';
+                }
+                  ?>
             </div>
         </div>
       <div class="col-md-9">
@@ -180,7 +215,7 @@ if (isset($_POST['thaoluan'])) {
               <tbody>
                 <tr>
                   <td class="row">
-                    <div class="col-10">
+                    <div class="col-9">
                       <?php echo $chiTietBaiViet['ngayDangBV'];
                             if($chiTietBaiViet['trangThaiBV'] =='dachinhsua'){
                               echo ' <div style="padding: 3px; border-radius: 4px; background-color: gray; width: fit-content; color: white">Đã chỉnh sửa</div>';
@@ -189,7 +224,7 @@ if (isset($_POST['thaoluan'])) {
                       
                     </div> 
                     
-                    <div  class="col-1  <?php if(!$tblBaiViet->kiemTraQuyenChinhSua()){ echo 'offset-1';}  ?>">
+                    <div  class="col-1  <?php if(!$tblBaiViet->kiemTraQuyenChinhSua()){ echo 'offset-2';}  ?>">
                       <form method="get">
                         <input type="text" name="maBV" value="<?php echo $maBV?>" hidden>
                         <button type="submit" name="save_bookmark" class="bookmark" value="<?php echo $bookmark?>">
@@ -205,11 +240,17 @@ if (isset($_POST['thaoluan'])) {
                     </div>
                     <?php 
                       if($tblBaiViet->kiemTraQuyenChinhSua()){
-                        echo '<div class="col-1">
-                        <button  name="save_bookmark" class="bookmark" value="<?php echo $bookmark?>" data-bs-toggle="modal" data-bs-target="#editModal">
-                          <i class="fa fa-pen " style="cursor: pointer;"></i>
-                        </button>
-                      </div>';
+                        echo '
+                        <div class="col-1">
+                          <button  name="edit" class="bookmark"  data-bs-toggle="modal" data-bs-target="#editModal">
+                            <i class="fa fa-pen " style="cursor: pointer;"></i>
+                          </button>
+                        </div>
+                        <div class="col-1">
+                          <button  name="remove" class="bookmark"  data-bs-toggle="modal" data-bs-target="#deleteModal">
+                            <i class="fa fa-trash " style="cursor: pointer;"></i>
+                          </button>
+                        </div>';
                       }
                     ?>
                     <!--Start Modal Edit -->
@@ -223,13 +264,30 @@ if (isset($_POST['thaoluan'])) {
                           </div>
                           <div class="modal-body">
                             <div class="d-flex  ">
-                              <div style="">
-                              <img src="../image/<?php if(isset( $chiTietBaiViet['anhDaiDien'])) echo $chiTietBaiViet['anhDaiDien']; ?>" style="width: 5em; object-fit: contain; border-radius: 50%;" alt="" class="" >
+                              <div >
+                              <img src="../image/<?php if(isset( $chiTietBaiViet['anhDaiDien'])) echo $chiTietBaiViet['anhDaiDien']; ?>" style="width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;" alt="" class="" >
                               </div>
                               <div style="padding: 15px;">
                                 <h5 class="card-title"><a href="#" class="text-decoration-none"><?php if(isset( $chiTietBaiViet['taiKhoan'])) echo $chiTietBaiViet['taiKhoan']; ?></a></h5>
                                 <span style="padding: 2px 4px!important;background-color: green; color:white;  border-radius: 5px">
-                                 <?php if(isset( $chiTietBaiViet['quyen'])) echo $chiTietBaiViet['quyen']; ?>
+                                 <?php if(isset( $chiTietBaiViet['quyen'])) {
+                                  if($chiTietBaiViet['quyen']=='quantrivien')
+                                    echo '
+                                    <span style="background-color: green; color:white;  border-radius: 5px">
+                                      Quản trị viên
+                                    </span>
+                                    ';
+                                  else
+                                    echo '
+                                      <span style="background-color: gray; color:white;  border-radius: 5px">
+                                        Người dùng
+                                      </span>
+                                      ';
+                                 }
+                                   ?>
                                 </span>
                                 <div> 
                                  <?php if(isset( $chiTietBaiViet['ngayDangBV'])) echo $chiTietBaiViet['ngayDangBV']; ?>
@@ -252,6 +310,31 @@ if (isset($_POST['thaoluan'])) {
                       </div>
                     </div>
                     <!--End Modal Edit-->
+                    <!--Start Modal delete -->
+                    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <form action="" method="post">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="editModalLabel">Xóa bài viết</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            
+                            <div class="h5">Bạn có chắc chắn muốn xóa bài viết này?</div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+                            <form action="" method="post">
+                              <input name="maBV" type="text" hidden value="<?php echo $chiTietBaiViet['maBV']?>">
+                              <button type="submit" class="btn btn-danger" name="xoaBaiViet">Xóa bài viết</button>
+                            </form>
+                          </div>
+                        </div>
+                        </form>
+                      </div>
+                    </div>
+                    <!--End Modal delete-->
                   </td>
                 </tr>
                 <tr>
@@ -414,9 +497,27 @@ if (isset($_GET['msgtl'])) {
       <div class="card mt-2">
         <div class="row g-0">
           <div class="col-md-3 card" style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
-            <img src="../image/<?php echo $thaoLuanBV['anhDaiDien'] ?>" style="width:5em" class="card-img-top mx-auto  mt-2" alt="...">
+            <img src="../image/<?php echo $thaoLuanBV['anhDaiDien'] ?>" style="width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;" class="card-img-top mx-auto  mt-2" alt="...">
             <div class="card-body mx-auto">
-              <h5 class="card-title"><a href="#" class="text-decoration-none"><?php echo $thaoLuanBV['taiKhoan'] ?></a></h5>
+              <h5  style="text-align: center;" class="card-title"><a href="#" class="text-decoration-none"><?php echo $thaoLuanBV['taiKhoan'] ?></a></h5>
+              <?php if(isset( $thaoLuanBV['quyen'])) {
+                if($thaoLuanBV['quyen']=='quantrivien')
+                  echo '
+                  <span style="background-color: green; color:white;  border-radius: 5px; padding:2px 4px">
+                    Quản trị viên
+                  </span>
+                  ';
+                else
+                  echo '
+                    <span style="background-color: gray; color:white;  border-radius: 5px; padding:2px 4px">
+                      Người dùng
+                    </span>
+                    ';
+                }
+              ?>
             </div>
           </div>
           <div class="col-md-9">
@@ -508,9 +609,27 @@ if (isset($_GET['msgtl'])) {
     <div class="card mt-2">
       <div class="row g-0">
           <div class="col-md-3 card" style="border-top-right-radius: 0; border-bottom-right-radius: 0; border-top-left-radius: 0">
-              <img src="../image/<?php if(isset($chiTietBaiViet['anhDaiDien']))echo $chiTietBaiViet['anhDaiDien']; ?>" style="width:5em" class="card-img-top mx-auto  mt-2" alt="...">
+              <img src="../image/<?php if(isset($userinfo['anhDaiDien']))echo $userinfo['anhDaiDien']; ?>" style="width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;" class="card-img-top mx-auto  mt-2" alt="...">
               <div class="card-body mx-auto">
-                <h5 class="card-title"><a href="#" class="text-decoration-none"><?php if(isset($chiTietBaiViet['taiKhoan']))echo $chiTietBaiViet['taiKhoan']; ?></a></h5>
+                <h5 style="text-align: center;" class="card-title"><a href="#" class="text-decoration-none"><?php if(isset($userinfo['taiKhoan']))echo $userinfo['taiKhoan']; ?></a></h5>
+                <?php if(isset( $userinfo['quyen'])) {
+                if($userinfo['quyen']=='quantrivien')
+                  echo '
+                  <span style="background-color: green; color:white;  border-radius: 5px; padding:2px 4px">
+                    Quản trị viên
+                  </span>
+                  ';
+                else
+                  echo '
+                    <span style="background-color: gray; color:white;  border-radius: 5px; padding:2px 4px">
+                      Người dùng
+                    </span>
+                    ';
+                }
+                  ?>                     
               </div>
           </div>
         <div class="col-md-9">
