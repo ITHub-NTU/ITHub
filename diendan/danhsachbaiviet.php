@@ -17,7 +17,6 @@ include('../inc/header.php');
 	if(isset($_GET['maCD'])){
 		$maCD = $_GET['maCD'];
 	}
-
 	if(isset($_SESSION['taiKhoan'])){
 		$tblChuDeBV->taiKhoan = $_SESSION['taiKhoan'];
 		$tblChuDeBV->maCDTD = $maCD;
@@ -82,31 +81,34 @@ include('../inc/header.php');
 	<div class="card" style="background-color:cadetblue;">
 		<div class="d-flex card-header">
 			<h5 class="" ><?php echo $chuDeBV['tenCD'] ?></h5>
-		<?php 
-			if(isset($_SESSION['taiKhoan'])){
-				if($theodoi){
-					echo '
-					<form method="post" style="margin-left: auto">
-						<button class="btn btn-success " value ="'.$maCD.'" name="theodoichude">Hủy theo dõi</button>
-					</form>
-					';
+			<?php 
+				if(isset($_SESSION['taiKhoan'])){
+					if($theodoi){
+						echo '
+						<form method="post" style="margin-left: auto">
+							<button class="btn btn-success " value ="'.$maCD.'" name="theodoichude">Hủy theo dõi</button>
+						</form>
+						';
+					}
+					else{
+						echo '
+						<form method="post" style="margin-left: auto">
+							<button class="btn btn-success " value ="'.$maCD.'" name="theodoichude">Theo dõi</button>
+						</form>
+						';
+					}
 				}
 				else{
 					echo '
-					<form method="post" style="margin-left: auto">
-						<button class="btn btn-success " value ="'.$maCD.'" name="theodoichude">Theo dõi</button>
-					</form>
-					';
+						<form method="post" style="margin-left: auto">
+							<button class="btn btn-success " value ="'.$maCD.'" name="theodoichude">Theo dõi</button>
+						</form>
+						';
 				}
-			}
-			else{
-				echo '
-					<form method="post" style="margin-left: auto">
-						<button class="btn btn-success " value ="'.$maCD.'" name="theodoichude">Theo dõi</button>
-					</form>
-					';
-			}
-		?>
+			?>
+		</div>
+	
+	<?php
 		$tblBaiViet->maCD = $_GET['maCD'];
 		$result = $tblBaiViet->layDanhSachBaiViet();
 		$numRows = $result->num_rows;
@@ -138,7 +140,10 @@ include('../inc/header.php');
 				<div class="col-md-6 my-auto text-center">
 					<div class="row my-auto " style="text-align:left;">
 						<div class="col-md-3 my-auto">
-							<img src="../image/<?php echo $baiViet['anhDaiDien'];?>" class="rounded m-3 d-block" style="width:4em" alt="...">
+							<img src="../image/<?php echo $baiViet['anhDaiDien'];?>" class=" m-3 d-block" style="width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;" alt="...">
 						</div>
 						<div class="col-md-9 my-auto">
 							<div class="row">
@@ -176,7 +181,7 @@ include('../inc/header.php');
 							<div class="row my-auto">
 								<?php if($timestamptwo != NULL){ 
 									echo '
-								<div class="col-md-7 my-auto">
+								<div class="col-md-6 my-auto">
 									<div class="row" style="text-align:right;">
 										<a class="text-decoration-none" href="chitietbaiviet.php?maBV='.$baiViet['maBV'].'#comment-'.$thaoLuanMoiNhat['maTLBV'].'" title="">
 										'.$tienIch->formatTimeAgo($timestamptwo).'
@@ -188,8 +193,12 @@ include('../inc/header.php');
 										</label>
 									</div>
 								</div>
-								<div class="col-md-5 my-auto">
-									<img src="../image/images.png" class="rounded d-block" style="width:3em" alt="...">
+								<div class="col-md-6 my-auto">
+									<img src="../image/'.$thaoLuanMoiNhat['anhDaiDien']
+									.'" class=" d-block" style="width: 80px;
+										height: 80px;
+										object-fit: cover;
+										border-radius: 50%;" alt="...">
 								</div>
 								';
 								} else {
