@@ -200,7 +200,7 @@ include('../inc/navbar.php');
                               <form action="" method="post">
                                   <input type="hidden" name="maBV" value="<?php echo $maBV; ?>">
                                   <!-- <input type="submit" name="editBV" value="Sửa" class="btn btn-primary mt-2"> -->
-                                  <input type="submit" name="deleteBV" value="Xóa" class="btn btn-danger mt-2">
+                                  <input type="submit" name="deleteBV" value="Xóa" class="btn btn-danger mt-5 mx-4">
                               </form>
                           </div>
                           
