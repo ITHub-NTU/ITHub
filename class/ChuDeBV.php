@@ -45,7 +45,7 @@
 					FROM ".$this->tblChuDeBV." as p
 					LEFT JOIN ".$this->tblBaiViet." as t ON p.maCD = t.maCD
 					WHERE p.maCD = '".$this->maCD."'
-					AND t.trangThaiBV = 'daduyet'";
+					AND (t.trangThaiBV = 'daduyet' OR t.trangThaiBV = 'dachinhsua')";
 				
 				$stmt = $this->conn->prepare($sqlQuery);
 				$stmt->execute();
@@ -88,7 +88,7 @@
 			}
 		}
 		public function layDSChuDeBVQT(){	
-		if($this->maQuanTri){
+			if($this->maQuanTri){
 				$sqlQuery = "
 					SELECT a.*, b.tenCD
 					FROM ".$this->tblQuanTriBV." AS a
@@ -103,6 +103,46 @@
 			}
 			
 		}
-		
+		public function kiemTraTheoDoiChuDe() {
+			if ($this->taiKhoan && $this->maCDTD) {
+				$query = "SELECT *
+						FROM tbltheodoichude
+						WHERE taiKhoan = ? AND maCD = ?";
+				$stmt = $this->conn->prepare($query);
+				$stmt->bind_param("ss", $this->taiKhoan, $this->maCDTD);
+				if ($stmt->execute()) {
+					$result = $stmt->get_result();
+					if ($result->num_rows > 0) {
+						// Dữ liệu đã tồn tại, lấy nó và kiểm tra với $this->maCDTD
+						$row = $result->fetch_assoc();
+						if ($row['maCD'] == $this->maCDTD) {
+							return true;
+						}
+						return false;
+					}
+				}
+			}
+			return false; 
+		}
+		public function thayDoiTheoDoiChuDe($bookmark) {
+			if ($this->taiKhoan && $this->maCDTD) {
+				if ($bookmark) {
+					$query = "DELETE FROM tbltheodoichude WHERE taiKhoan = ? AND maCD = ?";
+				} else {
+					$query = "INSERT INTO tbltheodoichude (taiKhoan,maCD) VALUES (?, ?)";
+				}
+				
+				$stmt = $this->conn->prepare($query);
+				$stmt->bind_param("ss", $this->taiKhoan, $this->maCDTD);
+
+				if ($stmt->execute()) {
+					return true;
+				} else {
+					return false;
+				}
+			} else {
+				return false;
+			}
+		}
 	}
 ?>
