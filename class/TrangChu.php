@@ -33,6 +33,34 @@
 			$result = $stmt->get_result();
 			return $result->fetch_all(MYSQLI_ASSOC);
 		}
+		public function themTaiLieuYeuThich($maTL, $taiKhoan) {
+			$query = "INSERT INTO " . $this->tbltailieu . " (maTL, taiKhoan) 
+			  VALUES (?, ?)";
 	
+			$stmt = $this->conn->prepare($query);
+			$stmt->bind_param("ss", $maTL, $taiKhoan);
+	
+			
+			if ($stmt->execute()) {
+				return true;
+			}
+			
+			return false;
+		}
+		public function getTaiLieuMoiNhat() {
+			$sqlQuery = "SELECT * FROM $this->tblTaiLieu WHERE trangThaiTL = 'daduyet' ORDER BY maTL DESC LIMIT 5";
+			$stmt = $this->conn->prepare($sqlQuery);
+			$stmt->execute();
+			$result = $stmt->get_result();
+			return $result->fetch_all(MYSQLI_ASSOC);
+		}
+
+		public function getBaiVietMoiNhat() {
+			$sqlQuery = "SELECT * FROM $this->tblBaiViet WHERE trangThaiBV = 'daduyet' ORDER BY maBV DESC LIMIT 5";
+			$stmt = $this->conn->prepare($sqlQuery);
+			$stmt->execute();
+			$result = $stmt->get_result();
+			return $result->fetch_all(MYSQLI_ASSOC);
+		}
 	}
-?>
+	?>
