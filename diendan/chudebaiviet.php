@@ -31,6 +31,7 @@ include('../inc/header.php');
       <div class="modal-body">
 	  	<ul class="list-group">
           <?php
+		  
           // Lấy danh sách các chủ đề từ cơ sở dữ liệu và hiển thị chúng
           $database = new Database();
           $db = $database->getConnection();
@@ -80,7 +81,7 @@ include('../inc/header.php');
 				<div class="col-md-4">
 					<div class="row">
 						<div class="col-md-3">
-							<img src="../image/<?php echo $chuDeBV['anhCD']; ?>" class="rounded m-3 d-block" style="width:5em" alt="...">
+							<img src="../image/<?php echo $chuDeBV['anhCD']; ?>" class=" m-3 d-block" style="width:5em; height: 5em; object-fit: cover;" alt="...">
 						</div>
 						<div class="col-md-9 my-auto">
 							<a class="text-decoration-none m-5" href="danhsachbaiviet.php?maCD=<?php echo $chuDeBV['maCD'];?>" title=""><?php echo $chuDeBV['tenCD']; ?></a>
@@ -110,7 +111,7 @@ include('../inc/header.php');
 								<?php if($timestamp != NULL){ 
 									echo '<div class="col-md-3 my-auto">
 									<img src="../image/'.$thaoLuanMoiNhat['anhDaiDien']
-									.'" class="rounded m-3 d-block" style="width:4em" alt="...">
+									.'" class=" d-block" style="width: 80px;height: 80px;object-fit: cover;border-radius: 50%;" alt="...">
 									</div>
 									<div class="col-md-9 my-auto" style="text-align:left;">
 										<div class="row">
