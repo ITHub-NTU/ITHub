@@ -141,6 +141,14 @@
                     }
 
                     $tblNguoiDung->taiKhoan = $_SESSION['taiKhoan'];
+                    $userInfo = $tblNguoiDung->getUserInfoByTaiKhoan($_SESSION['taiKhoan']);
+                    if ($userInfo !== null) {
+                        $anhDaiDien = $userInfo['anhDaiDien'];
+                        $taiKhoan = $userInfo['taiKhoan'];
+                    } else {
+                        $anhDaiDien = 'user.jpg';
+                    }
+                    
                     $color = 'green';
                     if(isset($_POST['submitTrangThai'])){
                         if($tblNguoiDung->changeTrangThaiHoatDong()) {
@@ -192,7 +200,14 @@
                             <div  data-bs-toggle="dropdown" >
                                 <?php 
                                     if(isset($color))
-                                    echo '<img style="width: 45px; height: 45px; object-fit: cover;border: 3px solid '.$color.';" class="user-avatar rounded-circle" src="'.$path.'image/user.png" alt="User Avatar">'
+                                    //----------------------------------------------------------------------
+                                    echo ' 
+                                    <div class="d-flex" >
+                                        <div class="m-1" style=" font-weight: bold; font-size: 20px;line-height: 38px;" ><span style="border-left: 3px solid black; height: 10px; padding-right: 15px;"></span> </span>'.$taiKhoan.'&nbsp;</div>
+                                        <img style="width: 45px; height: 45px; object-fit: cover;border: 3px solid '.$color.';" class="user-avatar rounded-circle" src="'.$path.'image/'.$anhDaiDien.'" alt="User Avatar">
+                                    </div>
+                                    '
+                                    //----------------------------------------------------------------------
                                 ?>
                             </div>
                             <ul class="dropdown-menu">
@@ -331,7 +346,9 @@
 
 </script>
 <?php
-    $_SESSION['room'] = "quantrivien_" . $_SESSION['taiKhoan'];
+    if(isset( $_SESSION['taiKhoan'])) {
+        $_SESSION['room'] = "quantrivien_" . $_SESSION['taiKhoan'];
+    }
 ?>
 
 <script>
