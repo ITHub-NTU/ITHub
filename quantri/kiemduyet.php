@@ -175,17 +175,7 @@ include('../inc/navbar.php');
     </div>
 
 </div>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var replyButton = document.querySelector("[name='reply']");
-        var guithaoluanForm = document.querySelector("#guithaoluan");
 
-        replyButton.addEventListener("click", function (e) {
-            e.preventDefault(); 
-            guithaoluanForm.scrollIntoView({ behavior: "smooth" });
-        });
-    });
-</script>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
