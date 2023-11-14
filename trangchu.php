@@ -98,7 +98,7 @@ include($path."inc/header.php");
                 <?php foreach ($dsBaiVietYeuThich as $baiVietYeuThich) : ?>
                     <div class="section-card border border-1 rounded-2 mt-2">
                         <div class="d-flex">
-                          
+                            <div class="blog-details3902">
                                 <?php
                                     $currentDomain = $_SERVER['HTTP_HOST'];
                                     $chitietbaivietURL = "http://".$currentDomain."/ITHUB/diendan/chitietbaiviet.php?maBV=".$baiVietYeuThich['maBV'];
@@ -119,7 +119,7 @@ include($path."inc/header.php");
                                     </div>
                                 </blockquote>
                              
-                            
+                            </div>
                         </div>
                     </div>
                 <?php endforeach; ?>
