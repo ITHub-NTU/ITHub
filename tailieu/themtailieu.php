@@ -3,6 +3,7 @@ include_once '../config/Database.php';
 include_once '../class/LoaiTaiLieu.php';
 include_once '../class/TaiLieu.php';
 include_once '../class/TienIch.php';
+include_once '../class/ThongBao.php';
 
 $database = new Database();
 $db = $database->getConnection();
@@ -11,6 +12,62 @@ $tblLoaiTaiLieu = new LoaiTaiLieu($db);
 $maTL = $tienIch->autoIncrement('TblTaiLieu','maTL','TL00000001');
 $_SESSION['maTL'] = $maTL;
 $tblTaiLieu = new TaiLieu($db);
+$tblThongBao = new ThongBao($db);
+
+date_default_timezone_set('Asia/Ho_Chi_Minh'); // Đặt múi giờ là Asia/Ho_Chi_Minh
+
+$currentDateTime = new DateTime();
+$currentDateTime->setTimezone(new DateTimeZone('Asia/Ho_Chi_Minh'));
+
+
+
+if(isset($_SESSION['hoatdong']))
+{
+    if (isset($_SESSION['taiKhoan'])) {
+        $chDangNhap = true;
+        $taiKhoan = $_SESSION['taiKhoan']; 
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            if (isset($_POST['maDD'])&&isset($_POST['tenTL'])&&isset($_POST['moTaTL'])){
+                $tblLoaiTaiLieu->maLoaiTL = $_GET['maLoaiTL'];
+                $loaiTaiLieu = $tblLoaiTaiLieu->layLoaiTaiLieu();
+                $maLoaiTL = $tblLoaiTaiLieu->maLoaiTL;
+                $maDD = $_POST['maDD'];
+                $tenTL = $_POST['tenTL']; 
+                $moTaTL = $_POST['moTaTL'];
+                
+            
+                // Lưu thông tin tệp vào cơ sở dữ liệu
+                $trangThaiTL = 'chuaduyet'; // Gán trạng thái mặc định hoặc thay đổi thành trạng thái tùy ý
+                $fileTL = "upload-tailieu/"; // Đường dẫn lưu trữ file trên server
+                $ngayDangTL = $currentDateTime->format('Y-m-d H:i:s');
+                $ngayDuyetTL = null;
+            
+                if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
+                    $file = $_FILES['file']['name'];
+                    $fileTL .= $file;
+            
+                    if (move_uploaded_file($_FILES['file']['tmp_name'], $fileTL)) {
+                        // Lưu thông tin tệp vào cơ sở dữ liệu
+                        if ($tblTaiLieu->themTaiLieu($maTL, $maLoaiTL, $taiKhoan, $maDD, $tenTL, $moTaTL, $fileTL, $trangThaiTL, $ngayDangTL, $ngayDuyetTL)) {
+                            echo "Tệp đã được tải lên và lưu vào cơ sở dữ liệu thành công.";
+                            $tblThongBao->themTBTL($taiKhoan, '', 'admin', $maLoaiTL, $maTL);
+                        } else {
+                            echo "Có lỗi xảy ra trong quá trình lưu tệp vào cơ sở dữ liệu.";
+                        }
+                    } else {
+                        echo "Có lỗi xảy ra trong quá trình tải lên.";
+                    }
+                } 
+                echo "Tài liệu đã thêm thành công, chờ duyệt nhé cưng!";
+            }
+        }
+    }else {
+        header("location:../nguoidung/dangnhap.php");
+        $chDangNhap = false;
+        $taiKhoan = null;    }
+
+}
+
 
 if (isset($_GET['maLoaiTL'])) {
     $maLoaiTL = $_GET['maLoaiTL'];
@@ -18,38 +75,7 @@ if (isset($_GET['maLoaiTL'])) {
     die("Lỗi: 'maLoaiTL' không tồn tại.");
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $tblLoaiTaiLieu->maLoaiTL = $_GET['maLoaiTL'];
-    $loaiTaiLieu = $tblLoaiTaiLieu->layLoaiTaiLieu();
-    $maLoaiTL = $tblLoaiTaiLieu->maLoaiTL;
-    $taiKhoan = 'phuongha';
-    $maDD = $_POST['maDD'];
-    $tenTL = $_POST['tenTL']; 
-    $moTaTL = $_POST['moTaTL'];
 
-    // Lưu thông tin tệp vào cơ sở dữ liệu
-    $trangThaiTL = 'Trạng thái mặc định'; // Gán trạng thái mặc định hoặc thay đổi thành trạng thái tùy ý
-    $ngayDuyetTL = date("Y-m-d H:i:s"); // Sử dụng ngày và giờ hiện tại
-    $fileTL = "upload-tailieu/"; // Đường dẫn lưu trữ file trên server
-
-    if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
-        $file = $_FILES['file']['name'];
-        $fileTL .= $file;
-
-        if (move_uploaded_file($_FILES['file']['tmp_name'], $fileTL)) {
-            // Lưu thông tin tệp vào cơ sở dữ liệu
-            if ($tblTaiLieu->themTaiLieu($maTL, $maLoaiTL, $taiKhoan, $maDD, $tenTL, $moTaTL, $fileTL, $trangThaiTL, $ngayDuyetTL)) {
-                echo "Tệp đã được tải lên và lưu vào cơ sở dữ liệu thành công.";
-                
-            } else {
-                echo "Có lỗi xảy ra trong quá trình lưu tệp vào cơ sở dữ liệu.";
-            }
-        } else {
-            echo "Có lỗi xảy ra trong quá trình tải lên.";
-        }
-    } 
-    echo "Tài liệu đã thêm thành công, chờ duyệt nhé cưng!";
-}
 
 $query = "SELECT maDD, tenDD FROM TblDinhDangTL";
 $stmt = $db->prepare($query);
