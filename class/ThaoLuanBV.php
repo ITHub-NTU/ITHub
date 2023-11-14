@@ -1,6 +1,55 @@
 <?php
-	class ThaoLuanBV {	
+	// class ThaoLuanBV {	
 	
+	// 	private $tblThaoLuanBV = 'tblthaoluanbv';
+	// 	private $tblNguoiDung = 'tblnguoidung';
+	// 	private $tblBaiViet = 'tblbaiviet';
+	// 	private $conn;
+		
+	// 	public function __construct($db){
+	// 		$this->conn = $db;
+	// 	}	
+
+	// 	public function layDanhSachThaoLuanBV(){	
+	// 		if($this->maBV) {
+	// 			$sqlQuery = "
+	// 			SELECT *
+	// 			FROM ".$this->tblThaoLuanBV."
+	// 			WHERE maBV = '".$this->maBV."'
+	// 			ORDER BY ngayDangTLBV ASC";			
+	// 			$stmt = $this->conn->prepare($sqlQuery);
+	// 			$stmt->execute();
+	// 			$result = $stmt->get_result();			
+	// 			return $result;	
+	// 		}
+	// 	}
+
+	// 	public function layThaoLuanPhanHoiBV(){	
+	// 		if($this->maPhanHoi) {
+	// 			$sqlQuery = "
+	// 			SELECT *
+	// 			FROM ".$this->tblThaoLuanBV."
+	// 			WHERE maTLBV = '".$this->maPhanHoi."'";		
+	// 			$stmt = $this->conn->prepare($sqlQuery);
+	// 			$stmt->execute();
+	// 			$result = $stmt->get_result();			
+	// 			return $result;	
+	// 		}
+	// 	}
+
+	// 	public function layThaoLuanBV(){
+	// 		if($this->maTLBV_reply){
+	// 			$sqlQuery = 'SELECT * FROM tblthaoluanbv';
+	// 			$stmt = $this->conn->prepare($sqlQuery);
+	// 			$stmt->execute();
+	// 			$result = $stmt->get_result();	
+	// 			return $result;	
+	// 		}
+	// 	}
+	// }
+
+	class ThaoLuanBV {	
+   
 		private $tblThaoLuanBV = 'tblthaoluanbv';
 		private $tblNguoiDung = 'tblnguoidung';
 		private $tblBaiViet = 'tblbaiviet';
@@ -9,21 +58,22 @@
 		public function __construct($db){
 			$this->conn = $db;
 		}	
-
+	
 		public function layDanhSachThaoLuanBV(){	
 			if($this->maBV) {
 				$sqlQuery = "
-				SELECT *
-				FROM ".$this->tblThaoLuanBV."
-				WHERE maBV = '".$this->maBV."'
-				ORDER BY ngayDangTLBV ASC";			
+				SELECT a.*, b.anhDaiDien, b.quyen
+				FROM ".$this->tblThaoLuanBV." as a
+				JOIN tblnguoidung AS b ON a.taiKhoan = b.taiKhoan 
+				WHERE a.maBV = '".$this->maBV."'
+				ORDER BY a.ngayDangTLBV ASC";			
 				$stmt = $this->conn->prepare($sqlQuery);
 				$stmt->execute();
 				$result = $stmt->get_result();			
 				return $result;	
 			}
 		}
-
+	
 		public function layThaoLuanPhanHoiBV(){	
 			if($this->maPhanHoi) {
 				$sqlQuery = "
@@ -36,7 +86,7 @@
 				return $result;	
 			}
 		}
-
+	
 		public function layThaoLuanBV(){
 			if($this->maTLBV_reply){
 				$sqlQuery = 'SELECT * FROM tblthaoluanbv';
@@ -44,6 +94,21 @@
 				$stmt->execute();
 				$result = $stmt->get_result();	
 				return $result;	
+			}
+		}
+		public function layThaoLuanReply(){
+			if($this->maTLBV_reply_2)
+			{
+				$sqlQuery = "SELECT * FROM tblthaoluanbv WHERE maTLBV = '".$this->maTLBV_reply_2."' " ;
+				$stmt = $this->conn->prepare($sqlQuery);
+				$stmt->execute();
+				$result = $stmt->get_result();	
+				if ($result->num_rows > 0) {
+					$userInfo = $result->fetch_assoc();
+					return $userInfo;
+				} else {
+					return null;
+				}	
 			}
 		}
 		public function baoCaoThaoLuanBaiViet(){
@@ -152,5 +217,6 @@
 				return false;
 			}
 		}
+	
 	}
 ?>
