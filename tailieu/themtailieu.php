@@ -108,9 +108,10 @@ include('../inc/header.php');
                             </select>
                         </div>
                         <div class="fallback">
-                            <input name="file" type="file">
+                            <label for="formFile" class="form-label"></label>
+                            <input class="form-control" type="file" id="formFile" required>
                         </div>
-                        <div class="dz-message needsclick">
+                        <div class="dz-message needsclick text-center">
                             <div class="mb-3">
                                 <i class="fas fa-upload fa-3x text-secondary"></i>
                             </div>
