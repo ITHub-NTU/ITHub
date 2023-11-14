@@ -35,7 +35,7 @@ include($path."inc/header.php");
 <body>
     <?php include($path."inc/navbar.php"); ?>
     <div class="row">
-        <div id="carouselExampleIndicators" class="carousel slide col-12">
+        <div id="carouselExampleIndicators" class="carousel slide col-lg-12">
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -63,9 +63,9 @@ include($path."inc/header.php");
             </button>
         </div>
         <div class="row">
-            <div class="col-4">
-            <div class="col-md-12 ">
-                <h5 class="text-center p-3 mt-2 bg-warning rounded-2">TOP 2 TÀI LIỆU YÊU THÍCH</h5>
+            <div class="col-lg-4">
+            <div class="col-lg-12">
+                <h5 class="text-center p-3 mt-2 bg-warning rounded-2">TOP 5 TÀI LIỆU YÊU THÍCH</h5>
                 <?php if ($dsTaiLieuYeuThich !== null) : ?>
                     <?php foreach ($dsTaiLieuYeuThich as $taiLieuYeuThich) : ?>
                         <div class="border border-1 rounded-2 mt-2">
@@ -94,7 +94,7 @@ include($path."inc/header.php");
                     <p>Không tìm thấy tài liệu.</p>
                 <?php endif; ?>
                 
-            <h5 class="text-center p-3 mt-2 bg-warning rounded-2">TOP 2 BÀI VIẾT YÊU THÍCH</h5>
+            <h5 class="text-center p-3 mt-2 bg-warning rounded-2">TOP 5 BÀI VIẾT YÊU THÍCH</h5>
                 <?php foreach ($dsBaiVietYeuThich as $baiVietYeuThich) : ?>
                     <div class="section-card border border-1 rounded-2 mt-2">
                         <div class="d-flex">
@@ -125,9 +125,8 @@ include($path."inc/header.php");
                 <?php endforeach; ?>
                 </div>
             </div>
-            <div class="col-8">
-            <h5 class="text-center p-3 mt-2 bg-warning rounded-2">Tài liệu và bài viết mới nhất</h5>
-                
+            <div class="col-lg-8">
+            <h5 class="text-center p-3 mt-2 bg-warning rounded-2">TÀI LIỆU VÀ BÀI VIẾT MỚI NHẤT</h5>
                 <?php
                 foreach ($dsTaiLieuMoiNhat as $taiLieuMoiNhat) :?>
                 <div class="section-card border border-1 rounded-2 mt-2">

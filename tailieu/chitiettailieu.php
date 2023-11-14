@@ -50,7 +50,20 @@ if(isset($_SESSION['hoatdong']))
             
                     if (is_uploaded_file($_FILES['file']['tmp_name'])) {
                         $taiLieu->chinhSuaTaiLieu($taiLieuMaTL, $maLoaiTL, $taiKhoan, $maDD, $tenTL, $moTaTL, $fileTL, $trangThaiTL,$ngayDangTL, $ngayDuyetTL);
-                        header("location:../tailieu/danhsachtailieu.php");
+                        echo '<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="successModalLabel">Thành công</h5>
+                                      <input type="button" class="btn btn-secondary" value="X" data-bs-dismiss="modal" aria-label="Close">
+                                </div>
+                                <div class="modal-body">
+                                    Tài liệu đã được chỉnh sửa và lưu vào cơ sở dữ liệu thành công. Vui lòng chờ duyệt tài liệu. 
+                                </div>
+                            </div>
+                        </div>
+                    </div>';
+                     
                     }
                     else {
                         echo "lỗi";
@@ -348,5 +361,13 @@ if (isset($_GET['maLoaiTL'])) {
                 document.getElementById('currentFileName').innerText = fileName;
                 document.getElementById('currentFileName').setAttribute('href', this.value);
             });
-            </script>       
+            // Sau khi xử lý thành công khi tệp được tải lên và lưu vào cơ sở dữ liệu
+    // Kích hoạt modal thông báo thành công
+    document.addEventListener('DOMContentLoaded', function () {
+    <?php if ($taiLieu->chinhSuaTaiLieu($taiLieuMaTL, $maLoaiTL, $taiKhoan, $maDD, $tenTL, $moTaTL, $fileTL, $trangThaiTL,$ngayDangTL, $ngayDuyetTL)) { ?>
+            $('#successModal').modal('show');
+        <?php } ?>
+    });
+            </script>
+           
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

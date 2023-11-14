@@ -14,9 +14,10 @@
 		public function layDanhSachTaiLieuYeuThich(){    
 			$sqlQuery = "SELECT *  FROM $this->tblTaiLieuYeuThich TLYT
 			INNER JOIN $this->tblTaiLieu TL ON TLYT.maTL = TL.maTL
+			WHERE trangThaiTL = 'daduyet'
 			GROUP BY TL.tenTL
 			ORDER BY TL.maTL DESC
-			LIMIT 2";
+			LIMIT 5";
 			$stmt = $this->conn->prepare($sqlQuery);
 			$stmt->execute();
 			$result = $stmt->get_result();
@@ -25,9 +26,10 @@
 		public function layDanhSachBaiVietYeuThich(){    
 			$sqlQuery = "SELECT *  FROM $this->tblBaiVietYeuThich BVYT
 			INNER JOIN $this->tblBaiViet BV ON BVYT.maBV = BV.maBV
+			WHERE trangThaiBV = 'daduyet'
 			GROUP BY BV.tenBV
 			ORDER BY BV.maBV DESC
-			LIMIT 2";
+			LIMIT 5";
 			$stmt = $this->conn->prepare($sqlQuery);
 			$stmt->execute();
 			$result = $stmt->get_result();
