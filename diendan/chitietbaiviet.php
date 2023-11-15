@@ -36,33 +36,6 @@ include('../inc/header.php');
     $maTLBV_reply = $GLOBALS['maTLBV_reply'];
 	$chiTietBaiViet = $tblBaiViet->layBaiViet();
 
-// Them thao luan
-if (isset($_POST['thaoluan'])) {
-  $noiDungTLBV = $_POST['noiDungTLBV'];
-  if(isset($_POST['maTLBV_reply'])) {
-    $maPhanHoi = $_POST['maTLBV_reply'];
-  } else {
-    $maPhanHoi = '0';
-  }
-
-  if($maPhanHoi == '0') {
-    $loaiTB = 'binhluan';
-  } else {
-    $loaiTB = 'phanhoi';
-  }
-   
-  $maTLBV = $tienIch->autoIncrement('tblthaoluanbv', 'maTLBV', 'TL00000001');
-  $query = "INSERT INTO tblthaoluanbv (maTLBV, maBV, maPhanHoi, taiKhoan, noiDungTLBV, trangThaiTLBV) VALUES (?, ?, ?, ?, ?, 'dadang')";
-  $stmt = $db->prepare($query);
-  $stmt->bind_param('sssss', $maTLBV, $maBV, $maPhanHoi , $taiKhoan, $noiDungTLBV);
-
-  if ($stmt->execute()) {
-    $tblThongBao->themTBPhanHoiBV($chiTietBaiViet['taiKhoan'], $taiKhoan, $loaiTB, $chiTietBaiViet['maCD'], $maBV, $maTLBV);
-  }else {
-    echo "Lỗi khi thêm thảo luận: " . $stmt->error;
-  }
-  $stmt->close();
-}
   if (isset($_POST['reply'])) {
     $GLOBALS['checkPhanHoi'] = 1;
     $maTLBV_reply = $_POST['maTLBV_reply'];
@@ -77,8 +50,42 @@ if (isset($_POST['thaoluan'])) {
         $row_reply = $result_reply->fetch_assoc();
         $noiDungReply = $row_reply['noiDungTLBV'];
         $taiKhoanReply = $row_reply['taiKhoan'];
+        $_SESSION['taiKhoanDuocPhanHoi'] = $taiKhoanReply;
     }
   }
+  if(isset($_SESSION['taiKhoanDuocPhanHoi'])) {
+    $taiKhoanDuocPhanHoi = $_SESSION['taiKhoanDuocPhanHoi'];
+  }
+  
+// Them thao luan
+if (isset($_POST['thaoluan'])) {
+  $noiDungTLBV = $_POST['noiDungTLBV'];
+  if(isset($_POST['maTLBV_reply'])) {
+    $maPhanHoi = $_POST['maTLBV_reply'];
+  } else {
+    $maPhanHoi = '0';
+  }
+
+  if($maPhanHoi == '0') {
+    $loaiTB = 'binhluan';
+  } else {
+    $loaiTB = 'phanhoi';
+  }
+
+  
+  $maTLBV = $tienIch->autoIncrement('tblthaoluanbv', 'maTLBV', 'TL00000001');
+  $query = "INSERT INTO tblthaoluanbv (maTLBV, maBV, maPhanHoi, taiKhoan, noiDungTLBV, trangThaiTLBV) VALUES (?, ?, ?, ?, ?, 'dadang')";
+  $stmt = $db->prepare($query);
+  $stmt->bind_param('sssss', $maTLBV, $maBV, $maPhanHoi , $taiKhoan, $noiDungTLBV);
+  
+  if ($stmt->execute()) {
+    $tblThongBao->themTBPhanHoiBV($chiTietBaiViet['taiKhoan'], $taiKhoan, $loaiTB, $chiTietBaiViet['maCD'], $maBV, $maTLBV, $taiKhoanDuocPhanHoi);
+  }else {
+    echo "Lỗi khi thêm thảo luận: " . $stmt->error;
+  }
+  $stmt->close();
+}
+  
   $bookmark = $tblBaiViet->getBookmarkTaiKhoan();
 
   if(isset($_GET['save_bookmark'])){
