@@ -224,7 +224,7 @@ class NguoiDung {
         }
     }
 
-    private function isDuplicateEmail($email) {
+    public function isDuplicateEmail($email) {
         $checkEmailQuery = "SELECT email FROM $this->tblNguoiDung WHERE email = ?";
         $stmt = $this->conn->prepare($checkEmailQuery);
         $stmt->bind_param("s", $email);
@@ -280,10 +280,10 @@ class NguoiDung {
 
     public function getUserInfoFromDatabase() {
         if (!empty($_SESSION["taiKhoan"])) {
-            $tai_khoan = $_SESSION["taiKhoan"];
+            $taiKhoan = $_SESSION["taiKhoan"];
             $sqlQuery = "SELECT * FROM " . $this->tblNguoiDung . " WHERE taiKhoan = ?";
             $stmt = $this->conn->prepare($sqlQuery);
-            $stmt->bind_param("s", $tai_khoan);
+            $stmt->bind_param("s", $taiKhoan);
             $stmt->execute();
             $result = $stmt->get_result();
 
@@ -513,17 +513,32 @@ class NguoiDung {
     }
 
     public function xoaBaiViet($maBV) {
-        $sqlQuery = "DELETE FROM " . $this->tblBaiViet . " WHERE maBV = ?";
-        $stmt = $this->conn->prepare($sqlQuery);
-        $stmt->bind_param("s", $maBV);
+        $this->conn->begin_transaction();
+        try {
+            $queryDeleteBVViPham = "DELETE FROM tblbvvipham WHERE maBV = ?";
+            $stmtDeleteBVViPham = $this->conn->prepare($queryDeleteBVViPham);
+            $stmtDeleteBVViPham->bind_param("s", $maBV);
+            $stmtDeleteBVViPham->execute();
     
-        if ($stmt->execute()) {
+            $queryDeleteTLBV= "DELETE FROM tblthaoluanbv WHERE maBV = ?";
+            $stmtDeleteTLBV = $this->conn->prepare($queryDeleteTLBV);
+            $stmtDeleteTLBV->bind_param("s", $maBV);
+            $stmtDeleteTLBV->execute();
+
+            $queryDeleteBV = "DELETE FROM tblbaiviet WHERE maBV = ?";
+            $stmtDeleteBV = $this->conn->prepare($queryDeleteBV);
+            $stmtDeleteBV->bind_param("s", $maBV);
+            $stmtDeleteBV->execute();
+    
+            $this->conn->commit();
             return true;
-        } else {
-            die("Lỗi thực hiện truy vấn: " . $stmt->error);
+        } catch (Exception $e) {
+            $this->conn->rollback();
             return false;
         }
     }
+
+    
 
     public function xoaTaiLieu($maTL) {
         $sqlQuery = "DELETE FROM " . $this->tblTaiLieu . " WHERE maTL = ?";
