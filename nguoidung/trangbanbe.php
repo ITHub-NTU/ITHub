@@ -26,7 +26,7 @@ $userInfo = $tblNguoiDung->getUserInfoByTaiKhoan($taiKhoanBB);
       $tenND = $userInfo['tenND'];
       $quyen = $userInfo['quyen'];
       $ngaySinh = $userInfo['ngaySinh'];
-      $anhDaiDien = $userInfo['anhDaiDien'];
+      $anhDaiDienBB = $userInfo['anhDaiDien'];
 
       if ($quyen === 'nguoidung') {
           $quyen = 'Người dùng';
@@ -106,7 +106,7 @@ include('../inc/navbar.php');
         <div class="card">
           <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px;">
             <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
-              <img src="../image/<?php echo $anhDaiDien?>"                          
+              <img src="../image/<?php echo $anhDaiDienBB?>"                          
                 alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
                 style="width: 150px; height: 150px; object-fit: cover; z-index: 1">
               <button type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark"

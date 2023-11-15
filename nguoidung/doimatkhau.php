@@ -108,6 +108,7 @@ include('../inc/navbar.php');
     </div>
     </section>
 </form>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <?php 
 include('../inc/footer.php');
 ?>
