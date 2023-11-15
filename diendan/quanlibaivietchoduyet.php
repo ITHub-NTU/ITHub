@@ -32,14 +32,14 @@ if(isset($_POST['chinhSuaBaiViet'])){
     $noiDungBV = $_POST['noiDungBV'];
     $tblBaiViet->maBV = $_POST['maBV'];
     $tblBaiViet->chinhSuaBaiViet($tenBV, $noiDungBV);
-    header("Location: ./quanlibaivietchoduyet.php");
+    header("Location: ./quanlibaivietchoduyet.php?maCDBV=".$maCD);
   }
 if(isset($_POST['xoaBaiViet'])){
 if(isset($_POST['maBV'])){
     $maBV = $_POST['maBV'];
     $tblBaiViet->maBV = $maBV;
     $tblBaiViet->xoaBaiViet();
-    header("Location: ./chudebaiviet.php");
+    header("Location: ./quanlibaivietchoduyet.php?maCDBV=".$maCD);
 }
 else{
     header('Location: 404notfound.php');
@@ -135,7 +135,9 @@ $resultDanhSachBV = $tblBaiViet->layDanhSachBaiVietDangChoDuyet($maCD, $taiKhoan
                         if ($resultBVDC) { 
                             $row = $resultBVDC->fetch_row(); 
                             $soLuong = $row[0]; 
-                            if($soLuong != 0) echo $soLuong;}
+                            if($soLuong != 0) echo $soLuong;
+                            else    echo 0;
+                        }
                     ?></div>
                 </div>
                 <!-- <div class="col-3 m-auto">
@@ -149,6 +151,8 @@ $resultDanhSachBV = $tblBaiViet->layDanhSachBaiVietDangChoDuyet($maCD, $taiKhoan
         </div>
     </div>
     <?php 
+        if($resultDanhSachBV->num_rows == 0)
+            echo '<div class="h3">Không có bài viết nào đang chờ duyệt trong chủ đề này</div>';
         while($chiTietBaiViet = $resultDanhSachBV->fetch_assoc()){
            
     ?>
