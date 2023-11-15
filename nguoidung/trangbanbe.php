@@ -1,4 +1,5 @@
 <?php
+//Include thu vien
 include_once '../config/Database.php';
 include_once '../class/NguoiDung.php';
 include_once '../class/BaiViet.php';
