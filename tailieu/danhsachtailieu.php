@@ -52,7 +52,7 @@
         <div class="section-body">
        
             <div class="row">
-                <nav class="col-sm-3 border border-1 rounded-2" >
+                <nav class="col-lg-3 border border-1 rounded-2" >
                     <h5 class="text-center p-3 mt-2 bg-warning rounded-2 ">Loại tài liệu</h5>
                     <div class="list-group">
                             <?php
@@ -73,9 +73,9 @@
                             ?>
                         </div>
                 </nav>
-                <div class="col-sm-9">
+                <div class="col-lg-9">
                     <div class="row">
-                       <div class=" section-card col-sm-10 ">
+                       <div class=" section-card col-lg-10 ">
                             <div>
                                 <tr>
                                 <th>
@@ -139,7 +139,7 @@
                             </tr>
                             </div>
                         </div>
-                        <div class="col-sm-2">
+                        <div class="col-lg-2">
                             <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-warning text-white" style="width:100%">Thêm tài liệu</button>
                         </div>
                     </div>
@@ -149,7 +149,7 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h1 class="modal-title fs-5" id="exampleModalLabel">Đăng tài liệu vào chủ đề...</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <button type="button" class="btn-close" data-bs-dimdiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
                                     <ul class="list-group">
@@ -177,7 +177,7 @@
                         <?php if ($taiLieu['trangThaiTL'] == 'daduyet' ) : ?>
                         <div class="section-card border border-1 rounded-2 mt-2">
                             <div class="row">
-                                <div class="col-sm-3 text-center">
+                                <div class="col-lg-3 text-center">
                                     <?php if (!empty($taiLieu['anhTL'])) : ?>
                                         <img class="border border-3 rounded-4 m-3" style="width: 150px; height: 150px;" src="../image/macdinh.jpg" alt="Image" class="img-responsive">
                                         <!-- "img/<?php echo $taiLieu['anhTL']; ?>" -->
@@ -186,7 +186,7 @@
                                     <?php endif; ?>
                                 </div>
                                 
-                                <div class="col-sm-9">
+                                <div class="col-lg-9">
                                     <div class="mt-2 mb-2 row" >
                                     <h3 class="fw-medium mb-2 mt-3" ><span><i id="fa-picture-o" aria-hidden="true"></i></span><?php echo $taiLieu['tenTL']; ?></h3>
                                    </div>
@@ -265,9 +265,11 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         var sortArrow = document.querySelector('#sort-tenTL .bi-sort-alpha-up');
-        sortArrow.addEventListener('click', function() {
-            sortArrow.classList.toggle('bi-sort-alpha-down');
-        });
+        if (sortArrow) {
+            sortArrow.addEventListener('click', function() {
+                sortArrow.classList.toggle('bi-sort-alpha-down');
+            });
+        }
 
         var sortArrows = document.querySelectorAll('.bi-sort-alpha-up');
         sortArrows.forEach(function(arrow) {
