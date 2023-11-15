@@ -144,5 +144,14 @@
 				return false;
 			}
 		}
+		public function laySoLuongNguoiTheoDoiCD($maCD){
+			$sqlQuery = "
+				SELECT COUNT(*) as soLuong FROM `tbltheodoichude` WHERE maCD = '".$maCD."'";
+			
+			$stmt = $this->conn->prepare($sqlQuery);
+			$stmt->execute();
+			$result = $stmt->get_result();	
+			return $result;	
+		}
 	}
 ?>

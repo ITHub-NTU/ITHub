@@ -235,7 +235,6 @@ if (isset($_POST['thaoluan'])) {
                             else  
                               echo '<i class="far fa-bookmark " style="cursor: pointer;"></i>';
                           ?>
-                          
                         </button>
                       </form>
                     </div>
