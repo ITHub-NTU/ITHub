@@ -255,15 +255,13 @@
 <div class="container">
 <div class="container-fluid" style="margin-bottom: 10px;">
     <div class="row border-top px-xl-5 pt-2">
-        <div class="col-lg-3 d-none d-lg-block">
-        </div>
-        <div style="font-size: 20px;" class="col-lg-9">
+        <div style="font-size: 20px;" class="col-lg-10  offset-lg-1" >
             <nav class="navbar navbar-expand-lg py-3 py-lg-0 px-0">
                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                    <div class="navbar-nav navbar-nav2 py-0">
+                <div class="collapse navbar-collapse d-flex" id="navbarCollapse">
+                    <div class="navbar-nav navbar-nav2 m-auto">
                         <a href="<?php echo $path?>trangchu.php" class="nav-item nav-item2 nav-link">Trang chủ</a>
                         <a href="<?php echo $path?>tailieu/danhsachtailieu.php" class="nav-item nav-item2 nav-link">Tài liệu</a>
                         <a href="<?php echo $path?>diendan/chudebaiviet.php" class="nav-item nav-item2 nav-link">Diễn đàn</a>
@@ -294,6 +292,7 @@
                                 }
                             }
                         ?>
+                        <a href="<?php echo $path?>timkiem.php" class="nav-item nav-item2 nav-link">Tìm kiếm</a>
                         <a href="#" class="nav-item nav-item2 nav-link">Bài tập cá nhân</a>
                         
                         <a href="#" class="nav-item nav-item2 nav-link">Liên hệ</a>

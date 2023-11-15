@@ -21,8 +21,10 @@ include("../inc/navbar.php");
 ?>
 <?php 
 	$tblBaiViet->maBV = $_GET['maBV'];
+  
   $maBV = $_GET['maBV'];
   $baiViet = $tblBaiViet->layBaiViet();
+  $tblBaiViet->trangThaiBV = $baiViet['trangThaiBV'];
   if(isset($_POST['duyet_baiviet'])){
       //----------------------------------------
     
@@ -66,7 +68,12 @@ include("../inc/navbar.php");
             <table class="table">
               <tbody>
                 <tr>
-                  <td><?php echo $baiViet['ngayDangBV']?></td>
+                  <td class="d-flex"><?php echo 
+                    $tienIch->formatTimeAgo(strtotime($baiViet['ngayDangBV']));
+                            if($baiViet['trangThaiBV'] =='chinhsua'){
+                              echo ' <div style="padding: 3px 6px; margin: 0 5px; border-radius: 4px; background-color: gray; width: fit-content; color: white">Chỉnh sửa</div>';
+                            }
+                      ; ?></td>
                 </tr>
                 <tr>
                     <td>

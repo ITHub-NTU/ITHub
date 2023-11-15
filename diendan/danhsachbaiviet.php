@@ -59,7 +59,7 @@ include('../inc/header.php');
 				$soLuong = $row[0]; 
 				if($soLuong != 0){
 					echo '
-					<div class="card mt-2 mb-2" style="background-color: #DADDE1;">
+					<div class="card  mb-2" style="background-color: #DADDE1;">
 						<div class="card-body">
 							<div class="row">
 								<div class="col-10">
@@ -67,7 +67,11 @@ include('../inc/header.php');
 									<div>'.$soLuong.' bài viết</div>
 								</div>
 								<div class="col-2 m-auto">
-									<button class="btn btn-primary">Quản lí bài viết</button>
+									<form method="get" action="quanlibaivietchoduyet.php">
+										<input name="maCDBV" hidden value="'.$maCD.'"/>
+										<button type="submit" class="btn btn-primary">Quản lí bài viết</button>
+									</form>
+									
 								</div>
 							</div>
 						</div>

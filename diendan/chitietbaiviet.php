@@ -215,10 +215,11 @@ if (isset($_POST['thaoluan'])) {
               <tbody>
                 <tr>
                   <td class="row">
-                    <div class="col-9">
-                      <?php echo $chiTietBaiViet['ngayDangBV'];
+                    <div class="col-9 d-flex">
+                      <?php echo 
+                            $tienIch->formatTimeAgo(strtotime($chiTietBaiViet['ngayDuyetBV']));
                             if($chiTietBaiViet['trangThaiBV'] =='dachinhsua'){
-                              echo ' <div style="padding: 3px; border-radius: 4px; background-color: gray; width: fit-content; color: white">Đã chỉnh sửa</div>';
+                              echo ' <div style="padding: 3px 6px; margin: 0 5px; border-radius: 4px; background-color: gray; width: fit-content; color: white">Đã chỉnh sửa</div>';
                             }
                       ; ?>
                       
@@ -694,68 +695,6 @@ if (isset($_GET['msgtl'])) {
     });
 </script>
 
-<script>
-  $(document).ready(function(){
-  
-    function load_unseen_notification(view = ''){
-      $.ajax({
-      url:"../notification/fetch.php",
-      method:"POST",
-      data:{view:view},
-      dataType:"json",
-      success:function(data)
-      {
-        $('#notification').html(data.notification);
-        if (data.unseen_notification > 0) {
-          $('.badge.bg-danger').show();
-          if (data.unseen_notification > 10) {
-            $('.count').html('10<sup style="font-weight: bold;">+</sup>');
-          } else {
-            $('.count').html(data.unseen_notification);
-          }
-        }
-        else {
-            $('.count').html('');
-            $('.badge.bg-danger').hide();
-          }
-      }
-      });
-    }
-  
-    load_unseen_notification();
-  
-    $('#comment_form').on('submit', function(event){
-      event.preventDefault();
-      if($('#subject').val() != '' && $('#comment').val() != '')
-      {
-      var form_data = $(this).serialize();
-      $.ajax({
-        url:"insert.php",
-        method:"POST",
-        data:form_data,
-        success:function(data)
-        {
-        $('#comment_form')[0].reset();
-        load_unseen_notification();
-        }
-      });
-      }
-      else
-      {
-      alert("Both Fields are Required");
-      }
-    });
-  
-    $(document).on('click', '#thongbao', function(){
-      $('.count').html('');
-      load_unseen_notification('yes');
-    });
-  
-    setInterval(function(){ 
-      load_unseen_notification();; 
-    }, 5000);
-  });
-</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <?php include("../inc/footer.php"); ?>
