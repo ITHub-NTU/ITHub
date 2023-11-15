@@ -31,7 +31,7 @@ if (isset($_POST['view'])) {
 
     $query = "SELECT * FROM tblthongbao WHERE taiKhoan = '{$_SESSION["taiKhoan"]}' ORDER BY ngayDangTB DESC LIMIT 30";
     $result = $db->query($query);
-    $output = '<li style="padding-left:5px;font-weight:bold; font-size:18px;margin-top:-10px; background-color:#f0f0f0f0">Thông báo</li>';
+    $output = '<li style="padding-left:10px;font-weight:bold; font-size:18px;margin-top:-10px; margin-bottom: 5px; background-color:#f0f0f0f0">Thông báo</li>';
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
