@@ -7,6 +7,12 @@ include_once '../class/TienIch.php';
 $database = new Database();
 $db = $database->getConnection();
 $tblNguoiDung = new NguoiDung($db);
+
+if(!(isset($_SESSION['taiKhoan']))){
+    header('Location:./dangnhap.php');
+}
+
+$modalMessage ='';
 $taiKhoan = $_SESSION['taiKhoan'];
 $userInfo = $tblNguoiDung->getUserInfoFromDatabase();
 
@@ -39,53 +45,13 @@ $userInfo = $tblNguoiDung->getUserInfoFromDatabase();
         $tblNguoiDung->taiKhoan = $taiKhoan;
         $resultBV = $tblNguoiDung->layDanhSachBaiVietCuaNguoiDung();
         $countBaiViet = mysqli_num_rows($resultBV);
-        $resultTL = $tblNguoiDung->layDanhSachTaiLieuCuaNguoiDung($taiKhoan);
+        $resultTL = $tblNguoiDung->layDanhSachTaiLieuCuaNguoiDung();
         $countTaiLieu = mysqli_num_rows($resultTL);
-        $resultTLYT = $tblNguoiDung->layDanhSachTaiLieuYeuThichCuaNguoiDung($taiKhoan);
-        $resultBVYT = $tblNguoiDung->layDanhSachBaiVietYeuThichCuaNguoiDung($taiKhoan);
+        $resultTLYT = $tblNguoiDung->layDanhSachTaiLieuYeuThichCuaNguoiDung();
+        $resultBVYT = $tblNguoiDung->layDanhSachBaiVietYeuThichCuaNguoiDung();
     }
 
 
-    
-    if (isset($_POST['deleteBV'])) {
-      $maBV = $_POST['maBV'];
-      $resultDBV= $tblNguoiDung->xoaBaiViet($maBV);
-      if ($resultDBV) {
-          $modalMessage = 'Bài viết của bạn đã được xóa thành công.';
-      } else {
-          $modalMessage = 'Xóa bài viết của bạn không thành công. Vui lòng thử lại.';
-      }
-    } 
-
-    if (isset($_POST['deleteTL'])) {
-      $maTL = $_POST['maTL'];
-      $resultDTL = $tblNguoiDung->xoaTaiLieu($maTL);
-      if ($resultDTL) {
-          $modalMessage = 'Tài liệu của bạn đã được xóa thành công.';
-      } else {
-          $modalMessage = 'Xóa tài liệu của bạn không thành công. Vui lòng thử lại.';
-      }
-    } 
-
-    if (isset($_POST['deleteBVYT'])) {
-      $maBVYT = $_POST['maBVYT'];
-      $resultDBVYT= $tblNguoiDung->xoaBaiVietYeuThich($taiKhoan, $maBVYT);
-      if ($resultDBVYT) {
-          $modalMessage = 'Bài viết yêu thích đã được xóa thành công.';
-      } else {
-          $modalMessage = 'Xóa bài viết yêu thích không thành công. Vui lòng thử lại.';
-      }
-    } 
-
-    if (isset($_POST['deleteTLYT'])) {
-      $maTLYT = $_POST['maTLYT'];
-      $resultDTLYT = $tblNguoiDung->xoaTaiLieuYeuThich($taiKhoan, $maTLYT);
-      if ($resultDTLYT) {
-          $modalMessage = "Tài liệu yêu thích đã được xóa thành công.";
-      } else {
-          $modalMessage = 'Xóa tài liệu yêu thích không thành công. Vui lòng thử lại.';
-      }
-    } 
     
 include('../inc/header.php');
 include('../inc/navbar.php');
@@ -97,12 +63,12 @@ include('../inc/navbar.php');
         <div class="card">
           <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px;">
             <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
-              <img src="../image/<?php echo $anhDaiDien; ?>"                          
+              <img src="../image/<?php echo $anhDaiDien?>"                          
                 alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
                 style="width: 150px; height: 150px; object-fit: cover; z-index: 1">
               <button type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark"
                 style="z-index: 1;">
-                <a class="text-decoration-none" href="chinhsuathongtin.php">Edit profile</a>
+                <a class="text-decoration-none" href="chinhsuathongtin.php">Chỉnh sửa</a>
               </button>
             </div>
             <div class="ms-3" style="margin-top: 170px;">
@@ -172,7 +138,7 @@ include('../inc/navbar.php');
                           $thaoLuanMoiNhat = $tblbaiViet->layThaoLuanMoiNhat();
                           ?>
                          
-                          <div class="col-md-10">
+                          <div id="BV_<?php echo $maBV; ?>" class="col-md-10">
                             <a class="text-decoration-none" href="../diendan/chitietbaiviet.php?maBV=<?php echo $maBV; ?>" title="<?php echo $tenBV; ?>">
                               <div class="card mb-3">
                                   <div class="row g-0">
@@ -196,8 +162,8 @@ include('../inc/navbar.php');
                               </div>
                             </a>
                           </div>
-                          <div class="col-md-2 mt-4">
-                              <form action="" method="post">
+                          <div id="RBV_<?php echo $maBV; ?>"class="col-md-2 mt-4">
+                              <form name="deleteBV" method="post">
                                   <input type="hidden" name="maBV" value="<?php echo $maBV; ?>">
                                   <!-- <input type="submit" name="editBV" value="Sửa" class="btn btn-primary mt-2"> -->
                                   <input type="submit" name="deleteBV" value="Xóa" class="btn btn-danger mt-5 mx-4">
@@ -239,7 +205,7 @@ include('../inc/navbar.php');
                                 $tenDD = $taiLieu['tenDD'];
                                 $tenLoaiTL = $taiLieu['tenLoaiTL'];
                         ?>
-                        <div class="col-md-10">
+                        <div id="TL_<?php echo $maBV; ?>" class="col-md-10">
                             <a class="text-decoration-none text-black" href="tailieu/chitiettailieu.php?maTL=<?php echo $maTL; ?>" title="<?php echo $tenTL; ?>">
                                 <div class="card mb-3">
                                     <div class="row g-0">
@@ -259,8 +225,8 @@ include('../inc/navbar.php');
                                 </div>
                             </a>
                         </div>
-                        <div class="col-md-2 text-center mt-5">
-                            <form action="" method="post">
+                        <div id="RTL_<?php echo $maBV; ?>" class="col-md-2 text-center mt-5">
+                            <form name="deleteTL" method="post">
                                 <input type="hidden" name="maTL" value="<?php echo $maTL; ?>">
                                 <!-- <input type="submit" name="editTL" value="Sửa" class="btn btn-primary"> -->
                                 <input type="submit" name="deleteTL" value="Xóa" class="btn btn-danger">
@@ -305,7 +271,7 @@ include('../inc/navbar.php');
                         $thaoLuanMoiNhat = $tblbaiViet->layThaoLuanMoiNhat();
                         ?>
                           
-                          <div class="col-md-10">
+                          <div id="BVYT_<?php echo $maBV; ?>" class="col-md-10">
                             <a class="text-decoration-none" href="../diendan/chitietbaiviet.php?maBV=<?php echo $maBV; ?>" title="<?php echo $tenBV; ?>">
                               <div class="card mb-3">
                                   <div class="row g-0">
@@ -329,8 +295,8 @@ include('../inc/navbar.php');
                               </div>
                             </a>
                           </div>
-                          <div class="col-md-2 text-center mt-4">
-                              <form action="" method="post">
+                          <div id="RBVYT_<?php echo $maBV; ?>" class="col-md-2 text-center mt-4">
+                              <form name="deleteBVYT" method="post">
                                   <input type="hidden" name="maBVYT" value="<?php echo $maBV; ?>">
                                   <input type="submit" name="deleteBVYT" value="Xóa" class="btn btn-danger mt-2 px-3">
                               </form>
@@ -370,7 +336,7 @@ include('../inc/navbar.php');
                                 $tenDD = $taiLieuYT['tenDD'];
                                 $tenLoaiTL = $taiLieuYT['tenLoaiTL'];
                         ?>
-                        <div class="col-md-10">
+                        <div id="TLYT_<?php echo $maTL; ?>" class="col-md-10">
                             <a class="text-decoration-none text-black" href="tailieu/chitiettailieu.php?maTL=<?php echo $maTL; ?>" title="<?php echo $tenTL; ?>">
                                 <div class="card mb-3">
                                     <div class="row g-0">
@@ -390,8 +356,8 @@ include('../inc/navbar.php');
                                 </div>
                             </a>
                         </div>
-                        <div class="col-md-2 text-center mt-5 ">
-                            <form action="" method="post">
+                        <div id="RTLYT_<?php echo $maTL; ?>" class="col-md-2 text-center mt-5 ">
+                            <form name="deleteTLYT" method="post">
                                 <input type="hidden" name="maTLYT" value="<?php echo $maTL; ?>">
                                 <input type="submit" name="deleteTLYT" value="Xóa" class="btn btn-danger">
                             </form>
@@ -423,8 +389,7 @@ include('../inc/navbar.php');
                 <h5 class="modal-title">Thông báo</h5>
                 <button type="button" class="close" data-dismiss="modal" id="modalCloseButton">&times;</button>
             </div>
-            <div class="modal-body">
-                <?php echo $modalMessage; ?>
+            <div class="modal-body" id="modalMessage">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeButton">Đóng</button>
@@ -432,7 +397,131 @@ include('../inc/navbar.php');
         </div>
     </div>
 </div>
+<script>
+$('form[name="deleteBV"]').submit(function(event) {
+    event.preventDefault(); 
 
+    var maBV = $(this).find('input[name="maBV"]').val();
+
+    $.ajax({
+        type: 'POST',
+        url: 'xoadulieu.php',
+        data: { deleteBV: true, maBV: maBV },
+        dataType: 'json',
+        success: function(response) {
+            if (response.status === "success") {
+                $('#myModal').modal('show');
+                $('#modalMessage').text('Đã xóa bài viết thành công.');
+                setTimeout(function() {
+                    location.reload();
+                }, 2000); 
+            } else {
+                $('#modalMessage').text('Đã xảy ra lỗi trong quá trình xóa bài viết.');
+                $('#myModal').modal('show');
+            }
+        },
+        error: function(xhr, status, error) {
+            $('#modalMessage').text('Đã xảy ra lỗi trong quá trình xóa bài viết Error.');
+            $('#myModal').modal('show');
+        }
+    });
+});
+
+$('form[name="deleteTL"]').submit(function(event) {
+    event.preventDefault(); 
+
+    var maTL = $(this).find('input[name="maTL"]').val();
+
+    $.ajax({
+        type: 'POST',
+        url: 'xoadulieu.php',
+        data: { deleteTL: true, maTL: maTL },
+        dataType: 'json',
+        success: function(response) {
+            if (response.status === 'success') {
+                $('#myModal').modal('show');
+                $('#modalMessage').text('Đã xóa tài liệu thành công.');
+                setTimeout(function() {
+                    location.reload();
+                }, 2000); 
+            } else {
+                $('#modalMessage').text('Đã xảy ra lỗi trong quá trình xóa tài liệu.');
+                $('#myModal').modal('show');
+            }
+        },
+        error: function(xhr, status, error) {
+            $('#modalMessage').text('Đã xảy ra lỗi trong quá trình xóa tài liệu.');
+            $('#myModal').modal('show');
+        }
+    });
+});
+
+$('form[name="deleteBVYT"]').submit(function(event) {
+    event.preventDefault(); 
+
+    var maBVYT = $(this).find('input[name="maBVYT"]').val();
+
+    $.ajax({
+        type: 'POST', 
+        url: 'xoadulieu.php',
+        data: { deleteBVYT: true, maBVYT: maBVYT },
+        dataType: 'json',
+        success: function(response) {
+            if (response.status === 'success'){
+                $('#myModal').modal('show');
+                $('#modalMessage').text('Đã xóa bài viết yêu thích thành công.');
+                setTimeout(function() {
+                    location.reload();
+                }, 2000); 
+            } else {
+                $('#modalMessage').text('Đã xảy ra lỗi trong quá trình xóa bài viết yêu thích.');
+                $('#myModal').modal('show');
+            }
+            
+        },
+        error: function(xhr, status, error) {
+            $('#modalMessage').text('Đã xảy ra lỗi trong quá trình xóa bài viết yêu thích.');
+            $('#myModal').modal('show');
+        }
+    });
+});
+
+
+$('form[name="deleteTLYT"]').submit(function(event) {
+    event.preventDefault(); 
+
+    var maTLYT = $(this).find('input[name="maTLYT"]').val();
+
+    $.ajax({
+        type: 'POST',
+        url: 'xoadulieu.php',
+        data: { deleteTLYT: true, maTLYT: maTLYT },
+        dataType: 'json',
+        success: function(response) {
+            if (response.status === 'success'){
+                $('#myModal').modal('show');
+                $('#modalMessage').text('Đã xóa tài liệu yêu thích thành công.');
+                setTimeout(function() {
+                    location.reload();
+                }, 2000); 
+            } else {
+                $('#modalMessage').text('Đã xảy ra lỗi trong quá trình xóa tài liệu yêu thích.');
+                $('#myModal').modal('show');
+            }
+            
+        },
+        error: function(xhr, status, error) {
+            $('#modalMessage').text('Đã xảy ra lỗi trong quá trình xóa tài liệu yêu thích.');
+            $('#myModal').modal('show');
+        }
+    });
+});
+</script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     const showBaiVietButton = document.getElementById("showBaiViet");
     const showTaiLieuButton = document.getElementById("showTaiLieu");
@@ -507,7 +596,6 @@ include('../inc/navbar.php');
         $('#myModal').modal('hide');
     });
 </script>
-
 
 <?php 
 include('../inc/footer.php');
