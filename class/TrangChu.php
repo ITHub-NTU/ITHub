@@ -50,7 +50,7 @@
 			return false;
 		}
 		public function getTaiLieuMoiNhat() {
-			$sqlQuery = "SELECT * FROM $this->tblTaiLieu WHERE trangThaiTL = 'daduyet' ORDER BY maTL DESC LIMIT 5";
+			$sqlQuery = "SELECT * FROM $this->tblTaiLieu WHERE trangThaiTL = 'daduyet' ORDER BY maTL DESC LIMIT 6";
 			$stmt = $this->conn->prepare($sqlQuery);
 			$stmt->execute();
 			$result = $stmt->get_result();
@@ -58,7 +58,7 @@
 		}
 
 		public function getBaiVietMoiNhat() {
-			$sqlQuery = "SELECT * FROM $this->tblBaiViet WHERE trangThaiBV = 'daduyet' ORDER BY maBV DESC LIMIT 5";
+			$sqlQuery = "SELECT * FROM $this->tblBaiViet WHERE trangThaiBV = 'daduyet' ORDER BY maBV DESC LIMIT 6";
 			$stmt = $this->conn->prepare($sqlQuery);
 			$stmt->execute();
 			$result = $stmt->get_result();

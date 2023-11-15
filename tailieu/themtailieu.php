@@ -1,283 +1,190 @@
-﻿<?php include_once '../config/Database.php'; ?>
-<?php include_once '../class/TaiLieu.php'; ?>
-<?php include_once '../class/LoaiTaiLieu.php'; ?>
-    <?php
-    $database = new Database();
-    $db = $database->getConnection();
-    $taiLieu = new TaiLieu($db);
-    // Kiểm tra tài khoản có hoạt động hoặc bận và tài khoản đã đăng xuất chưa
-    if(isset($_SESSION['hoatdong']))
-    {
+﻿<?php 
+include_once '../config/Database.php';
+include_once '../class/LoaiTaiLieu.php';
+include_once '../class/TaiLieu.php';
+include_once '../class/TienIch.php';
+include_once '../class/ThongBao.php';
+
+$database = new Database();
+$db = $database->getConnection();
+$tienIch = new TienIch();
+$tblLoaiTaiLieu = new LoaiTaiLieu($db);
+$maTL = $tienIch->autoIncrement('TblTaiLieu','maTL','TL00000001');
+$_SESSION['maTL'] = $maTL;
+$tblTaiLieu = new TaiLieu($db);
+$tblThongBao = new ThongBao($db);
+
+date_default_timezone_set('Asia/Ho_Chi_Minh'); // Đặt múi giờ là Asia/Ho_Chi_Minh
+
+$currentDateTime = new DateTime();
+$currentDateTime->setTimezone(new DateTimeZone('Asia/Ho_Chi_Minh'));
+
+
+
+if(isset($_SESSION['hoatdong'])|| empty($_SESSION['taiKhoan']))
+{
+    if (isset($_SESSION['taiKhoan'])) {
         $chDangNhap = true;
-        $taiKhoan = $_SESSION['taiKhoan'];  
-            //Thêm và xóa tài liệu yêu thích
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            if(isset($_POST['maTL']) and isset($_POST['yeuThich']) and isset($_POST['taiKhoan'])){
-                $maTL = $_POST['maTL'];
-                $yeuThich = $_POST['yeuThich'];
-                $taiKhoan = $_POST['taiKhoan'];
-                // Thêm thông tin yêu thích vào cơ sở dữ liệu
-                $themXoaTLYeuThich = $taiLieu->changeTLYeuThich($yeuThich, $taiKhoan,$maTL);
-            } 
-        }
-    }else{
-        
-        $chDangNhap = false;
-        $taiKhoan = null;  
-    }
-  
-
-    // lấy dữ liệu dưới để kiểm tra rồi sắp xếp
-    $sort = isset($_GET['sort']) ? $_GET['sort'] : '';
-    $order = isset($_GET['order']) ? $_GET['order'] : '';
-
-    $selectedCategory = '';
-    if (isset($_GET['maLoaiTL'])) {
-        $maLoaiTL = $_GET['maLoaiTL'];
-        $taiLieu->maLoaiTL = $maLoaiTL;
-        $taiLieus = $taiLieu->getTaiLieuBymaLoaiTL($sort, $order);
-        $chon = 'maLoaiTL';
-        $selectedCategory = $maLoaiTL;
-    } else {
-        $chon = '';
-        $taiLieus = $taiLieu->getTaiLieu($sort, $order);
-        
-    }
-    
-
-    include('../inc/header.php');
-    ?>
-  
-        <?php include("../inc/navbar.php"); ?>
-        <div class="section-body">
-       
-            <div class="row">
-                <nav class="col-lg-3 border border-1 rounded-2" >
-                    <h5 class="text-center p-3 mt-2 bg-warning rounded-2 ">Loại tài liệu</h5>
-                    <div class="list-group">
-                            <?php
-                            $loaiTaiLieus = $taiLieu->getLoaiTaiLieu();
-                            $activeClass = ($selectedCategory == '') ? 'active' : ''; // Check if "Tất cả" is selected
-                            echo '<a class="p-2 mt-2 rounded-2 list-group-item list-group-item-action list-group-item-success ' . $activeClass . '" style="width:100%" href="danhsachtailieu.php" class="list-group-item list-group-item-action">Tất cả</a>';
-                            
-                            foreach ($loaiTaiLieus as $loaiTaiLieu) {
-                                $parameters = array(
-                                    'maLoaiTL' => $loaiTaiLieu['maLoaiTL'],
-                                    'sort' => $sort,
-                                    'order' => $order
-                                );
-                                $queryString = http_build_query($parameters);
-                                $activeClass = ($selectedCategory == $loaiTaiLieu['maLoaiTL']) ? 'active' : '';
-                                echo '<a class="p-2 mt-2 rounded-2 list-group-item list-group-item-action list-group-item-success ' . $activeClass . '" style="width:100%" id="loaitailieu" href="danhsachtailieu.php?' . $queryString . '" class="list-group-item list-group-item-action">' . $loaiTaiLieu['tenLoaiTL'] . '</a>';
-                            }
-                            ?>
-                        </div>
-                </nav>
-                <div class="col-lg-9">
-                    <div class="row">
-                       <div class=" section-card col-lg-10 ">
-                            <div>
-                                <tr>
-                                <th>
-                                    <svg class="me-5 ms-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel-fill" viewBox="0 0 16 16">
-                                        <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2z"/>
-                                    </svg>
-                                </th>       
-                            </tr>
-                            <tr>    
-                                <th>
-                                    <a class="text-secondary icon-link icon-link-hover text-decoration-none m-2 me-5" href="?<?php echo $chon?>=<?php echo $selectedCategory; ?>&sort=tenTL&order=<?php echo ($sort == 'tenTL' && $order == 'ASC') ? 'DESC' : 'ASC'; ?>" id="sort-tenTL">Tên tài liệu
-                                        <?php if ($sort == 'tenTL') : ?>
-                                            <?php if ($order == 'ASC') : ?>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sort-alpha-down" viewBox="0 0 16 16">
-                                                    <path fill-rule="evenodd" d="M10.082 5.629 9.664 7H8.598l1.789-5.332h1.234L13.402 7h-1.12l-.419-1.371h-1.781zm1.57-.785L11 2.687h-.047l-.652 2.157h1.351z"/>
-                                                    <path d="M12.96 14H9.028v-.691l2.579-3.72v-.054H9.098v-.867h3.785v.691l-2.567 3.72v.054h2.645V14zM4.5 2.5a.5.5 0 0 0-1 0v9.793l-1.146-1.147a.5.5 0 0 0-.708.708l2 1.999.007.007a.497.497 0 0 0 .7-.006l2-2a.5.5 0 0 0-.707-.708L4.5 12.293V2.5z"/>
-                                                </svg>
-                                            <?php else : ?>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sort-alpha-up" viewBox="0 0 16 16">
-                                                    <path fill-rule="evenodd" d="M10.082 5.629 9.664 7H8.598l1.789-5.332h1.234L13.402 7h-1.12l-.419-1.371h-1.781zm1.57-.785L11 2.687h-.047l-.652 2.157h1.351z"/>
-                                                    <path d="M12.96 14H9.028v-.691l2.579-3.72v-.054H9.098v-.867h3.785v.691l-2.567 3.72v.054h2.645V14zm-8.46-.5a.5.5 0 0 1-1 0V3.707L2.354 4.854a.5.5 0 0 1-.708.708l2-1.999.007-.007a.498.498 0 0 1 .7.006l2 2a.5.5 0 0 1-.707.708L4.5 3.707V13.5z"/>
-                                                </svg>
-                                            <?php endif; ?>
-                                        <?php endif; ?>
-                                    </a>
-                                </th>
-                                <th>
-                                    <a class="text-secondary icon-link icon-link-hover text-decoration-none m-2 me-5" href="?<?php echo $chon?>=<?php echo $selectedCategory; ?>&sort=taiKhoan&order=<?php echo ($sort == 'taiKhoan' && $order == 'ASC') ? 'DESC' : 'ASC'; ?>" id="sort-taiKhoan">Tên tài khoản
-                                        <?php if ($sort == 'taiKhoan') : ?>
-                                            <?php if ($order == 'ASC') : ?>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sort-alpha-down" viewBox="0 0 16 16">
-                                                    <path fill-rule="evenodd" d="M10.082 5.629 9.664 7H8.598l1.789-5.332h1.234L13.402 7h-1.12l-.419-1.371h-1.781zm1.57-.785L11 2.687h-.047l-.652 2.157h1.351z"/>
-                                                    <path d="M12.96 14H9.028v-.691l2.579-3.72v-.054H9.098v-.867h3.785v.691l-2.567 3.72v.054h2.645V14zM4.5 2.5a.5.5 0 0 0-1 0v9.793l-1.146-1.147a.5.5 0 0 0-.708.708l2 1.999.007.007a.497.497 0 0 0 .7-.006l2-2a.5.5 0 0 0-.707-.708L4.5 12.293V2.5z"/>
-                                                </svg>
-                                            <?php else : ?>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sort-alpha-up" viewBox="0 0 16 16">
-                                                    <path fill-rule="evenodd" d="M10.082 5.629 9.664 7H8.598l1.789-5.332h1.234L13.402 7h-1.12l-.419-1.371h-1.781zm1.57-.785L11 2.687h-.047l-.652 2.157h1.351z"/>
-                                                    <path d="M12.96 14H9.028v-.691l2.579-3.72v-.054H9.098v-.867h3.785v.691l-2.567 3.72v.054h2.645V14zm-8.46-.5a.5.5 0 0 1-1 0V3.707L2.354 4.854a.5.5 0 0 1-.708.708l2-1.999.007-.007a.498.498 0 0 1 .7.006l2 2a.5.5 0 0 1-.707.708L4.5 3.707V13.5z"/>
-                                                </svg>
-                                            <?php endif; ?>
-                                        <?php endif; ?>
-                                    </a>
-                                </th>
-                                <th>
-                                    <a class="text-secondary icon-link icon-link-hover text-decoration-none m-2" href="?<?php echo $chon?>=<?php echo $selectedCategory; ?>&sort=ngayDangTL&order=<?php echo ($sort == 'ngayDangTL' && $order == 'ASC') ? 'DESC' : 'ASC'; ?>" id="sort-ngayDangTL">Ngày đăng
-                                        <?php if ($sort == 'ngayDangTL') : ?>
-                                            <?php if ($order == 'ASC') : ?>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sort-alpha-down" viewBox="0 0 16 16">
-                                                    <path fill-rule="evenodd" d="M10.082 5.629 9.664 7H8.598l1.789-5.332h1.234L13.402 7h-1.12l-.419-1.371h-1.781zm1.57-.785L11 2.687h-.047l-.652 2.157h1.351z"/>
-                                                    <path d="M12.96 14H9.028v-.691l2.579-3.72v-.054H9.098v-.867h3.785v.691l-2.567 3.72v.054h2.645V14zM4.5 2.5a.5.5 0 0 0-1 0v9.793l-1.146-1.147a.5.5 0 0 0-.708.708l2 1.999.007.007a.497.497 0 0 0 .7-.006l2-2a.5.5 0 0 0-.707-.708L4.5 12.293V2.5z"/>
-                                                </svg>
-                                            <?php else : ?>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sort-alpha-up" viewBox="0 0 16 16">
-                                                    <path fill-rule="evenodd" d="M10.082 5.629 9.664 7H8.598l1.789-5.332h1.234L13.402 7h-1.12l-.419-1.371h-1.781zm1.57-.785L11 2.687h-.047l-.652 2.157h1.351z"/>
-                                                    <path d="M12.96 14H9.028v-.691l2.579-3.72v-.054H9.098v-.867h3.785v.691l-2.567 3.72v.054h2.645V14zm-8.46-.5a.5.5 0 0 1-1 0V3.707L2.354 4.854a.5.5 0 0 1-.708.708l2-1.999.007-.007a.498.498 0 0 1 .7.006l2 2a.5.5 0 0 1-.707.708L4.5 3.707V13.5z"/>
-                                                </svg>
-                                            <?php endif; ?>
-                                        <?php endif; ?>
-                                    </a>
-                                </th>
-                            </tr>
+        $taiKhoan = $_SESSION['taiKhoan']; 
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            if (isset($_POST['maDD'])&&isset($_POST['tenTL'])&&isset($_POST['moTaTL'])){
+                $tblLoaiTaiLieu->maLoaiTL = $_GET['maLoaiTL'];
+                $loaiTaiLieu = $tblLoaiTaiLieu->layLoaiTaiLieu();
+                $maLoaiTL = $tblLoaiTaiLieu->maLoaiTL;
+                $maDD = $_POST['maDD'];
+                $tenTL = $_POST['tenTL']; 
+                $moTaTL = $_POST['moTaTL'];
+                
+            
+                // Lưu thông tin tệp vào cơ sở dữ liệu
+                $trangThaiTL = 'chuaduyet'; // Gán trạng thái mặc định hoặc thay đổi thành trạng thái tùy ý
+                $fileTL = "upload-tailieu/"; // Đường dẫn lưu trữ file trên server
+                $ngayDangTL = $currentDateTime->format('Y-m-d H:i:s');
+                $ngayDuyetTL = null;
+            
+                if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
+                    $file = $_FILES['file']['name'];
+                    $fileTL .= $file;
+            
+                    if (move_uploaded_file($_FILES['file']['tmp_name'], $fileTL)) {
+                        // Lưu thông tin tệp vào cơ sở dữ liệu
+                        if ($tblTaiLieu->themTaiLieu($maTL, $maLoaiTL, $taiKhoan, $maDD, $tenTL, $moTaTL, $fileTL, $trangThaiTL, $ngayDangTL, $ngayDuyetTL)) {
+                            echo '<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="successModalLabel">Thành công!</h5>
+                                          <input type="button" class="btn btn-secondary" value="X" data-bs-dismiss="modal" aria-label="Close">
+                                    </div>
+                                    <div class="modal-body">
+                                        Tài liệu đã được tải lên và lưu vào cơ sở dữ liệu thành công.Chờ duyệt tài liệu
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-warning text-white" style="width:100%">Thêm tài liệu</button>
-                        </div>
-                    </div>
-                    <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
+                        </div>';
+                            $tblThongBao->themTBTL($taiKhoan, '', 'admin', $maLoaiTL, $maTL);
+                        } else {
+                            echo '<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="successModalLabel">Thành công</h5>
+                                          <input type="button" class="btn btn-secondary" value="X" data-bs-dismiss="modal" aria-label="Close">
+                                    </div>
+                                    <div class="modal-body">
+                                        Lỗi tải tệp
+                                    </div>
+                                </div>
+                            </div>
+                        </div>';
+                        }
+                    } else {
+                        echo '<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Đăng tài liệu vào chủ đề...</h1>
-                                    <button type="button" class="btn-close" data-bs-dimdiss="modal" aria-label="Close"></button>
+                                    <h5 class="modal-title" id="successModalLabel">Thành công</h5>
+                                      <input type="button" class="btn btn-secondary" value="X" data-bs-dismiss="modal" aria-label="Close">
                                 </div>
                                 <div class="modal-body">
-                                    <ul class="list-group">
-                                      
-                                    <?php
-                                    $database = new Database();
-                                    $db = $database->getConnection();
-                                    $tblLoaiTaiLieu = new LoaiTaiLieu($db);
-                                    $result = $tblLoaiTaiLieu->layDSLoaiTaiLieu();
+                                    Có lỗi trong quá trình tải lên
+                                </div>
+                            </div>
+                        </div>
+                    </div>';
+                    }
+                } 
+                echo '<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="successModalLabel">Thành công!</h5>
+                                          <input type="button" class="btn btn-secondary" value="Đóng" data-bs-dismiss="modal" aria-label="Close">
+                                    </div>
+                                    <div class="modal-body">
+                                        Tài liệu đã được tải lên và lưu vào cơ sở dữ liệu thành công.Chờ duyệt tài liệu
+                                    </div>
+                                </div>
+                            </div>
+                        </div>';
+            }
+        }
+    }else {
+        header("location:../nguoidung/dangnhap.php");
+        $chDangNhap = false;
+        $taiKhoan = null;   }
 
-                                    while ($loaiTaiLieu = $result->fetch_assoc()) {
-                                        $maLoaiTL = $loaiTaiLieu['maLoaiTL'];
-                                        echo '<li class="list-group-item"><a style="text-decoration: none; color: black"  href="themtailieu.php?maLoaiTL='.$maLoaiTL.'">' . $loaiTaiLieu['tenLoaiTL'] . '</a></li>';
-                                    }
-                                    ?>
-                                    </ul>
-                                </div>
-                            </div>
+}
+
+
+if (isset($_GET['maLoaiTL'])) {
+    $maLoaiTL = $_GET['maLoaiTL'];
+} else {
+    die("Lỗi: 'maLoaiTL' không tồn tại.");
+}
+
+
+
+$query = "SELECT maDD, tenDD FROM TblDinhDangTL";
+$stmt = $db->prepare($query);
+$stmt->execute();
+$result = $stmt->get_result();
+include('../inc/header.php');
+?>
+<?php include("../inc/navbar.php"); ?>
+<link href="../css/dropzone.min.css" rel="stylesheet" type="text/css" />
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Thêm tài liệu</h4>
+            </div>
+            <div class="card-body">
+                <div>
+                    <form method="post" class="dropzone dz-clickable" action="#" enctype="multipart/form-data">
+                        <input type="text" class="form-control mb-3 fs-2" placeholder="Tựa đề tài liệu" name="tenTL" aria-label="Tựa đề tài liệu" required>
+                        <input type="text" class="form-control mb-3 fs-2" placeholder="Mô tả" name="moTaTL" aria-label="Mô tả" required>
+                        <div class="form-group">
+                            <label for="maDD">Chọn kiểu tài liệu:</label>
+                            <select class="form-control" id="maDD" name="maDD" required>
+                                <?php
+                                // $result contains the data from your SQL query
+                                foreach ($result as $row) {
+                                    echo "<option value='" . $row['maDD'] . "'>" . $row['tenDD'] . "</option>";
+                                }
+                                ?>
+                            </select>
                         </div>
-                    </div>
-                   
-                    <!-- End Modal -->
-                <?php if ($taiLieus !== null) : ?>
-                    <?php foreach ($taiLieus as $taiLieu) : ?>
-                        <?php if ($taiLieu['trangThaiTL'] == 'daduyet' ) : ?>
-                        <div class="section-card border border-1 rounded-2 mt-2">
-                            <div class="row">
-                                <div class="col-lg-3 text-center">
-                                    <?php if (!empty($taiLieu['anhTL'])) : ?>
-                                        <img class="border border-3 rounded-4 m-3" style="width: 150px; height: 150px;" src="../image/macdinh.jpg" alt="Image" class="img-responsive">
-                                        <!-- "img/<?php echo $taiLieu['anhTL']; ?>" -->
-                                    <?php else : ?>
-                                        <img class="border border-3 rounded-4 m-3" style="width: 150px; height: 150px;" src="../image/macdinh.jpg" alt="Default Image" class="img-responsive">
-                                    <?php endif; ?>
-                                </div>
-                                
-                                <div class="col-lg-9">
-                                    <div class="mt-2 mb-2 row" >
-                                    <h3 class="fw-medium mb-2 mt-3" ><span><i id="fa-picture-o" aria-hidden="true"></i></span><?php echo $taiLieu['tenTL']; ?></h3>
-                                   </div>
-                                    <div class="mt-2 mb-2 row" >
-                                    <p class="fw-normal mb-2 mt-2" ><?php echo $taiLieu['moTaTL']; ?></p>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col"> <a href="#"><i class="fa fa-user text-body-secondary me-5" aria-hidden="true"> <?php echo $taiLieu['taiKhoan']; ?></i></a>
-                                        </div>
-                                        <div class="col"> <a href="#"><i class="fa fa-calendar text-body-secondary me-5" aria-hidden="true"> <?php echo date('d-m-Y', strtotime($taiLieu['ngayDuyetTL'])); ?></i></a>
-                                        </div>
-                                       
-                                        <div class="col"><a href="#"><i class="fa fa-book text-body-secondary me-5" aria-hidden="true"> <?php echo $taiLieu['tenLoaiTL']; ?></i></a>
-                                        </div>
-                                        <div class="col"><a href="#"><i class="fa fa-folder text-body-secondary " aria-hidden="true"> <?php echo $taiLieu['tenDD']; ?></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex mb-3 mt-3">  
-                                        <div>
-                                        <a class="btn btn-warning me-4" href="chitiettailieu.php?maTL=<?php echo $taiLieu['maTL']; ?>" class="icon-link icon-link-hover me-4" style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration:none;">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-                                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                                            </svg>
-                                            Tiếp tục đọc 
-                                        </a>
-                                        </div>
-                                        <?php if ($chDangNhap): ?>
-                                        <div>
-                                        <?php $database = new Database();
-                                            $db = $database->getConnection();
-                                            $taiLieuYT = new TaiLieu($db);
-                                            $taiLieuYeuThich = $taiLieuYT->getTLYeuThich($taiKhoan,$taiLieu['maTL']);
-                                        if($taiLieuYeuThich==true):?>
-                                            <form action="#" method="post" id="like_form">
-                                            <input type="hidden" name="maTL" id="maTL" value="<?php echo $taiLieu['maTL']; ?>">
-                                                <input type="hidden" name="taiKhoan" id="taiKhoan" value="<?php echo $taiKhoan; ?>">
-                                                <input type="hidden" name="yeuThich" id="yeuThich" value="<?php $yeuThich=true; echo $yeuThich ?>">
-                                                <button type="submit" class="btn btn-warning me-4" id="post_like" style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration:none;">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
-                                                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
-                                                    </svg>
-                                                    Đã yêu thích
-                                                </button>
-                                            </form>
-                                            <?php else:?>
-                                            <form action="#" method="post" id="like_form">
-                                                <input type="hidden" name="maTL" id="maTL" value="<?php echo $taiLieu['maTL']; ?>">
-                                                <input type="hidden" name="taiKhoan" id="taiKhoan" value="<?php echo $taiKhoan; ?>">
-                                                <input type="hidden" name="yeuThich" id="yeuThich" value="<?php $yeuThich=false; echo $yeuThich ?>">
-                                                <button type="submit" class="btn btn-warning me-4" id="post_like" style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration:none;">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart" viewBox="0 0 16 16">
-                                                <path d="m8 6.236-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z"/>
-                                                </svg>
-                                                    yêu thích
-                                                </button>
-                                            </form>
-                                        <?php endif;?>
-                                        </div>
-                                        <?php endif;?>
-                                        <div>
-                                            <a href="download-pdf.php?pdf=<?php echo $taiLieu['fileTL']; ?>" class="btn btn-warning">Tải về</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="fallback">
+                            <label for="formFile" class="form-label"></label>
+                            <input class="form-control" type="file" id="formFile" required accept=".pdf, .doc, .docx, .pptx">
                         </div>
-                        <?php endif;?>
-                    <?php endforeach; ?>
-                <?php else : ?>
-                    <p>Không tìm thấy tài liệu.</p>
-                <?php endif; ?>
+                        <div class="dz-message needsclick text-center">
+                            <div class="mb-3">
+                                <i class="fas fa-upload fa-3x text-secondary"></i>
+                            </div>
+                            <h5 class="text-secondary">Thả tài liệu tại đây hoặc nhấn vào để đăng tải </h5>
+                        </div>
+                        <div class="text-center mt-4">
+                            <input type="submit" value="Đăng tài liệu" class="btn btn-dark my-3">
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-        
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        var sortArrow = document.querySelector('#sort-tenTL .bi-sort-alpha-up');
-        if (sortArrow) {
-            sortArrow.addEventListener('click', function() {
-                sortArrow.classList.toggle('bi-sort-alpha-down');
-            });
-        }
-
-        var sortArrows = document.querySelectorAll('.bi-sort-alpha-up');
-        sortArrows.forEach(function(arrow) {
-            arrow.addEventListener('click', function() {
-                arrow.classList.toggle('bi-sort-alpha-down');
-            });
-        });
-        
-    </script>
+    </div> <!-- end col -->
+</div> <!-- end row -->
+<!-- dropzone js -->
+<script src="../js/dropzone.min.js"></script>
+<script>
+    // Sau khi xử lý thành công khi tệp được tải lên và lưu vào cơ sở dữ liệu
+    // Kích hoạt modal thông báo thành công
+    document.addEventListener('DOMContentLoaded', function () {
+        <?php if ($tblTaiLieu->themTaiLieu($maTL, $maLoaiTL, $taiKhoan, $maDD, $tenTL, $moTaTL, $fileTL, $trangThaiTL, $ngayDangTL, $ngayDuyetTL)) { ?>
+            $('#successModal').modal('show');
+        <?php } ?>
+    });
+</script>
 
 <?php include('../inc/footer.php'); ?>
