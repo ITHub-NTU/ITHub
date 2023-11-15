@@ -63,7 +63,6 @@ if (isset($_POST['view'])) {
                                         '.$row['noiDungTB'].'
                                     </p>
                                     <span style="position: absolute; bottom: -2px; color: #1876F2; font-size: 15px;"><small>'.$tienIch->formatTimeAgo($timestamp).'</small><br></span>
-                                    <p>'.$folder.'</p>
                                     </div>
                                 <div class="col-md-1 my-auto">
                                     <i class="fas fa-circle" style="font-size: 12px; color: #1876F2; text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3); transform: rotate(0deg);"></i>
@@ -76,7 +75,7 @@ if (isset($_POST['view'])) {
             } else {
                 $output .= '
                 <li>
-                    <a class="text-decoration-none notifications" href="'.$path.$row['linkTB'].'" style="font-weight:bold;">
+                    <a class="text-decoration-none notifications" href="'.$path.$row['linkTB'].'" >
                         <div class="card notification-item mx-1" style="width: 380px; max-height: 95px; min-height:95px; border: none;">
                             <div class="row g-0 m-1" style="padding-bottom:1px;">
                                 <div class="col-md-2 col-sm-3">
@@ -88,7 +87,6 @@ if (isset($_POST['view'])) {
                                         '.$row['noiDungTB'].'
                                     </p>
                                     <span style="position: absolute; bottom: -2px; color: #1876F2; font-size: 15px;"><small>'.$tienIch->formatTimeAgo($timestamp).'</small><br></span>
-                                    <p>'.$folder.'</p>
                                 </div>
                                 <div class="col-md-1 my-auto">
                                     
