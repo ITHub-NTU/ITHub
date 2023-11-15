@@ -31,16 +31,16 @@ if (isset($_POST['view'])) {
 
     $query = "SELECT * FROM tblthongbao WHERE taiKhoan = '{$_SESSION["taiKhoan"]}' ORDER BY ngayDangTB DESC LIMIT 30";
     $result = $db->query($query);
-    $output = '<li style="padding-left:5px;font-weight:bold; font-size:18px;margin-top:-10px; background-color:#f0f0f0f0">Thông báo</li>';
+    $output = '<li style="padding-left:10px;font-weight:bold; font-size:18px;margin-top:-10px; margin-bottom: 5px; background-color:#f0f0f0f0">Thông báo</li>';
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             $anhTB = $row['anhTB'];
-            $folder = $path."image/";
-            if (file_exists($folder . $anhTB)) {
-                $folder .= $anhTB;
+            $folder = "../image/";
+            if($currentPage == 'trangchu.php') {
+                $folder = '../ITHub/image/'.$anhTB;
             } else {
-                $folder .= "user.png";
+                $folder .= $anhTB;
             }
 
             if(!empty($row['ngayDangTB'])) {
@@ -63,7 +63,7 @@ if (isset($_POST['view'])) {
                                         '.$row['noiDungTB'].'
                                     </p>
                                     <span style="position: absolute; bottom: -2px; color: #1876F2; font-size: 15px;"><small>'.$tienIch->formatTimeAgo($timestamp).'</small><br></span>
-                                </div>
+                                    </div>
                                 <div class="col-md-1 my-auto">
                                     <i class="fas fa-circle" style="font-size: 12px; color: #1876F2; text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3); transform: rotate(0deg);"></i>
                                 </div>
@@ -75,7 +75,7 @@ if (isset($_POST['view'])) {
             } else {
                 $output .= '
                 <li>
-                    <a class="text-decoration-none notifications" href="'.$path.$row['linkTB'].'" style="font-weight:bold;">
+                    <a class="text-decoration-none notifications" href="'.$path.$row['linkTB'].'" >
                         <div class="card notification-item mx-1" style="width: 380px; max-height: 95px; min-height:95px; border: none;">
                             <div class="row g-0 m-1" style="padding-bottom:1px;">
                                 <div class="col-md-2 col-sm-3">
