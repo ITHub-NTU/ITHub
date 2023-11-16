@@ -22,11 +22,11 @@ if(!empty($_POST["login"]) && !empty($_POST["taiKhoan"]) && !empty($_POST["matKh
         switch ($tblNguoiDung->quyen) {
             case 'quantrivien':
                 $tblNguoiDung->accountOnline($_POST["taiKhoan"]);
-                header("Location: ../diendan/chudebaiviet.php");
+                header("Location: ../trangchu.php");
                 break;
             case 'nguoidung':
                 $tblNguoiDung->accountOnline($_POST["taiKhoan"]);
-                header("Location: ../diendan/chudebaiviet.php");
+                header("Location: ../trangchu.php");
                 break;
             case 'nguoidungbichan':
                 $loginMessage = "Người dùng đã bị chặn";
