@@ -31,8 +31,8 @@ include("../inc/navbar.php");
         
         ?>
         <div class="col-md-3 d-flex ">
-            <div class="card" style="width: 100%;">
-                <img src="../image/<?php echo  $danhSachTaiLieu['anhTL']?>" class="card-img-top" alt="...">
+            <div class="card" style="width: 300px;">
+                <img  style="width: 100%; height: 250px; object-fit: contain;" src="../image/<?php echo  $danhSachTaiLieu['anhTL']?>" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title"><?php echo  $danhSachTaiLieu['tenTL']?></h5>
                     <p class="card-text"><?php echo  $danhSachTaiLieu['moTaTL']?></p>
@@ -42,7 +42,7 @@ include("../inc/navbar.php");
         </div>
         <?php 
                 }
-            } else echo 'Không có kết quả tìm kiếm';}
+            } else echo 'Không có kết quả tìm kiếm tài liệu cho từ khóa: '.$search;}
         ?>
     </div>
     </div>

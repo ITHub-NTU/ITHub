@@ -4,8 +4,7 @@ include_once '../config/Database.php';
 include_once '../class/ChuDeBV.php';
 include_once '../class/BaiViet.php';
 include_once '../class/TienIch.php';
-include_once '../class/NguoiDung.php';
-											
+include_once '../class/NguoiDung.php';		
 $database = new Database();
 $db = $database->getConnection();
 
@@ -129,7 +128,6 @@ include('../inc/header.php');
 										</div>
 									</div>';
 									} else {
-										
 										$queryBVMN = "
 											SELECT bv.*, cd.tenCD
 											FROM tblbaiviet bv
