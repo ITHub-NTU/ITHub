@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\databasesqlite"
   ],
-  "SelectedNode": "\\C:\\xampp\\htdocs\\ITHub-main",
+  "SelectedNode": "\\databasesqlite\\ithub.sql",
   "PreviewInSolutionExplorer": false
 }
