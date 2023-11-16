@@ -6,3 +6,12 @@
 /.vs/ITHub/FileContentIndex
 /.vs/ITHub/v17/Browse.VC.db
 /.vs/ITHub/v17
+/.vs/commit/FileContentIndex
+*.suo
+/.vs/ITHub-commit/FileContentIndex
+*.wsuo
+*.vsidx
+/.vs/ITHub-main/FileContentIndex
+/.vs/ITHubcommit/FileContentIndex
+/.vs/slnx.sqlite
+*.lock
