@@ -172,7 +172,7 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h1 class="modal-title fs-5" id="exampleModalLabel">Đăng tài liệu vào chủ đề...</h1>
-                                    <button type="button" class="btn-close" data-bs-dimdiss="modal" aria-label="Close"></button>
+                                    <input type="button" class="btn btn-secondary" value="X" data-bs-dismiss="modal" aria-label="Close">
                                 </div>
                                 <div class="modal-body">
                                     <ul class="list-group">
@@ -198,14 +198,14 @@
                 <?php if ($taiLieus !== null) : ?>
                     <?php foreach ($taiLieus as $taiLieu) : ?>
                         <?php if ($taiLieu['trangThaiTL'] == 'daduyet' ) : ?>
-                        <div class="section-card border border-1 rounded-2 mt-2">
+                        <div class="card-body border border-1 rounded-2 mt-2" style="padding-bottom:0; font-weight:bold">
                             <div class="row">
                                 <div class="col-lg-3 text-center">
                                     <?php if (!empty($taiLieu['anhTL'])) : ?>
-                                        <img class="border border-3 rounded-4 m-3" style="width: 150px; height: 150px;" src="../image/macdinh.png" alt="Image" class="img-responsive">
-                                        <!-- "img/<?php echo $taiLieu['anhTL']; ?>" -->
+                                        <img class="border border-3 rounded-4 m-3" style="width: 150px; height: 150px;" src="../image/<?php echo $taiLieu['anhTL']; ?>" alt="Image" class="img-responsive">
+                            
                                     <?php else : ?>
-                                        <img class="border border-3 rounded-4 m-3" style="width: 150px; height: 150px;" src="../image/macdinh.png" alt="Default Image" class="img-responsive">
+                                        <img class="border border-3 rounded-4 m-3" style="width: 150px; height: 150px;" src="../image/macdinh.jpg" alt="Default Image" class="img-responsive">
                                     <?php endif; ?>
                                 </div>
                                 
@@ -217,14 +217,19 @@
                                     <p class="fw-normal mb-2 mt-2" ><?php echo $taiLieu['moTaTL']; ?></p>
                                     </div>
                                     <div class="row">
-                                        <div class="col"> <a href="#"><i class="fa fa-user text-body-secondary me-5" aria-hidden="true"> <?php echo $taiLieu['taiKhoan']; ?></i></a>
+                                        <div class="col-lg-3">  <a href="../nguoidung/trangbanbe.php?taiKhoanBanBe=<?php echo $taiLieu['taiKhoan'];?>" class="me-4"style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration:none;color:black">
+                                    <?php
+                                    echo'
+                                    <img style="width: 30px; height: 30px; object-fit: cover;border: 3px solid" class="user-avatar rounded-circle" src="'.$path.'image/'.$taiLieu['anhDaiDien'].'" alt="User Avatar">';
+                                    ?>
+                                    <?php echo $taiLieu['taiKhoan']; ?></a>
                                         </div>
-                                        <div class="col"> <a href="#"><i class="fa fa-calendar text-body-secondary me-5" aria-hidden="true"> <?php echo date('d-m-Y', strtotime($taiLieu['ngayDuyetTL'])); ?></i></a>
+                                        <div class="col-xl-3"> <a href="#"><i class="fa fa-calendar text-body-secondary me-5" aria-hidden="true"> <?php echo date('d-m-Y', strtotime($taiLieu['ngayDuyetTL'])); ?></i></a>
                                         </div>
                                        
-                                        <div class="col"><a href="#"><i class="fa fa-book text-body-secondary me-5" aria-hidden="true"> <?php echo $taiLieu['tenLoaiTL']; ?></i></a>
+                                        <div class="col-xl-3"><a href="#"><i class="fa fa-book text-body-secondary me-5" aria-hidden="true"> <?php echo $taiLieu['tenLoaiTL']; ?></i></a>
                                         </div>
-                                        <div class="col"><a href="#"><i class="fa fa-folder text-body-secondary " aria-hidden="true"> <?php echo $taiLieu['tenDD']; ?></i></a>
+                                        <div class="col-xl-3"><a href="#"><i class="fa fa-folder text-body-secondary " aria-hidden="true"> <?php echo $taiLieu['tenDD']; ?></i></a>
                                         </div>
                                     </div>
                                     <div class="d-flex mb-3 mt-3">  
