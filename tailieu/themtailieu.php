@@ -62,7 +62,7 @@ if(isset($_SESSION['hoatdong'])|| empty($_SESSION['taiKhoan']))
                                 </div>
                             </div>
                         </div>';
-                            $tblThongBao->themTBTL($taiKhoan, '', 'admin', $maLoaiTL, $maTL);
+                           
                         } else {
                             echo '<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -107,6 +107,7 @@ if(isset($_SESSION['hoatdong'])|| empty($_SESSION['taiKhoan']))
                                 </div>
                             </div>
                         </div>';
+                         $tblThongBao->themTBTL($taiKhoan, '', 'admin', $maLoaiTL, $maTL);
             }
         }
     }else {
