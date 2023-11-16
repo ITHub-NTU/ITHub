@@ -1,4 +1,4 @@
-<?php 
+﻿<?php 
 include_once '../config/Database.php';
 include_once '../class/LoaiTaiLieu.php';
 include_once '../class/TaiLieu.php';
@@ -48,12 +48,7 @@ if(isset($_SESSION['hoatdong'])|| empty($_SESSION['taiKhoan']))
             
                     if (move_uploaded_file($_FILES['file']['tmp_name'], $fileTL)) {
                         // Lưu thông tin tệp vào cơ sở dữ liệu
-<<<<<<< HEAD
-                        if ($tblTaiLieu->themTaiLieu($maTL, $maLoaiTL, $taiKhoan, $maDD, $tenTL, $moTaTL, $fileTL, $trangThaiTL, $ngayDangTL, $ngayDuyetTL)) {
-                            $tblThongBao->themTBTL($taiKhoan, '', 'admin', $maLoaiTL, $maTL);
-=======
                         if ($tblTaiLieu->themTaiLieu($maTL, $maLoaiTL, $taiKhoan, $maDD, $tenTL, $moTaTL, $fileTL,$anhTL, $trangThaiTL, $ngayDangTL, $ngayDuyetTL)) {
->>>>>>> 65b6bf9018909ce59a34b93d3ad49dc860fab7b2
                             echo '<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
@@ -67,7 +62,7 @@ if(isset($_SESSION['hoatdong'])|| empty($_SESSION['taiKhoan']))
                                 </div>
                             </div>
                         </div>';
-                            
+                            $tblThongBao->themTBTL($taiKhoan, '', 'admin', $maLoaiTL, $maTL);
                         } else {
                             echo '<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
