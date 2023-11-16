@@ -162,11 +162,11 @@ include('../inc/navbar.php');
                               </div>
                             </a>
                           </div>
-                          <div id="RBV_<?php echo $maBV; ?>"class="col-md-2 mt-4">
+                          <div id="RBV_<?php echo $maBV; ?>"class="col-md-2 d-flex justify-content-center align-items-center">
                               <form name="deleteBV" method="post">
                                   <input type="hidden" name="maBV" value="<?php echo $maBV; ?>">
                                   <!-- <input type="submit" name="editBV" value="Sửa" class="btn btn-primary mt-2"> -->
-                                  <input type="submit" name="deleteBV" value="Xóa" class="btn btn-danger mt-5 mx-4">
+                                  <input type="submit" name="deleteBV" value="Xóa" class="btn btn-danger">
                               </form>
                           </div>
                           
@@ -205,7 +205,7 @@ include('../inc/navbar.php');
                                 $tenDD = $taiLieu['tenDD'];
                                 $tenLoaiTL = $taiLieu['tenLoaiTL'];
                         ?>
-                        <div id="TL_<?php echo $maBV; ?>" class="col-md-10">
+                        <div id="TL_<?php echo $maBV; ?>" class="col-md-10 mt-3">
                             <a class="text-decoration-none text-black" href="tailieu/chitiettailieu.php?maTL=<?php echo $maTL; ?>" title="<?php echo $tenTL; ?>">
                                 <div class="card mb-3">
                                     <div class="row g-0">
@@ -225,7 +225,7 @@ include('../inc/navbar.php');
                                 </div>
                             </a>
                         </div>
-                        <div id="RTL_<?php echo $maBV; ?>" class="col-md-2 text-center mt-5">
+                        <div id="RTL_<?php echo $maBV; ?>" class="col-md-2 d-flex justify-content-center align-items-center">
                             <form name="deleteTL" method="post">
                                 <input type="hidden" name="maTL" value="<?php echo $maTL; ?>">
                                 <!-- <input type="submit" name="editTL" value="Sửa" class="btn btn-primary"> -->
@@ -295,10 +295,10 @@ include('../inc/navbar.php');
                               </div>
                             </a>
                           </div>
-                          <div id="RBVYT_<?php echo $maBV; ?>" class="col-md-2 text-center mt-4">
+                          <div id="RBVYT_<?php echo $maBV; ?>" class="col-md-2 text-center d-flex justify-content-center align-items-center">
                               <form name="deleteBVYT" method="post">
                                   <input type="hidden" name="maBVYT" value="<?php echo $maBV; ?>">
-                                  <input type="submit" name="deleteBVYT" value="Xóa" class="btn btn-danger mt-2 px-3">
+                                  <input type="submit" name="deleteBVYT" value="Xóa" class="btn btn-danger">
                               </form>
                           </div>
                       <?php
@@ -356,7 +356,7 @@ include('../inc/navbar.php');
                                 </div>
                             </a>
                         </div>
-                        <div id="RTLYT_<?php echo $maTL; ?>" class="col-md-2 text-center mt-5 ">
+                        <div id="RTLYT_<?php echo $maTL; ?>" class="col-md-2 text-center d-flex justify-content-center align-items-center">
                             <form name="deleteTLYT" method="post">
                                 <input type="hidden" name="maTLYT" value="<?php echo $maTL; ?>">
                                 <input type="submit" name="deleteTLYT" value="Xóa" class="btn btn-danger">
