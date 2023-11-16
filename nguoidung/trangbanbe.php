@@ -36,7 +36,7 @@ if ($userInfo) {
     } elseif ($quyen === 'quantrivien') {
         $quyen = 'Quản trị viên';
     } else {
-        $quyen = 'Người dùng bị chặn';
+        header('Location: ./trangchan.php');
     }
 
     $ngaySinh = date('d/m/Y', strtotime($ngaySinh));
