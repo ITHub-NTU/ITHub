@@ -569,10 +569,59 @@ class NguoiDung {
         }
     }
 
+<<<<<<< HEAD
+    public function layThongTinQuanTriTrucTuyen($tenBangQT) {
+        $sqlQuery = " 
+                SELECT DISTINCT s.* FROM ".$this->tblNguoiDung." s
+                JOIN ".$tenBangQT." t ON t.maQuanTri = s.taiKhoan
+                WHERE trangThai = 'hoatdong';";
+				
+		$stmt = $this->conn->prepare($sqlQuery);
+        $stmt->execute();
+        $result = $stmt->get_result();			
+        return $result;	
+    } 
+
+    public function layChuDeQT($taiKhoan) {
+        $sqlQuery = " 
+            SELECT s.*, k.*
+            FROM ".$this->tblNguoiDung." s
+            JOIN `tblquantribv` t ON t.maQuanTri = s.taiKhoan
+            JOIN `tblchudebv` k ON t.maCD = k.maCD
+            WHERE t.maQuanTri = '".$taiKhoan."';";
+        
+        $stmt = $this->conn->prepare($sqlQuery);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        $danhSachChuDeQT = array();
+        
+        while ($row = $result->fetch_assoc()) {
+            $danhSachChuDeQT[] = '<a class="text-decoration-none" href="danhsachbaiviet.php?maCD='.$row['maCD'].'" style="display:flex">'.trim($row['tenCD']).'</a>';
+        }        
+    
+        $chuDeQT = implode(', ', $danhSachChuDeQT);
+    
+        return $chuDeQT;
+    }
+
+    public function layTongTaiKhoan(){
+        $sqlQuery = "
+            SELECT COUNT(*) AS soLuongTK
+            FROM ".$this->tblNguoiDung."";
+            
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->execute();
+            $result = $stmt->get_result();	
+            $tongTaiKhoan = $result->fetch_assoc();			
+            return $tongTaiKhoan['soLuongTK'];	
+    }
+=======
     public function chanUser($taiKhoan) {
         $banQuery = "UPDATE " . $this->tblNguoiDung . " SET quyen = 'nguoidungbichan' WHERE taiKhoan = ?";
         $stmt = $this->conn->prepare($banQuery);
         $stmt->bind_param("s", $taiKhoan);
+>>>>>>> d3c57a0c81248665648d9c4d64e2f23ad0caaf54
     
         if ($stmt->execute()) {
             return true;

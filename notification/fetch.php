@@ -52,19 +52,19 @@ if (isset($_POST['view'])) {
                 $output .= '
                 <li>
                     <a class="text-decoration-none notifications" href="'.$path.$row['linkTB'].'" style="font-weight:bold;">
-                        <div class="card notification-item mx-1" style="width: 380px; max-height: 95px; min-height:95px; border: none;">
+                        <div class="card notification-item mx-1" style="max-width: 400px; min-width: 400px; max-height: 95px; min-height:95px; border: none;">
                             <div class="row g-0 m-1" style="padding-bottom:1px;">
-                                <div class="col-md-2 col-sm-3">
+                                <div class="col-2">
                                     <img src="'.$folder.'" class="img-fluid" alt="..." style = "width: 65px; height: 65px; border-radius: 65px; -o-object-fit: cover; object-fit: cover;">
                                     '.$row['iconTB'].'
                                 </div>
-                                <div class="col-md-9 col-sm-9" style="padding-left: 15px; line-height: 1.5; position: relative;">
+                                <div class="col-9" style="padding-left: 15px; line-height: 1.5; position: relative;">
                                     <p style="font-size: 15px; -webkit-line-clamp: 3; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;  white-space: normal; word-wrap: break-word">
                                         '.$row['noiDungTB'].'
                                     </p>
                                     <span style="position: absolute; bottom: -2px; color: #1876F2; font-size: 15px;"><small>'.$tienIch->formatTimeAgo($timestamp).'</small><br></span>
                                     </div>
-                                <div class="col-md-1 my-auto">
+                                <div class="col-1 my-auto">
                                     <i class="fas fa-circle" style="font-size: 12px; color: #1876F2; text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3); transform: rotate(0deg);"></i>
                                 </div>
                             </div>
@@ -76,19 +76,19 @@ if (isset($_POST['view'])) {
                 $output .= '
                 <li>
                     <a class="text-decoration-none notifications" href="'.$path.$row['linkTB'].'" >
-                        <div class="card notification-item mx-1" style="width: 380px; max-height: 95px; min-height:95px; border: none;">
+                        <div class="card notification-item mx-1" style="max-width: 400px; min-width: 400px; max-height: 95px; min-height:95px; border: none;">
                             <div class="row g-0 m-1" style="padding-bottom:1px;">
-                                <div class="col-md-2 col-sm-3">
+                                <div class="col-2">
                                     <img src="'.$folder.'" class="img-fluid" alt="..." style = "width: 65px; height: 65px; border-radius: 65px; -o-object-fit: cover; object-fit: cover;">
                                     '.$row['iconTB'].'
                                 </div>
-                                <div class="col-md-9 col-sm-9" style="padding-left: 15px; line-height: 1.5; position: relative;">
+                                <div class="col-9" style="padding-left: 15px; line-height: 1.5; position: relative;">
                                     <p style="font-size: 15px; -webkit-line-clamp: 3; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;  white-space: normal; word-wrap: break-word">
                                         '.$row['noiDungTB'].'
                                     </p>
                                     <span style="position: absolute; bottom: -2px; color: #1876F2; font-size: 15px;"><small>'.$tienIch->formatTimeAgo($timestamp).'</small><br></span>
                                 </div>
-                                <div class="col-md-1 my-auto">
+                                <div class="col-1 my-auto">
                                     
                                 </div>
                             </div>
