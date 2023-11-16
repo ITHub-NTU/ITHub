@@ -313,18 +313,14 @@ class NguoiDung {
     }
 
     public function logOut(){
-        $currentPage = basename($_SERVER['PHP_SELF']);
+        $currentPage = $_SERVER['REQUEST_URI'];
         $taiKhoan = $_SESSION['taiKhoan'];
         session_unset();
         session_destroy();
         $sql = "UPDATE " . $this->tblNguoiDung . " SET trangThai = 'dunghoatdong' WHERE taiKhoan = ?";
-
-
         $stmt = $this->conn->prepare($sql);
     
         if ($stmt) {
-            
-    
             $stmt->bind_param("s", $taiKhoan);
             $stmt->execute();
     
@@ -573,6 +569,7 @@ class NguoiDung {
         }
     }
 
+<<<<<<< HEAD
     public function layThongTinQuanTriTrucTuyen($tenBangQT) {
         $sqlQuery = " 
                 SELECT DISTINCT s.* FROM ".$this->tblNguoiDung." s
@@ -619,6 +616,18 @@ class NguoiDung {
             $tongTaiKhoan = $result->fetch_assoc();			
             return $tongTaiKhoan['soLuongTK'];	
     }
+=======
+    public function chanUser($taiKhoan) {
+        $banQuery = "UPDATE " . $this->tblNguoiDung . " SET quyen = 'nguoidungbichan' WHERE taiKhoan = ?";
+        $stmt = $this->conn->prepare($banQuery);
+        $stmt->bind_param("s", $taiKhoan);
+>>>>>>> d3c57a0c81248665648d9c4d64e2f23ad0caaf54
     
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 ?>
