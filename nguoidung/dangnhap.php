@@ -30,6 +30,8 @@ if(!empty($_POST["login"]) && !empty($_POST["taiKhoan"]) && !empty($_POST["matKh
                 break;
             case 'nguoidungbichan':
                 $loginMessage = "Người dùng đã bị chặn";
+                session_unset();
+                session_destroy();
                 break;
         }
     } else {
@@ -93,3 +95,4 @@ include '../inc/navbar.php'
 <?php 
 include '../inc/footer.php';
 ?>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
