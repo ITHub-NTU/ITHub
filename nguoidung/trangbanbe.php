@@ -9,92 +9,65 @@ $database = new Database();
 $db = $database->getConnection();
 $tblNguoiDung = new NguoiDung($db);
 
+if(!(isset($_SESSION['taiKhoan']))){
+    header('Location: ../dangnhap.php');
+}
 if(!(isset($_GET['taiKhoanBanBe']))){
-    header('Location:./../../trangchu.php');
+    header('Location: ../trangchu.php');
 }
 if($_GET['taiKhoanBanBe'] == $_SESSION['taiKhoan']){
-    header('Location:./trangcanhan.php');
+    header('Location: ./trangcanhan.php');
 }
 $taiKhoanBB = $_GET['taiKhoanBanBe'];
 $taiKhoan = $_SESSION['taiKhoan'];
 $userInfo = $tblNguoiDung->getUserInfoByTaiKhoan($taiKhoanBB);
 
-    if ($userInfo) {
-      $taiKhoanBB = $userInfo['taiKhoan'];
-      $email = $userInfo['email'];
-      $hoND = $userInfo['hoND'];
-      $tenND = $userInfo['tenND'];
-      $quyen = $userInfo['quyen'];
-      $ngaySinh = $userInfo['ngaySinh'];
-      $anhDaiDienBB = $userInfo['anhDaiDien'];
+if ($userInfo) {
+    $taiKhoanBB = $userInfo['taiKhoan'];
+    $email = $userInfo['email'];
+    $hoND = $userInfo['hoND'];
+    $tenND = $userInfo['tenND'];
+    $quyen = $userInfo['quyen'];
+    $ngaySinh = $userInfo['ngaySinh'];
+    $anhDaiDienBB = $userInfo['anhDaiDien'];
 
-      if ($quyen === 'nguoidung') {
-          $quyen = 'Người dùng';
-      } elseif ($quyen === 'quantrivien') {
-          $quyen = 'Quản trị viên';
-      } else {
-          $quyen = 'Người dùng bị chặn';
-      }
-
-      $ngaySinh = date('d/m/Y', strtotime($ngaySinh));
+    if ($quyen === 'nguoidung') {
+        $quyen = 'Người dùng';
+    } elseif ($quyen === 'quantrivien') {
+        $quyen = 'Quản trị viên';
     } else {
-      echo "Không tìm thấy thông tin người dùng.";
+        $quyen = 'Người dùng bị chặn';
     }
 
-    if (isset($_GET['taiKhoanBanBe'])) {
-        $taiKhoanBB = $_GET['taiKhoanBanBe'];
-        $countFriends = $tblNguoiDung->countFriends($taiKhoanBB) - 1;
-        $countFriends = max(0, $countFriends);
-        $tblNguoiDung->taiKhoan = $taiKhoanBB;
-        $resultBV = $tblNguoiDung->layDanhSachBaiVietCuaNguoiDung();
-        $countBaiViet = mysqli_num_rows($resultBV);
-        $resultTL = $tblNguoiDung->layDanhSachTaiLieuCuaNguoiDung($taiKhoanBB);
-        $countTaiLieu = mysqli_num_rows($resultTL);
-        $resultTLYT = $tblNguoiDung->layDanhSachTaiLieuYeuThichCuaNguoiDung($taiKhoanBB);
-        $resultBVYT = $tblNguoiDung->layDanhSachBaiVietYeuThichCuaNguoiDung($taiKhoanBB);
+    $ngaySinh = date('d/m/Y', strtotime($ngaySinh));
+} else {
+    echo "Không tìm thấy thông tin người dùng.";
+}
+
+if (isset($_GET['taiKhoanBanBe'])) {
+    $taiKhoanBB = $_GET['taiKhoanBanBe'];
+    $countFriends = $tblNguoiDung->countFriends($taiKhoanBB) - 1;
+    $countFriends = max(0, $countFriends);
+    $tblNguoiDung->taiKhoan = $taiKhoanBB;
+    $resultBV = $tblNguoiDung->layDanhSachBaiVietCuaNguoiDung();
+    $countBaiViet = mysqli_num_rows($resultBV);
+    $resultTL = $tblNguoiDung->layDanhSachTaiLieuCuaNguoiDung($taiKhoanBB);
+    $countTaiLieu = mysqli_num_rows($resultTL);
+    $resultTLYT = $tblNguoiDung->layDanhSachTaiLieuYeuThichCuaNguoiDung($taiKhoanBB);
+    $resultBVYT = $tblNguoiDung->layDanhSachBaiVietYeuThichCuaNguoiDung($taiKhoanBB);
+}
+
+if(isset($_POST['banUser'])){
+    $taiKhoanBan = $_POST['taiKhoanBan']; 
+    $result = $tblNguoiDung->chanUser($taiKhoanBan); 
+    if($result) {
+        header('Location: ../trangchu.php');
+        exit;
+    } else {
+        echo "Failed to ban user.";
     }
+}
 
-
-    
-    // if (isset($_POST['deleteBV'])) {
-    //   $maBV = $_POST['maBV'];
-    //   $resultDBV= $tblNguoiDung->xoaBaiViet($maBV);
-    //   if ($resultDBV) {
-    //       $modalMessage = 'Bài viết của bạn đã được xóa thành công.';
-    //   } else {
-    //       $modalMessage = 'Xóa bài viết của bạn không thành công. Vui lòng thử lại.';
-    //   }
-    // } 
-
-    // if (isset($_POST['deleteTL'])) {
-    //   $maTL = $_POST['maTL'];
-    //   $resultDTL = $tblNguoiDung->xoaTaiLieu($maTL);
-    //   if ($resultDTL) {
-    //       $modalMessage = 'Tài liệu của bạn đã được xóa thành công.';
-    //   } else {
-    //       $modalMessage = 'Xóa tài liệu của bạn không thành công. Vui lòng thử lại.';
-    //   }
-    // } 
-
-    // if (isset($_POST['deleteBVYT'])) {
-    //   $maBVYT = $_POST['maBVYT'];
-    //   $resultDBVYT= $tblNguoiDung->xoaBaiVietYeuThich($taiKhoan, $maBVYT);
-    //   if ($resultDBVYT) {
-    //       $modalMessage = 'Bài viết yêu thích đã được xóa thành công.';
-    //   } else {
-    //       $modalMessage = 'Xóa bài viết yêu thích không thành công. Vui lòng thử lại.';
-    //   }
-    // } 
-
-    // if (isset($_POST['deleteTLYT'])) {
-    //   $maTLYT = $_POST['maTLYT'];
-    //   $resultDTLYT = $tblNguoiDung->xoaTaiLieuYeuThich($taiKhoan, $maTLYT);
-    //   if ($resultDTLYT) {
-    //       $modalMessage = "Tài liệu yêu thích đã được xóa thành công.";
-    //   } else {
-    //       $modalMessage = 'Xóa tài liệu yêu thích không thành công. Vui lòng thử lại.';
-    //   }
-    // } 
     
 include('../inc/header.php');
 include('../inc/navbar.php');
@@ -123,11 +96,27 @@ include('../inc/navbar.php');
           <div class="p-2 text-black" style="background-color: #f8f9fa;">
             <div class="d-flex justify-content-end text-center py-1">
                 <div>
-                    <a href="#">
+                    <?php
+                        $userInfoAdmin = $tblNguoiDung->getUserInfoByTaiKhoan($_SESSION['taiKhoan']);
+                        $quyenadmin = $userInfoAdmin['quyen'];
+                        if ($quyenadmin === 'quantrivien') {
+                        ?>
+                        <form method="post" action="">
+                            <div class="mt-2">
+                                <button type="button" class="text-decoration-none btn btn-danger" data-bs-toggle="modal" data-bs-target="#banModal">Chặn</button>
+                            </div>
+                        </form>
+                        <?php
+                        }
+                    ?>
+                </div>
+                <div>
+                    <a href="#" class="text-decoration-none">
                         <i class="fas fa-comment mx-5 mb-1 h5"></i>
-                    <p class="small text-muted mb-0 mx-2">Nhắn tin</p>
+                        <p class="small text-muted mb-0 mx-2">Nhắn tin</p>
                     </a>
                 </div>
+                
                 <div>
                     <p class="mb-1 h5"><?php echo $countTaiLieu; ?></p>
                     <p class="small text-muted mb-0">Tài liệu</p>
@@ -402,6 +391,26 @@ include('../inc/navbar.php');
   </div>
 </section>
 
+<div class="modal fade" id="banModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Khóa người dùng</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Bạn có chắc chắn muốn khóa người dùng này?
+      </div>
+      <div class="modal-footer">
+        <form  method="post">
+          <input type="hidden"  name="taiKhoanBan" value="<?php echo $taiKhoanBB; ?>">
+          <button type="submit" name="banUser" class="btn btn-danger">Khóa người dùng</button>
+        </form>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Quay lại</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
