@@ -343,5 +343,29 @@
 			return $result;    
 		}
 		
+		public function layTongBaiViet(){
+			$sqlQuery = "
+				SELECT COUNT(*) AS soLuongBV 
+				FROM ".$this->tblBaiViet."
+				WHERE trangThaiBV = 'daduyet' or trangThaiBV = 'dachinhsua'";
+				
+				$stmt = $this->conn->prepare($sqlQuery);
+				$stmt->execute();
+				$result = $stmt->get_result();	
+				$soLuongBV = $result->fetch_assoc();			
+				return $soLuongBV['soLuongBV'];	
+		}
+
+		public function layTongThaoLuan(){
+			$sqlQuery = "
+				SELECT COUNT(*) AS soLuongThaoLuan 
+				FROM ".$this->tblThaoLuanBV."";
+				
+				$stmt = $this->conn->prepare($sqlQuery);
+				$stmt->execute();
+				$result = $stmt->get_result();	
+				$tongThaoLuan = $result->fetch_assoc();			
+				return $tongThaoLuan['soLuongThaoLuan'];	
+		}
 	}
 ?>

@@ -190,7 +190,7 @@
                             <span class="fa fa-bell" aria-hidden="true" style="font-size: 18px;"></span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end navbar-right" id="notification" style="max-height: 87vh; overflow-y: auto; overflow-x: hidden;">
-                        
+      
                         </ul>
                     </div>
                     <!-- end thong bao -->
