@@ -35,30 +35,21 @@ include($path."inc/header.php");
         }
      
         .d-flex::-webkit-scrollbar{
-            width: 5px;
-            height:6px;
-            }
-            .d-flex::-webkit-scrollbar-track{
-            background-color: #fafafa;
-            
-            }
-            .d-flex::-webkit-scrollbar-thumb{
-            background-image: linear-gradient(-45deg, #6a5af9, #d66efd);
-            border-radius: 50px;
-           
-            }
-            .overlay {
-                position: absolute;
-                top: 65%;
-                left: 17%;
-                mix-blend-mode: overlay;
-                padding: 10px;
-            }
-           
-       
-
+        width: 5px;
+        height:6px;
+        }
+        .d-flex::-webkit-scrollbar-track{
+        background-color: #fafafa;
         
-           
+        }
+        .d-flex::-webkit-scrollbar-thumb{
+        background-image: linear-gradient(-45deg, #6a5af9, #d66efd);
+        border-radius: 50px;
+        
+        }
+       
+    
+        
     </style>
 <body>
     <?php include($path."inc/navbar.php"); ?>
@@ -68,24 +59,22 @@ include($path."inc/header.php");
                 <div class="carousel-item active">
                 <div style="position: relative;">
                 <img src="image/lienhe.png" class="d-block w-100 " alt="tài liệu">
-                    <div class="carousel-caption d-none d-md-block">
-                    </div>
                 </div>
                 </div>
                 <div class="carousel-item">
                 <div style="position: relative;">
                     <img src="image/tailieu.png" class="d-block w-100" alt="tài liệu">
-                    <div class="overlay">
+                    <!-- <div class="overlay">
                         <a href="../ITHub/tailieu/danhsachtailieu.php" class="btn btn-light">Truy cập ngay</a>
-                    </div>
+                    </div> -->
                 </div>
                 </div>
                 <div class="carousel-item">
                 <div style="position: relative;">
                 <img src="image/baiviet.png" class="d-block w-100" alt="tài liệu">
-                <div class="overlay">
+                <!-- <div class="overlay">
                         <a href="../ITHub/tailieu/danhsachtailieu.php" class="btn btn-light xl">Truy cập ngay</a>
-                    </div>
+                    </div> -->
                 </div>
                 </div> 
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
@@ -139,7 +128,7 @@ include($path."inc/header.php");
                                 <div class="card-body">
                                     <h5 class="card-title" style="height: 50px;-webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;  white-space: normal; word-wrap: break-word"><?php echo  $taiLieuMoiNhat['tenTL']?></h5>
                                     <p class="card-text" style="height:100px ;-webkit-line-clamp: 3; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;  white-space: normal; word-wrap: break-word"><?php echo  $taiLieuMoiNhat['moTaTL']?></p>
-                                    <a href="nguoidung/trangcanhan.php" class="me-4"style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration:none;color:black">
+                                    <a href="nguoidung/trangbanbe.php?taiKhoanBanBe=<?php echo $taiLieuMoiNhat['taiKhoan'];?>" class="me-4"style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration:none;color:black">
                                     <?php
                                     echo'
                                     <img style="width: 30px; height: 30px; object-fit: cover;border: 3px solid" class="user-avatar rounded-circle" src="'.$path.'image/'.$taiLieuMoiNhat['anhDaiDien'].'" alt="User Avatar">';
@@ -173,7 +162,7 @@ include($path."inc/header.php");
                                 <div class="card-body">
                                     <h5 class="card-title" style="height: 50px;-webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;  white-space: normal; word-wrap: break-word"><?php echo  $baiVietMoiNhat['tenBV']?></h5>
                                     <p class="card-text" style="height:100px ;-webkit-line-clamp: 3; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;  white-space: normal; word-wrap: break-word"><?php echo  $baiVietMoiNhat['noiDungBV']?></p>
-                                    <a href="nguoidung/trangcanhan.php" class="me-4"style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration:none;color:black">
+                                    <a href="nguoidung/trangbanbe.php?taiKhoanBanBe=<?php echo $baiVietMoiNhat['taiKhoan'];?>" class="me-4"style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration:none;color:black">
                                     <?php
                                     echo'
                                     <img style="width: 30px; height: 30px; object-fit: cover;border: 3px solid" class="user-avatar rounded-circle" src="'.$path.'image/'.$baiVietMoiNhat['anhDaiDien'].'" alt="User Avatar">';
@@ -215,7 +204,7 @@ include($path."inc/header.php");
                                 <div class="card-body">
                                     <h5 class="card-title" style="height: 50px;-webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;  white-space: normal; word-wrap: break-word"><?php echo  $taiLieuYeuThich['tenTL']?></h5>
                                     <p class="card-text" style="height:100px ;-webkit-line-clamp: 3; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;  white-space: normal; word-wrap: break-word"><?php echo  $taiLieuYeuThich['moTaTL']?></p>
-                                    <a href="nguoidung/trangcanhan.php" class="me-4"style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration:none;color:black">
+                                    <a href="nguoidung/trangbanbe.php?taiKhoanBanBe=<?php echo $taiLieuYeuThich['taiKhoan'];?>" class="me-4"style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration:none;color:black">
                                     <?php
                                     echo'
                                     <img style="width: 30px; height: 30px; object-fit: cover;border: 3px solid" class="user-avatar rounded-circle" src="'.$path.'image/'.$taiLieuYeuThich['anhDaiDien'].'" alt="User Avatar">';
@@ -248,7 +237,7 @@ include($path."inc/header.php");
                                 <div class="card-body">
                                     <h5 class="card-title" style="height: 50px;-webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;  white-space: normal; word-wrap: break-word"><?php echo  $baiVietYeuThich['tenBV']?></h5>
                                     <p class="card-text" style="height:100px ;-webkit-line-clamp: 3; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;  white-space: normal; word-wrap: break-word"><?php echo  $baiVietYeuThich['noiDungBV']?></p>
-                                    <a href="nguoidung/trangcanhan.php" class="me-4"style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration:none;color:black">
+                                    <a href="nguoidung/trangbanbe.php?taiKhoanBanBe=<?php echo $baiVietYeuThich['taiKhoan'];?>" class="me-4"style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration:none;color:black">
                                     <?php
                                     echo'
                                     <img style="width: 30px; height: 30px; object-fit: cover;border: 3px solid" class="user-avatar rounded-circle" src="'.$path.'image/'.$baiVietYeuThich['anhDaiDien'].'" alt="User Avatar">';
