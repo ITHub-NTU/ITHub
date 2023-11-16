@@ -5,40 +5,48 @@ include_once '../class/ChuDeBV.php';
 include_once '../class/BaiViet.php';
 //----------------------------------------
 include_once '../class/TienIch.php';
+include_once '../class/ThongBao.php';
 $database = new Database();
 $db = $database->getConnection();
 $tblChuDeBV = new ChuDeBV($db);
+$tblThongBao = new ThongBao($db);
 $tienIch = new TienIch();
 $tblBaiViet = new BaiViet($db);
 //----------------------------------------
-if(!isset($_SESSION['hoatdong']))
+if(!isset($_SESSION['taiKhoan']))
 {
-header("location: ../dangnhap.php");
+header("location: ../nguoidung/dangnhap.php");
 }
 $taiKhoan = $_SESSION['taiKhoan'];
 include('../inc/header.php');
 include("../inc/navbar.php");
 ?>
 <?php 
-	$tblBaiViet->maBV = $_GET['maBV'];
-  
-  $maBV = $_GET['maBV'];
+  if(isset($_GET['maBV']))
+  {
+    $tblBaiViet->maBV = $_GET['maBV'];
+    $maBV = $_GET['maBV'];
+  }
+	if(isset($_POST['maBV']))
+  {
+    $tblBaiViet->maBV = $_POST['maBV'];
+    $maBV = $_POST['maBV'];
+  }
   $baiViet = $tblBaiViet->layBaiViet();
   $tblBaiViet->trangThaiBV = $baiViet['trangThaiBV'];
-  if(isset($_POST['duyet_baiviet'])){
-      //----------------------------------------
-    
-      if ($tblBaiViet->duyetBaiViet()) {
+  if(isset($_POST['duyet_baiviet']) ||isset( $_POST['maBV'])){
+      if ($tblBaiViet->duyetBaiViet($_POST['maBV'], $baiViet['trangThaiBV'])) {
+          $tblThongBao->themTBBV($taiKhoan,'admin', $maCD, $maBV);
           header('Location: ../quantri/baivietkiemduyet.php');
       } else {
-          header('Location: ../quantri/baivietkiemduyet.php');
+          echo $baiViet['trangThaiBV'];
       }
   }    
   if(isset($_POST['xoa_baiviet'])){
     if ($tblBaiViet->xoaBaiViet()) {
         header("Location: baivietkiemduyet.php"); 
     } else {
-      header('Location: ../quantri/baivietkiemduyet.php');
+        header('Location: ../quantri/baivietkiemduyet.php');
     }
   }
   
@@ -152,7 +160,7 @@ include("../inc/navbar.php");
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Quay lại</button>
         <form method="post">
-          <input type="hidden" name="maBV" value="<?php echo $maBV; ?>">
+          <input type="text" hidden name="maBV" value="<?php echo $maBV; ?>">
           <button type="submit" name="duyet_baiviet" class="btn btn-success">Duyệt bài viết</button>
         </form>
       </div>

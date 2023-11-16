@@ -28,10 +28,10 @@ if (isset($_POST["register"])) {
         $tenND = $_POST["tenND"];
         $ngaySinh = date("Y-m-d", strtotime($_POST["ngaySinh"]));
 
-            if (!preg_match('/^[a-zA-Z\s]+$/', $hoND)) {
+            if (!preg_match('/^[\p{L}\s]+$/u', $hoND)) {
                 $matKhauLoi[] = "Họ chỉ được chứa chữ cái và khoảng trắng.";
             }
-            if (!preg_match('/^[a-zA-Z\s]+$/', $tenND)) {
+            if (!preg_match('/^[\p{L}\s]+$/u', $tenND)) {
                 $matKhauLoi[] = "Tên chỉ được chứa chữ cái và khoảng trắng.";
             }
             if (!preg_match('/^[a-z0-9]+$/', $taiKhoan)) {

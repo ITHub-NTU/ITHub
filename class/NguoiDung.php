@@ -122,7 +122,7 @@ class NguoiDung {
 
 		$sqlQuery = "INSERT INTO " . $this->tblNguoiDung . " (taiKhoan, email, matKhau, quyen, hoND, tenND, ngaySinh, anhDaiDien, xacThuc, trangThai) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		$stmt = $this->conn->prepare($sqlQuery);
-		$stmt->bind_param("sssssssss", $taiKhoan, $email, $matKhauHashed, $quyen, $hoND, $tenND, $ngaySinh, $anhDaiDien, $xacThuc);
+		$stmt->bind_param("ssssssssss", $taiKhoan, $email, $matKhauHashed, $quyen, $hoND, $tenND, $ngaySinh, $anhDaiDien, $xacThuc, $trangThai);
 	
 		if ($stmt->execute()) {
             $verificationCode = $_SESSION['expectedVerificationCode'];
@@ -155,10 +155,10 @@ class NguoiDung {
         }
     }
 
-    public function updateUserInfoByTaiKhoan($taiKhoan, $email, $hoND, $tenND, $ngaySinh, $anhDaiDien) {
-        $sqlQuery = "UPDATE " . $this->tblNguoiDung . " SET email = ?, hoND = ?, tenND = ?, ngaySinh = ?, anhDaiDien = ?  WHERE taiKhoan = ?";
+    public function updateUserInfoByTaiKhoan($taiKhoan, $hoND, $tenND, $ngaySinh, $anhDaiDien) {
+        $sqlQuery = "UPDATE " . $this->tblNguoiDung . " SET hoND = ?, tenND = ?, ngaySinh = ?, anhDaiDien = ?  WHERE taiKhoan = ?";
         $stmt = $this->conn->prepare($sqlQuery);
-        $stmt->bind_param("ssssss",  $email, $hoND, $tenND, $ngaySinh, $anhDaiDien, $taiKhoan);
+        $stmt->bind_param("sssss",   $hoND, $tenND, $ngaySinh, $anhDaiDien, $taiKhoan);
 
         if ($stmt->execute()) {
             return true;

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 include_once '../config/Database.php';
 include_once '../class/TaiLieu.php';
 include_once '../class/ThongBao.php';
@@ -91,6 +91,15 @@ else {
     $taiKhoan = null;
 }
 
+     // Số lượng tài liệu trên mỗi trang
+     $recordsPerPage = 4;
+
+     // Trang hiện tại, mặc định là trang 1
+      $trangHienTai = isset($_GET['page']) ? $_GET['page'] : 1;
+ 
+     // Tính toán OFFSET dựa trên trang hiện tại
+     $offset = ( $trangHienTai - 1) * $recordsPerPage;
+
 $chiTietTaiLieu = $taiLieu->getChiTietTaiLieu();
 $dinhDangTaiLieus = $taiLieu->getDSDDTaiLieu();
 $sort = isset($_GET['sort']) ? $_GET['sort'] : '';
@@ -100,12 +109,12 @@ $selectedCategory = '';
 if (isset($_GET['maLoaiTL'])) {
     $maLoaiTL = $_GET['maLoaiTL'];
     $taiLieu->maLoaiTL = $maLoaiTL;
-    $taiLieus = $taiLieu->getTaiLieuBymaLoaiTL($sort, $order);
+    $taiLieus = $taiLieu->getTaiLieuBymaLoaiTL($sort, $order,$recordsPerPage, $offset);
     $chon = 'maLoaiTL';
     $selectedCategory = $maLoaiTL;
 } else {
     $chon = '';
-    $taiLieus = $taiLieu->getTaiLieu($sort, $order);
+    $taiLieus = $taiLieu->getTaiLieu($sort, $order,$recordsPerPage, $offset);
 }
 
 
