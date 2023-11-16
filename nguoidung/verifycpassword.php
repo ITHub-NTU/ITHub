@@ -17,7 +17,7 @@ if (isset($_POST["verify"])) {
     $timeRemaining = 60 - $timeElapsed;
 
     if ($timeElapsed < 60) {
-        // Mã vẫn còn hiệu lực
+        $_SESSION['startCountdown'] = false;
         if (!empty($_POST["verificationCode"])) {
             if (isset($_SESSION['expectedVerificationCode'])) {
                 $verificationCode = $_POST["verificationCode"];
