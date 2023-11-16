@@ -453,10 +453,10 @@
                         $noiDungTB = "Bạn có <strong>" . $soLuongTLChuaDuyet . "</strong> tài liệu mới cần duyệt trong chủ đề <strong>" . $loaiTaiLieu['tenLoaiTL'] . "</strong>";
         
                         $taiKhoan = $quanTriTL['maQuanTri'];
-                        $anhTB =  $loaiTaiLieu['anhLoaiTL'];
+                      
                         $notifications[] = array(
                             'taiKhoan' => $taiKhoan,
-                            'anhTB' => $anhTB,
+                           
                             'iconTB' => $iconTB,
                             'linkTB' => $linkTB,
                             'noiDungTB' => $noiDungTB,
