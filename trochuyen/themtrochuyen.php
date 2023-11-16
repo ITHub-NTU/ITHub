@@ -1,41 +1,33 @@
 <?php 
-  $currentPage = basename($_SERVER['PHP_SELF']);
-	if($currentPage == 'trangchu.php') {
-		$path = '../ITHub/';
-	} else {
-		$path = '../';
-	}
-  include_once $path.'config/Database.php';
-  include_once $path.'class/Nguoidung.php';
+  include_once '../config/Database.php';
   include "auth.php";
   $database = new Database();
   $db = $database->getConnection();
-  $tblNguoiDung = new NguoiDung($db);
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.css" rel="stylesheet" />
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="icon" href="img/n.jpg" type="image/x-icon">
-  <title>Tìm kiếm bạn bè | ITHub</title>
-  <style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.css" rel="stylesheet" />
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="img/n.jpg" type="image/x-icon">
+    <title>Thêm trò chuyện | ITHub</title>
+    <style>
       * {
         box-sizing: border-box;
         font-family: 'Poppins', sans-serif;
       }
-      h1,h2,h3,h4,h5,h6 {
+      h1,h2,h3,h4,h5,h6{
         font-weight: bold;
       }
       .container {
@@ -75,11 +67,11 @@
         font-weight: 300;
         font-size: 14px;
       }
-      .navbar {
+      .navbar{
         height: 60px;
         padding-left:30px;
       }
-      .fa-arrow-circle-left {
+      .fa-arrow-circle-left{
         font-size: 25px;
       }
   </style>
@@ -91,7 +83,7 @@
         <ol class="breadcrumb">
           <a href="tinnhan.php"><i class="fas fa-arrow-circle-left"></i></a> &nbsp;&nbsp;&nbsp;
           <li class="breadcrumb-item"><a href="tinnhan.php">Trò chuyện</a></li>
-          <li class="breadcrumb-item active" aria-current="page"><b>Bạn bè</b></li>
+          <li class="breadcrumb-item active" aria-current="page"><b>Thêm trò chuyện mới</b></li>
         </ol>
       </nav>
     </div>
@@ -109,21 +101,21 @@
             $friendEmail = $data['email'];
             $tableName = "ithub";
             $ifExists = false;
-            $target = $friendUsername."_".$taiKhoan;
+            $target = $friendUsername ."_". $taiKhoan;
             $findTable = "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'ithub' AND TABLE_NAME = '$target'";
             $findResult = $db->query($findTable);
-            if ($friendUsername != $taiKhoan) {
-                if (mysqli_num_rows($findResult) > 0) {
-                    $ifExists = true;
-                }
+            if ($friendUsername != $taiKhoan && $friendUsername != 'quantrivien') {
+              if (mysqli_num_rows($findResult) > 0) {
+                  $ifExists = true;
+                 
+              }
             }
 
-            if ($ifExists && $friendUsername != $taiKhoan) {
+            if (!$ifExists && $friendUsername != $taiKhoan && $friendUsername != 'quantrivien') {
               $count++;
             }
           }
         }
-        $_SESSION['banbe'] = $count;
         $findSql = "SELECT * FROM `tblnguoidung`;";
         $result = $db->query($findSql);
         if (mysqli_num_rows($result) > 0) {
@@ -136,24 +128,14 @@
             $findTable = "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'ithub' AND TABLE_NAME = '$target'";
             $findResult = $db->query($findTable);
             
-            if ($friendUsername != $taiKhoan) {
+            if ($friendUsername != $taiKhoan && $friendUsername != 'quantrivien') {
                 if (mysqli_num_rows($findResult) > 0) {
                     $ifExists = true;
-                    
                 }
             }
 
-            if ($ifExists && $friendUsername != $taiKhoan) {
-              $getImg = $tblNguoiDung->getUserInfoByTaiKhoan($friendUsername);
-              $anhDaiDien = $getImg['anhDaiDien'];
-              $folder = "img/";
-
-              if (file_exists($folder . $anhDaiDien)) {
-                  $folder .= $anhDaiDien;
-              } else {
-                  $folder .= "user.jpg";
-              }
-             
+            if (!$ifExists && $friendUsername != $taiKhoan && $friendUsername != 'quantrivien') {
+              $folder = "img/user.jpg";
               if ($count >= 3) {
                 $colClass = 'col-lg-4';
               } elseif ($count == 2) {
@@ -161,15 +143,17 @@
               } else{
                 $colClass = 'col-lg-12';
               }
+
               echo "
                 <div class='$colClass p-3'>
                     <div class='card'>
                         <img src='$folder' alt='User'>
                         <h1 class='font-weight-bold mb-1'>$friendUsername</h1>
+                        <h2 class= 'mb-1'><i class='fa fa-user'></i>Thành viên</h2>
                         <h2><i class='fas fa-envelope'></i> $friendEmail</h2>
                         <div class='container bg-white'>
-                            <a href='friendProfile.php?id=' type='button' class='btn btn-lg btn-outline-danger btn-rounded m-1 mt-3 fw-bold' data-mdb-ripple-color='dark'>Thông tin</a>
-                            <a href='tinnhan.php?id=$target' type='button' title='Messsage' class='btn btn-lg btn-primary btn-floating m-1 mt-3'><i class='fas fa-paper-plane fa-lg''></i></a>
+                            <a href='../nguoidung/trangbanbe.php?taiKhoanBanBe=$friendUsername' type='button' class='btn btn-lg btn-outline-danger btn-rounded m-1 mt-3 fw-bold' data-mdb-ripple-color='dark'>Thông tin</a>
+                            <a href='create.php?id=$target' type='button' title='Messsage' class='btn btn-lg btn-primary btn-floating m-1 mt-3'><i class='fas fa-paper-plane fa-lg''></i></a>
                         </div>
                     </div>
                 </div>";
@@ -179,5 +163,7 @@
       ?>
     </div>
 </div>
+
+
 </body>
 </html>

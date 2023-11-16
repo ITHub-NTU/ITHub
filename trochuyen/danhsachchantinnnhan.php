@@ -1,8 +1,10 @@
 <?php 
   include_once '../config/Database.php';
+  include_once '../class/NguoiDung.php';
   include "auth.php";
   $database = new Database();
   $db = $database->getConnection();
+  $tblNguoiDung = new NguoiDung($db);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,7 +23,7 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="icon" href="img/n.jpg" type="image/x-icon">
-    <title>Find Friend | NAMASTE</title>
+    <title>Danh sách chặn tin nhắn | ITHub</title>
     <style>
       * {
         box-sizing: border-box;
@@ -83,7 +85,7 @@
         <ol class="breadcrumb">
           <a href="tinnhan.php"><i class="fas fa-arrow-circle-left"></i></a> &nbsp;&nbsp;&nbsp;
           <li class="breadcrumb-item"><a href="tinnhan.php">Trò chuyện</a></li>
-          <li class="breadcrumb-item active" aria-current="page"><b>Tìm kiếm bạn bè</b></li>
+          <li class="breadcrumb-item active" aria-current="page"><b>Danh sách chặn tin nhắn</b></li>
         </ol>
       </nav>
     </div>
@@ -92,32 +94,13 @@
   <div class="container mt-5 pt-3 bg-white">
     <div class="row p-2">
       <?php
-        $findSql = "SELECT * FROM `tblnguoidung`;";
+        $findSql = "
+        SELECT * FROM `tblnguoidung` s
+        JOIN `tblchantinnhan` t ON t.nguoiBiChan = s.taiKhoan
+        WHERE t.nguoiChan = '".$_SESSION['taiKhoan']."';
+        ";
         $result = $db->query($findSql);
-        $count = 0;
-        if (mysqli_num_rows($result) > 0) {
-          while ($data = mysqli_fetch_assoc($result)) {
-            $friendUsername = $data['taiKhoan'];
-            $friendEmail = $data['email'];
-            $tableName = "ithub";
-            $ifExists = false;
-            $target = $friendUsername ."_". $taiKhoan;
-            $findTable = "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'ithub' AND TABLE_NAME = '$target'";
-            $findResult = $db->query($findTable);
-            if ($friendUsername != $taiKhoan && $friendUsername != 'quantrivien') {
-              if (mysqli_num_rows($findResult) > 0) {
-                  $ifExists = true;
-                 
-              }
-            }
-
-            if (!$ifExists && $friendUsername != $taiKhoan && $friendUsername != 'quantrivien') {
-              $count++;
-            }
-          }
-        }
-        $findSql = "SELECT * FROM `tblnguoidung`;";
-        $result = $db->query($findSql);
+        $count = $result->num_rows;
         if (mysqli_num_rows($result) > 0) {
           while ($data = mysqli_fetch_assoc($result)) {
             $friendUsername = $data['taiKhoan'];
@@ -128,14 +111,8 @@
             $findTable = "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'ithub' AND TABLE_NAME = '$target'";
             $findResult = $db->query($findTable);
             
-            if ($friendUsername != $taiKhoan && $friendUsername != 'quantrivien') {
-                if (mysqli_num_rows($findResult) > 0) {
-                    $ifExists = true;
-                }
-            }
 
-            if (!$ifExists && $friendUsername != $taiKhoan && $friendUsername != 'quantrivien') {
-              $folder = "img/user.jpg";
+            $folder = "img/user.jpg";
               if ($count >= 3) {
                 $colClass = 'col-lg-4';
               } elseif ($count == 2) {
@@ -143,7 +120,7 @@
               } else{
                 $colClass = 'col-lg-12';
               }
-
+              $room = $friendUsername.'_'.$taiKhoan;
               echo "
                 <div class='$colClass p-3'>
                     <div class='card'>
@@ -152,12 +129,11 @@
                         <h2 class= 'mb-1'><i class='fa fa-user'></i>Thành viên</h2>
                         <h2><i class='fas fa-envelope'></i> $friendEmail</h2>
                         <div class='container bg-white'>
-                            <a href='friendProfile.php?id=$friendUsername' type='button' class='btn btn-lg btn-outline-danger btn-rounded m-1 mt-3 fw-bold' data-mdb-ripple-color='dark'>Thông tin</a>
-                            <a href='create.php?id=$target' type='button' title='Messsage' class='btn btn-lg btn-primary btn-floating m-1 mt-3'><i class='fas fa-paper-plane fa-lg''></i></a>
+                            <a href='../nguoidung/trangbanbe.php?taiKhoanBanBe=$friendUsername' type='button' class='btn btn-lg btn-outline-danger btn-rounded m-1 mt-3 fw-bold' data-mdb-ripple-color='dark'>Thông tin</a>
+                            <a href='chantinnhan.php?id=$room&nguoiChan=$taiKhoan&nguoiBiChan=$friendUsername&hanhDong=huyChan' type='button' title='Hủy chặn tin nhắn' class='btn btn-lg btn-danger btn-floating m-1 mt-3'><i class='fa fa-ban mt-3' aria-hidden='true'></i></a>
                         </div>
                     </div>
                 </div>";
-            }
           }
         }
       ?>
