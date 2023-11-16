@@ -198,7 +198,7 @@
                 <?php if ($taiLieus !== null) : ?>
                     <?php foreach ($taiLieus as $taiLieu) : ?>
                         <?php if ($taiLieu['trangThaiTL'] == 'daduyet' ) : ?>
-                        <div class="section-card border border-1 rounded-2 mt-2">
+                        <div class="card-body border border-1 rounded-2 mt-2" style="padding-bottom:0; font-weight:bold">
                             <div class="row">
                                 <div class="col-lg-3 text-center">
                                     <?php if (!empty($taiLieu['anhTL'])) : ?>
@@ -217,19 +217,19 @@
                                     <p class="fw-normal mb-2 mt-2" ><?php echo $taiLieu['moTaTL']; ?></p>
                                     </div>
                                     <div class="row">
-                                        <div class="col">  <a href="nguoidung/trangcanhan.php" class="me-4"style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration:none;color:black">
+                                        <div class="col-lg-3">  <a href="nguoidung/trangcanhan.php" class="me-4"style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration:none;color:black">
                                     <?php
                                     echo'
                                     <img style="width: 30px; height: 30px; object-fit: cover;border: 3px solid" class="user-avatar rounded-circle" src="'.$path.'image/'.$taiLieu['anhDaiDien'].'" alt="User Avatar">';
                                     ?>
                                     <?php echo $taiLieu['taiKhoan']; ?></a>
                                         </div>
-                                        <div class="col"> <a href="#"><i class="fa fa-calendar text-body-secondary me-5" aria-hidden="true"> <?php echo date('d-m-Y', strtotime($taiLieu['ngayDuyetTL'])); ?></i></a>
+                                        <div class="col-xl-3"> <a href="#"><i class="fa fa-calendar text-body-secondary me-5" aria-hidden="true"> <?php echo date('d-m-Y', strtotime($taiLieu['ngayDuyetTL'])); ?></i></a>
                                         </div>
                                        
-                                        <div class="col"><a href="#"><i class="fa fa-book text-body-secondary me-5" aria-hidden="true"> <?php echo $taiLieu['tenLoaiTL']; ?></i></a>
+                                        <div class="col-xl-3"><a href="#"><i class="fa fa-book text-body-secondary me-5" aria-hidden="true"> <?php echo $taiLieu['tenLoaiTL']; ?></i></a>
                                         </div>
-                                        <div class="col"><a href="#"><i class="fa fa-folder text-body-secondary " aria-hidden="true"> <?php echo $taiLieu['tenDD']; ?></i></a>
+                                        <div class="col-xl-3"><a href="#"><i class="fa fa-folder text-body-secondary " aria-hidden="true"> <?php echo $taiLieu['tenDD']; ?></i></a>
                                         </div>
                                     </div>
                                     <div class="d-flex mb-3 mt-3">  
