@@ -1,41 +1,41 @@
-<?php
-include_once '../config/Database.php';
-include_once '../class/NguoiDung.php';
-include_once '../class/BaiViet.php';
-include_once '../class/TienIch.php';
+    <?php
+    include_once '../config/Database.php';
+    include_once '../class/NguoiDung.php';
+    include_once '../class/BaiViet.php';
+    include_once '../class/TienIch.php';
 
-$database = new Database();
-$db = $database->getConnection();
-$tblNguoiDung = new NguoiDung($db);
+    $database = new Database();
+    $db = $database->getConnection();
+    $tblNguoiDung = new NguoiDung($db);
 
-if(!(isset($_SESSION['taiKhoan']))){
+    if(!(isset($_SESSION['taiKhoan']))){
     header('Location:./dangnhap.php');
-}
+    }
 
-$modalMessage ='';
-$taiKhoan = $_SESSION['taiKhoan'];
-$userInfo = $tblNguoiDung->getUserInfoFromDatabase();
+    $modalMessage ='';
+    $taiKhoan = $_SESSION['taiKhoan'];
+    $userInfo = $tblNguoiDung->getUserInfoFromDatabase();
 
     if ($userInfo) {
-      $taiKhoan = $userInfo['taiKhoan'];
-      $email = $userInfo['email'];
-      $hoND = $userInfo['hoND'];
-      $tenND = $userInfo['tenND'];
-      $quyen = $userInfo['quyen'];
-      $ngaySinh = $userInfo['ngaySinh'];
-      $anhDaiDien = $userInfo['anhDaiDien'];
+        $taiKhoan = $userInfo['taiKhoan'];
+        $email = $userInfo['email'];
+        $hoND = $userInfo['hoND'];
+        $tenND = $userInfo['tenND'];
+        $quyen = $userInfo['quyen'];
+        $ngaySinh = $userInfo['ngaySinh'];
+        $anhDaiDien = $userInfo['anhDaiDien'];
 
-      if ($quyen === 'nguoidung') {
-          $quyen = 'Người dùng';
-      } elseif ($quyen === 'quantrivien') {
-          $quyen = 'Quản trị viên';
-      } else {
-          $quyen = 'Người dùng bị chặn';
-      }
+        if ($quyen === 'nguoidung') {
+            $quyen = 'Người dùng';
+        } elseif ($quyen === 'quantrivien') {
+            $quyen = 'Quản trị viên';
+        } else {
+            $quyen = 'Người dùng bị chặn';
+        }
 
-      $ngaySinh = date('d/m/Y', strtotime($ngaySinh));
+        $ngaySinh = date('d/m/Y', strtotime($ngaySinh));
     } else {
-      echo "Không tìm thấy thông tin người dùng.";
+        echo "Không tìm thấy thông tin người dùng.";
     }
 
     if (isset($_SESSION['taiKhoan'])) {
@@ -52,143 +52,146 @@ $userInfo = $tblNguoiDung->getUserInfoFromDatabase();
     }
 
 
-    
-include('../inc/header.php');
-include('../inc/navbar.php');
-?>
-<section class="mh-100 gradient-custom-2">
-  <div class="container py-5 h-100">
+
+    include('../inc/header.php');
+    include('../inc/navbar.php');
+    ?>
+    <section class="mh-100 gradient-custom-2">
+    <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col col-md-9">
+        <div class="col col-md-9">
         <div class="card">
-          <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px;">
+            <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px;">
             <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
-              <img src="../image/<?php echo $anhDaiDien?>"                          
+                <img src="../image/<?php echo $anhDaiDien?>"                          
                 alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
                 style="width: 150px; height: 150px; object-fit: cover; z-index: 1">
-              <button type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark"
+                <button type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark"
                 style="z-index: 1;">
                 <a class="text-decoration-none" href="chinhsuathongtin.php">Chỉnh sửa</a>
-              </button>
+                </button>
             </div>
             <div class="ms-3" style="margin-top: 170px;">
-              <?php   
+                <?php   
                 echo '<h5>' .$taiKhoan. '</h5>';
-              ?>
+                ?>
             </div>
-          </div>
-          <div class="p-2 text-black" style="background-color: #f8f9fa;">
+            </div>
+            <div class="p-2 text-black" style="background-color: #f8f9fa;">
             <div class="d-flex justify-content-end text-center py-1">
-              <div>
+                <div>
                 <p class="mb-1 h5"><?php echo $countTaiLieu; ?></p>
                 <p class="small text-muted mb-0">Tài liệu</p>
-              </div>
-              <div class="px-3">
+                </div>
+                <div class="px-3">
                 <p class="mb-1 h5"><?php echo $countBaiViet; ?></p>
                 <p class="small text-muted mb-0">Bài viết</p>
-              </div>
-              <div>
+                </div>
+                <div>
                 <p class="mb-1 h5"><?php echo "$countFriends"?></p>
                 <p class="small text-muted mb-0">Bạn</p>
-              </div>
+                </div>
             </div>
-          </div>
-          <div class="card-body p-4 text-black">
+            </div>
+            <div class="card-body p-4 text-black">
             <div class="mb-5">
-              <p class="lead fw-normal mb-1">Thông tin cá nhân</p>
-              <div class="p-4" style="background-color: #f8f9fa;">
+                <p class="lead fw-normal mb-1">Thông tin cá nhân</p>
+                <div class="p-4" style="background-color: #f8f9fa;">
                 <?php   
-                 
-                  echo '<p class="font-italic mb-1">Họ và tên: ' . $hoND . ' ' . $tenND . '</p>';
-                  echo '<p class="font-italic mb-1">Ngày sinh: ' .$ngaySinh. '</p>';
-                  echo '<p class="font-italic mb-0">Quyền: ' .$quyen. '</p>';
+                    
+                    echo '<p class="font-italic mb-1">Họ và tên: ' . $hoND . ' ' . $tenND . '</p>';
+                    echo '<p class="font-italic mb-1">Ngày sinh: ' .$ngaySinh. '</p>';
+                    echo '<p class="font-italic mb-0">Quyền: ' .$quyen. '</p>';
                 ?>
-              </div>
+                </div>
             </div>
 
             <div class="d-flex justify-content-around">
-              <button style="border-radius: 0;" id="showBaiViet" class="btn btn-primary col">Bài viết</button>
-              <button style="border-radius: 0;" id="showTaiLieu" class="btn btn-primary col">Tài liệu</button>
-              <button style="border-radius: 0;" id="showBaiVietYeuThich" class="btn btn-primary col">Bài viết yêu thích</button>
-              <button style="border-radius: 0;" id="showTaiLieuYeuThich" class="btn btn-primary col">Tài liệu yêu thích</button>
+                <button style="border-radius: 0;" id="showBaiViet" class="btn btn-primary col">Bài viết</button>
+                <button style="border-radius: 0;" id="showTaiLieu" class="btn btn-primary col">Tài liệu</button>
+                <button style="border-radius: 0;" id="showBaiVietYeuThich" class="btn btn-primary col">Bài viết yêu thích</button>
+                <button style="border-radius: 0;" id="showTaiLieuYeuThich" class="btn btn-primary col">Tài liệu yêu thích</button>
             </div>
 
             <div class="card" id="baiVietSection">
             <h5  class="card-header h2" style="background-color: cadetblue; text-align: center">Bài viết đã đăng</h5>
-              <div class="row">
-                  <?php
-                  if (mysqli_num_rows($resultBV) > 0) {
-                  ?>
-                  <div class="row">
-                      <?php
-                      while ($baiViet = $resultBV->fetch_assoc()) {
-                          $tblTienIch = new TienIch($db);
-                          $maBV = $baiViet['maBV'];
-                          $tenBV = $baiViet['tenBV'];
-                          $ngayDangBV = $baiViet['ngayDangBV'];
-                          $taiKhoanBV = $baiViet['taiKhoan'];
-                          $luotXem = $baiViet['luotXem'];
-                          $ngayDangFormatted = strtotime($baiViet['ngayDangBV']);
-                          $ngayDang = $tblTienIch->formatTimeAgo($ngayDangFormatted);
-                          $anhDaiDien = $baiViet['anhDaiDien'];
+                <div class="row">
+                    <?php
+                    if (mysqli_num_rows($resultBV) > 0) {
+                    ?>
+                    <div class="row">
+                        <?php
+                        while ($baiViet = $resultBV->fetch_assoc()) {
+                            $tblTienIch = new TienIch($db);
+                            $maBV = $baiViet['maBV'];
+                            $tenBV = $baiViet['tenBV'];
+                            $ngayDangBV = $baiViet['ngayDangBV'];
+                            $taiKhoanBV = $baiViet['taiKhoan'];
+                            $luotXem = $baiViet['luotXem'];
+                            $ngayDangFormatted = strtotime($baiViet['ngayDangBV']);
+                            $ngayDang = $tblTienIch->formatTimeAgo($ngayDangFormatted);
+                            $anhDaiDien = $baiViet['anhDaiDien'];
 
-                          $tblbaiViet = new BaiViet($db);
-                          $tblbaiViet->maBV = $maBV;
-                          $soLuongThaoLuan = $tblbaiViet->laySoLuongThaoLuan();
-                          $thaoLuanMoiNhat = $tblbaiViet->layThaoLuanMoiNhat();
-                          ?>
-                         
-                          <div id="BV_<?php echo $maBV; ?>" class="col-md-10">
-                            <a class="text-decoration-none" href="../diendan/chitietbaiviet.php?maBV=<?php echo $maBV; ?>" title="<?php echo $tenBV; ?>">
-                              <div class="card mb-3">
-                                  <div class="row g-0">
-                                      <div class="col-3">
-                                          <img src="../image/<?php echo $anhDaiDien; ?>" class="img-thumbnail d-block" style="width: 4em;" alt="...">
-                                          <p style="color: blue; margin-left: 5px"><?php echo $taiKhoanBV; ?></p>
-                                      </div>
-                                      <div class="col-9">
-                                          <div class="row">
-                                              <div class="col-12">
-                                                      <?php echo $tenBV; ?>
-                                              </div>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="px-4 d-flex justify-content-between">
-                                      <p>Bình luận: <?php echo $soLuongThaoLuan; ?></p>
-                                      <p>Lượt xem: <?php echo $luotXem; ?></p>
-                                      <p><?php echo $ngayDang; ?></p>
-                                  </div>
-                              </div>
-                            </a>
-                          </div>
-                          <div id="RBV_<?php echo $maBV; ?>"class="col-md-2 d-flex justify-content-center align-items-center">
-                              <form name="deleteBV" method="post">
-                                  <input type="hidden" name="maBV" value="<?php echo $maBV; ?>">
-                                  <!-- <input type="submit" name="editBV" value="Sửa" class="btn btn-primary mt-2"> -->
-                                  <input type="submit" name="deleteBV" value="Xóa" class="btn btn-danger">
-                              </form>
-                          </div>
-                          
-                      <?php
-                      }
-                      ?>
-                  </div>
-                  <?php
-                  } else {
-                      echo "<div class='col-12 text-center d-flex justify-content-center align-items-center' style='height: 300px; color: red; font-size: 24px;'>
-                      Không có đăng bài viết nào. 
-                      </div>";
-                  }
-                  ?>
-              </div>
+                            $tblbaiViet = new BaiViet($db);
+                            $tblbaiViet->maBV = $maBV;
+                            $soLuongThaoLuan = $tblbaiViet->laySoLuongThaoLuan();
+                            $thaoLuanMoiNhat = $tblbaiViet->layThaoLuanMoiNhat();
+                            ?>
+                            
+                            <div id="BV_<?php echo $maBV; ?>" class="col-md-12 justify-content-center">
+                                <a class="text-decoration-none" href="../diendan/chitietbaiviet.php?maBV=<?php echo $maBV; ?>" title="<?php echo $tenBV; ?>">
+                                    <div style="margin-left: 20px" class="card mt-3 ">
+                                        <div class="row g-0 justify-content-center">
+                                            <div class="col-3">
+                                                <img src="../image/<?php echo $anhDaiDien; ?>" class="img-thumbnail d-block" style="width: 4em;" alt="...">
+                                                <p style="color: blue; margin-left: 5px"><?php echo $taiKhoanBV; ?></p>
+                                            </div>
+                                            <div class="col-9">
+                                                <div class="row justify-content-center"> <!-- Thêm class justify-content-center ở đây -->
+                                                    <div class="col-10">
+                                                        <?php echo $tenBV; ?>
+                                                    </div>
+                                                    <div class="col-2 d-flex">
+                                                        <form name="deleteBV" method="post">
+                                                            <input type="hidden" name="maBV" value="<?php echo $maBV; ?>">
+                                                            <!-- <input type="submit" name="editBV" value="Sửa" class="btn btn-primary mt-2"> -->
+                                                            <button type="submit" name="deleteBV" class="btn btn-danger mt-4">
+                                                                <i class="fas fa-trash-alt"></i> 
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="px-4 d-flex justify-content-between">
+                                            <p>Bình luận: <?php echo $soLuongThaoLuan; ?></p>
+                                            <p>Lượt xem: <?php echo $luotXem; ?></p>
+                                            <p><?php echo $ngayDang; ?></p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            
+                            
+                        <?php
+                        }
+                        ?>
+                    </div>
+                    <?php
+                    } else {
+                        echo "<div class='col-12 text-center d-flex justify-content-center align-items-center' style='height: 300px; color: red; font-size: 24px;'>
+                        Không có đăng bài viết nào. 
+                        </div>";
+                    }
+                    ?>
+                </div>
             </div>
 
 
             <div class="card d-none" id="taiLieuSection">
                 <h5 class="card-header h2" style="background-color: cadetblue; text-align: center">Tài liệu đã đăng</h5>
                 <div class="card-body">
-                  <div class="row">
+                    <div class="row">
                         <?php
                         if (mysqli_num_rows($resultTL) > 0) {
                             while ($taiLieu = $resultTL->fetch_assoc()) {
@@ -248,13 +251,13 @@ include('../inc/navbar.php');
 
             <div class="card d-none" id="baiVietYeuThichSection">
             <h5 class="card-header h2" style="background-color: cadetblue; text-align: center">Bài viết yêu thích</h5>
-              <div class="row">
-                  <?php
-                  if (mysqli_num_rows($resultBVYT) > 0) {
-                  ?>
-                  <div class="row">
-                      <?php
-                      while ($baiVietYT = $resultBVYT->fetch_assoc()) {
+                <div class="row">
+                    <?php
+                    if (mysqli_num_rows($resultBVYT) > 0) {
+                    ?>
+                    <div class="row">
+                        <?php
+                        while ($baiVietYT = $resultBVYT->fetch_assoc()) {
                         $tblTienIch = new TienIch($db);
                         $maBV = $baiVietYT['maBV'];
                         $tenBV = $baiVietYT['tenBV'];
@@ -270,56 +273,56 @@ include('../inc/navbar.php');
                         $soLuongThaoLuan = $tblbaiViet->laySoLuongThaoLuan();
                         $thaoLuanMoiNhat = $tblbaiViet->layThaoLuanMoiNhat();
                         ?>
-                          
-                          <div id="BVYT_<?php echo $maBV; ?>" class="col-md-10">
+                            
+                            <div id="BVYT_<?php echo $maBV; ?>" class="col-md-10">
                             <a class="text-decoration-none" href="../diendan/chitietbaiviet.php?maBV=<?php echo $maBV; ?>" title="<?php echo $tenBV; ?>">
-                              <div class="card mb-3">
-                                  <div class="row g-0">
-                                      <div class="col-3">
-                                          <img src="../image/<?php echo $anhDaiDien; ?>" class="img-thumbnail d-block" style="width: 4em;" alt="...">
-                                          <p style="color: blue; margin-left: 5px"><?php echo $taiKhoanBV; ?></p>
+                                <div class="card mb-3">
+                                    <div class="row g-0">
+                                        <div class="col-3">
+                                            <img src="../image/<?php echo $anhDaiDien; ?>" class="img-thumbnail d-block" style="width: 4em;" alt="...">
+                                            <p style="color: blue; margin-left: 5px"><?php echo $taiKhoanBV; ?></p>
                                         </div>
-                                      <div class="col-9">
-                                          <div class="row">
-                                              <div class="col-12">
-                                                      <?php echo $tenBV; ?>
-                                              </div>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="px-4 d-flex justify-content-between">
-                                      <p>Bình luận: <?php echo $soLuongThaoLuan; ?></p>
-                                      <p>Lượt xem: <?php echo $luotXem; ?></p>
-                                      <p><?php echo $ngayDang; ?></p>
-                                  </div>
-                              </div>
+                                        <div class="col-9">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                        <?php echo $tenBV; ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="px-4 d-flex justify-content-between">
+                                        <p>Bình luận: <?php echo $soLuongThaoLuan; ?></p>
+                                        <p>Lượt xem: <?php echo $luotXem; ?></p>
+                                        <p><?php echo $ngayDang; ?></p>
+                                    </div>
+                                </div>
                             </a>
-                          </div>
-                          <div id="RBVYT_<?php echo $maBV; ?>" class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                              <form name="deleteBVYT" method="post">
-                                  <input type="hidden" name="maBVYT" value="<?php echo $maBV; ?>">
-                                  <input type="submit" name="deleteBVYT" value="Xóa" class="btn btn-danger">
-                              </form>
-                          </div>
-                      <?php
-                      }
-                      ?>
-                  </div>
-                  <?php
-                  } else {
-                      echo "<div class='col-12 text-center d-flex justify-content-center align-items-center' style='height: 300px; color: red; font-size: 24px;'>
-                      Không có bài viết yêu thích. 
-                      </div>";
-                  }
-                  ?>
-              </div>
+                            </div>
+                            <div id="RBVYT_<?php echo $maBV; ?>" class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                <form name="deleteBVYT" method="post">
+                                    <input type="hidden" name="maBVYT" value="<?php echo $maBV; ?>">
+                                    <input type="submit" name="deleteBVYT" value="Xóa" class="btn btn-danger">
+                                </form>
+                            </div>
+                        <?php
+                        }
+                        ?>
+                    </div>
+                    <?php
+                    } else {
+                        echo "<div class='col-12 text-center d-flex justify-content-center align-items-center' style='height: 300px; color: red; font-size: 24px;'>
+                        Không có bài viết yêu thích. 
+                        </div>";
+                    }
+                    ?>
+                </div>
             </div>
-    
+
 
             <div class="card d-none" id="taiLieuYeuThichSection">
             <h5 class="card-header h2" style="background-color: cadetblue; text-align: center">Tài liệu yêu thích</h5>
                 <div class="card-body">
-                  <div class="row">
+                    <div class="row">
                         <?php
                         if (mysqli_num_rows($resultTLYT) > 0) {
                             while ($taiLieuYT = $resultTLYT->fetch_assoc()) {
@@ -375,14 +378,14 @@ include('../inc/navbar.php');
             </div>
 
 
-          </div>
+            </div>
         </div>
-      </div>
+        </div>
     </div>
-  </div>
-</section>
+    </div>
+    </section>
 
-<div id="myModal" class="modal fade">
+    <div id="myModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -396,9 +399,9 @@ include('../inc/navbar.php');
             </div>
         </div>
     </div>
-</div>
-<script>
-$('form[name="deleteBV"]').submit(function(event) {
+    </div>
+    <script>
+    $('form[name="deleteBV"]').submit(function(event) {
     event.preventDefault(); 
 
     var maBV = $(this).find('input[name="maBV"]').val();
@@ -425,9 +428,9 @@ $('form[name="deleteBV"]').submit(function(event) {
             $('#myModal').modal('show');
         }
     });
-});
+    });
 
-$('form[name="deleteTL"]').submit(function(event) {
+    $('form[name="deleteTL"]').submit(function(event) {
     event.preventDefault(); 
 
     var maTL = $(this).find('input[name="maTL"]').val();
@@ -454,9 +457,9 @@ $('form[name="deleteTL"]').submit(function(event) {
             $('#myModal').modal('show');
         }
     });
-});
+    });
 
-$('form[name="deleteBVYT"]').submit(function(event) {
+    $('form[name="deleteBVYT"]').submit(function(event) {
     event.preventDefault(); 
 
     var maBVYT = $(this).find('input[name="maBVYT"]').val();
@@ -484,10 +487,10 @@ $('form[name="deleteBVYT"]').submit(function(event) {
             $('#myModal').modal('show');
         }
     });
-});
+    });
 
 
-$('form[name="deleteTLYT"]').submit(function(event) {
+    $('form[name="deleteTLYT"]').submit(function(event) {
     event.preventDefault(); 
 
     var maTLYT = $(this).find('input[name="maTLYT"]').val();
@@ -515,16 +518,16 @@ $('form[name="deleteTLYT"]').submit(function(event) {
             $('#myModal').modal('show');
         }
     });
-});
-</script>
+    });
+    </script>
 
 
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 
-<script>
+    <script>
     const showBaiVietButton = document.getElementById("showBaiViet");
     const showTaiLieuButton = document.getElementById("showTaiLieu");
     const showBaiVietYeuThichButton = document.getElementById("showBaiVietYeuThich");
@@ -581,10 +584,10 @@ $('form[name="deleteTLYT"]').submit(function(event) {
         baiVietYeuThichSection.classList.add("d-none");
         taiLieuYeuThichSection.classList.remove("d-none");
     });
-</script>
+    </script>
 
 
-<script>
+    <script>
     <?php if (!empty($modalMessage)) { ?>
         $(document).ready(function() {
             $('#myModal').modal('show');
@@ -597,8 +600,8 @@ $('form[name="deleteTLYT"]').submit(function(event) {
     document.getElementById("modalCloseButton").addEventListener("click", function() {
         $('#myModal').modal('hide');
     });
-</script>
+    </script>
 
-<?php 
-include('../inc/footer.php');
-?>
+    <?php 
+    include('../inc/footer.php');
+    ?>
