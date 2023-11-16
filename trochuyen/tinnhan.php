@@ -145,6 +145,18 @@
 	} else {
 		echo"lỗi truy vấn";
 	}
+	$kiemTraTrangThaiChan = $tblNguoiDung->kiemTraTrangThaiChan($_SESSION['room']);
+	if($kiemTraTrangThaiChan->num_rows > 0) {
+		$checkcout = TRUE;
+		$danhSachNguoiChan = array();
+		$danhSachNguoiBiChan = array();
+		while($rowTT = $kiemTraTrangThaiChan->fetch_assoc()) {
+			$danhSachNguoiChan[] = $rowTT['nguoiChan'];
+			$danhSachNguoiBiChan[] = $rowTT['nguoiBiChan'];
+		}
+	} else {
+		$checkcout = FALSE;
+	}
 
 	if(isset($_POST['dangxuat'])){
 		$tblNguoiDung->logOut();
@@ -306,7 +318,7 @@
 					<div class="offcanvas-body">
 						<ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
 							<a class="dropdown-item" href="../nguoidung/trangcanhan.php"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;Thông tin cá nhân</a>
-							<a class="dropdown-item" href="banbe.php"><i class="fa fa-coffee" aria-hidden="true"></i>&nbsp;&nbsp;Bạn bè</a>
+							<a class="dropdown-item" href="danhsachchantinnnhan.php"><i class="fa fa-user-times" aria-hidden="true"></i>&nbsp;&nbsp;Tin nhắn đã chặn</a>
 							<a class="dropdown-item" href="../nguoidung/changepassword.php"><i class="fa fa-unlock-alt" aria-hidden="true"></i>&nbsp;&nbsp;Đổi mật khẩu</a>
 							<div class="dropdown-divider"></div>
 							<form method="post">
@@ -329,12 +341,9 @@
 			</ul>
 		</div>
 		<div id="bottom-bar">
-			<a href="timkiembanbe.php" style="text-decoration:none; color:white;" ><button id="addcontact" style="width:100%">
-				<i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> <span>Thêm bạn bè</span>
+			<a href="themtrochuyen.php" style="text-decoration:none; color:white;" ><button id="addcontact" style="width:100%">
+				<i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> <span>Thêm trò chuyện mới</span>
 			</button></a>
-			<!-- <button id="settings"><a href="profile.php" style="text-decoration:none; color:white;" >
-				<i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Cài đặt</span></a>
-			</button> -->
 		</div>
 	</div>
 	<div class="content">
@@ -344,10 +353,14 @@
                 echo $finalName;
                 ?></p>
 			<div class="social-media">
-				<a onclick='goBack()'><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
 				<a href='../diendan/chudebaiviet.php'><i class="fa fa-home" aria-hidden="true"></i></a>
 				<a href='#end' id='scrollToBottom'><i class="fa fa-arrow-down" aria-hidden="true" title="Cuộn đến cuối trang"></i></a>
-
+				<?php if($checkcout or $finalName == 'quantrivien') {?>
+				<?php } else {?>
+					<a style="color:red" href='chantinnhan.php?id=<?php echo $_SESSION['room'] ?>&nguoiChan=<?php echo $_SESSION['taiKhoan']?>&nguoiBiChan=<?php echo $finalName ?>&hanhDong=chan'>
+						<i class="fa fa-ban" aria-hidden="true" title="Chặn tin nhắn"></i>
+					</a>
+				<?php } ?>
 			</div>
 		</div>
 		<div class="messages">
@@ -360,8 +373,23 @@
 		</div>
 		<div class="message-input">
 			<div class="wrap">
-				<?php if($_SESSION['room']=='quantrivien_quantrivien') {} else {?>
-				<form action="uploadfile.php" id="formbox" autocomplete="off" method="POST" enctype="multipart/form-data" style="display:flex; flex-direction: row; height: 53px;">
+				<?php if($_SESSION['room']=='quantrivien_quantrivien') {} 
+				else {
+				if($checkcout) {
+					if(in_array($_SESSION['taiKhoan'], $danhSachNguoiChan)) { ?>
+						<div class="card text-center" style="width: 100%;">
+							<p style="resize: none; width:100%; margin-top:13px">Bạn đã chặn <a><?php echo $finalName ?></a> 
+								<a style="color:red" href='chantinnhan.php?id=<?php echo $_SESSION['room'] ?>&nguoiChan=<?php echo $_SESSION['taiKhoan']?>&nguoiBiChan=<?php echo $finalName ?>&hanhDong=huychan' title="Hủy chặn tin nhắn">
+									<span>Bỏ chặn <i class="fa fa-ban" aria-hidden="true" ></i></span>
+								</a>
+							</p>
+						</div>
+					<?php } elseif(in_array($_SESSION['taiKhoan'], $danhSachNguoiBiChan)) { ?>
+						<div class="card text-center" style="width: 100%;">
+							<p style="resize: none; width:100%; margin-top:13px"><a><?php echo $finalName ?> không muốn nhận tin nhắn từ bạn</p>
+						</div>
+				<?php }} else { ?>
+					<form action="uploadfile.php" id="formbox" autocomplete="off" method="POST" enctype="multipart/form-data" style="display:flex; flex-direction: row; height: 53px;">
 					<div class="card" style="width: 100%;">
 						<div class="card-header" id="filePreview" style="display:none; <?php if(!empty($hide)) {echo $hide;} ?>">
 							<span class="span_file">
@@ -397,6 +425,7 @@
 					</button>
 
 				</form>
+				<?php } ?>
 				<?php } ?>
 				<script>
 					document.getElementById('fileToUpload').addEventListener('change', function () {

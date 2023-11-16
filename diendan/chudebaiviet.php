@@ -1,16 +1,16 @@
 <?php
-ob_start();
 include_once '../config/Database.php';
 include_once '../class/ChuDeBV.php';
 include_once '../class/BaiViet.php';
 include_once '../class/TienIch.php';
-
+include_once '../class/NguoiDung.php';		
 $database = new Database();
 $db = $database->getConnection();
 
 $tblChuDeBV = new ChuDeBV($db);
 $tienIch = new TienIch();
 $tblBaiViet = new BaiViet($db);
+$tblNguoiDung = new NguoiDung($db);;
 include('../inc/header.php');
 ?>
 
@@ -75,8 +75,8 @@ include('../inc/header.php');
 					echo '<div class="card" style="border-top-left-radius: 0; border-top-right-radius: 0">';
 				} else {
 					echo '<div class="card" style="border-radius:unset">';
-				}
-			?>
+			}
+		?>
 			<div class="row">
 				<div class="col-md-4">
 					<div class="row">
@@ -127,16 +127,40 @@ include('../inc/header.php');
 										</div>
 									</div>';
 									} else {
-										echo '<div class="my-auto text-center">
-											<p>Chưa có bài viết nào</P>
-										</div>';
+										$queryBVMN = "
+											SELECT bv.*, cd.tenCD
+											FROM tblbaiviet bv
+											JOIN tblchudebv cd ON bv.maCD = cd.maCD
+											WHERE bv.trangThaiBV = 'daduyet' or bv.trangThaiBV = 'dachinhsua'
+											ORDER BY bv.ngayDuyetBV DESC LIMIT 1;";
+										$resultBVMN = $db->query($queryBVMN);
+										$chiTietBaiViet = $resultBVMN->fetch_assoc();
+										$thongTinNguoiDung = $tblNguoiDung->getUserInfoByTaiKhoan($chiTietBaiViet['taiKhoan']);
+            							$anhND = $thongTinNguoiDung['anhDaiDien'];
+										echo '<div class="col-md-3 my-auto">
+											<img src="../image/'.$anhND
+											.'" class=" d-block" style="width: 80px;height: 80px;object-fit: cover;border-radius: 50%;" alt="...">
+											</div>
+											<div class="col-md-9 my-auto" style="text-align:left;">
+												<div class="row">
+													<a href="chitietbaiviet.php?maBV='.$chiTietBaiViet['maBV'].'"'.'class="text-decoration-none" style="display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 14.5em;">
+														'.$chiTietBaiViet['tenBV']
+													.'</a>
+													<label class"">
+													'.$tienIch->formatTimeAgo(strtotime($chiTietBaiViet['ngayDuyetBV'])). '. 
+													<a class="text-decoration-none">
+														'. $chiTietBaiViet['taiKhoan']
+													.'</a>
+													</label>
+												</div>
+											</div>';
 									} ?> 
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			</div>	
+		</div>	
 		<?php } ?>
 	</div>
 </div>

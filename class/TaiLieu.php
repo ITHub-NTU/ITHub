@@ -1,4 +1,4 @@
-﻿<?php 
+<?php 
 
 class TaiLieu {
     private $conn;
@@ -13,8 +13,8 @@ class TaiLieu {
     public function __construct($db) {
         $this->conn = $db;
     }
-    //Tuan Kiet
-    public function layTaiLieu(){
+      //Tuan Kiet
+      public function layTaiLieu(){
         if($this->maTL) {
             $sqlQuery = "
                 SELECT `tbltailieu`.*
@@ -28,57 +28,92 @@ class TaiLieu {
             return $taiLieu;	
         }
     }
-    //Duc nhong Lấy danh sách tài liệu 
-    public function getTaiLieu($sort = '', $order = '') {
-        $sql = "SELECT *
-                FROM $this->tbltailieu TL
-                INNER JOIN $this->tblloaitailieu LTL ON TL.maLoaiTL = LTL.maLoaiTL
-                INNER JOIN $this->tbldinhdangtl DDTL ON TL.maDD = DDTL.maDD";
-        $sql .= " GROUP BY TL.maTL";
-        if (!empty($sort) && !empty($order)) {
-            if ($sort == 'ngayDangTL') {
-                $sort = 'TL.ngayDangTL';
-            }
-            $sql .= " ORDER BY $sort $order";
+    //đếm tài liệu thuộc tài liệu và thuộc loại tài liệu
+    public function countTotalTaiLieu($maLoaiTL) {
+        $sql = "SELECT COUNT(maTL) as total FROM $this->tbltailieu";
+    
+        if ($maLoaiTL) {
+            $sql .= " WHERE maLoaiTL = ? AND trangThaiTL = 'daduyet'";
+        } else {
+            $sql .= " WHERE trangThaiTL = 'daduyet'";
         }
+        
         $stmt = $this->conn->prepare($sql);
         if ($stmt === false) {
-            die('Lỗi trong truy vấn Sql ' . $this->conn->error);
+            die('Lỗi trong truy vấn SQL ' . $this->conn->error);
         }
+    
+        if ($maLoaiTL) {
+            $stmt->bind_param('s', $maLoaiTL);
+        }
+    
         $stmt->execute();
         if ($stmt->error) {
-            die('Lỗi thực thi sql: ' . $stmt->error);
+            die('Lỗi thực thi SQL: ' . $stmt->error);
         }
+    
         $result = $stmt->get_result();
-        return $result;
+        $row = $result->fetch_assoc();
+    
+        return $row['total'];
     }
-    // Lấy danh sách loại tài liệu
-    public function getLoaiTaiLieu()
-    {
-        $query = "SELECT * FROM tblloaitailieu";
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->fetch_all(MYSQLI_ASSOC);
-    }
-
-    //DucNhong sắp xếp tài liệu bằng mã loại tài liệu 
-    public function getTaiLieuBymaLoaiTL($sort = '', $order = '') {
+  
+       // Lấy danh sách loại tài liệu
+       public function getLoaiTaiLieu()
+       {
+           $query = "SELECT * FROM tblloaitailieu";
+           $stmt = $this->conn->prepare($query);
+           $stmt->execute();
+           $result = $stmt->get_result();
+           return $result->fetch_all(MYSQLI_ASSOC);
+       }
+    //Duc nhong Lấy danh sách tài liệu 
+    public function getTaiLieu($sort = '', $order = '', $recordsPerPage , $offset) {
         $sql = "SELECT *
                 FROM $this->tbltailieu TL
                 INNER JOIN $this->tblloaitailieu LTL ON TL.maLoaiTL = LTL.maLoaiTL
                 INNER JOIN $this->tbldinhdangtl DDTL ON TL.maDD = DDTL.maDD
-                WHERE TL.maLoaiTL = ?";
+                WHERE TL.trangThaiTL = 'daduyet'
+                ";
         $sql .= " GROUP BY TL.maTL";
         if (!empty($sort) && !empty($order)) {
-            if ($sort == 'ngayDangTL') {
-                $sort = 'TL.ngayDangTL';
+            if ($sort == 'ngayDuyetTL') {
+                $sort = 'TL.ngayDuyetTL';
             }
             $sql .= " ORDER BY $sort $order";
         }
+        $sql .= " LIMIT $recordsPerPage OFFSET $offset";
+    
         $stmt = $this->conn->prepare($sql);
         if ($stmt === false) {
-            die('Lỗi trong truy vấn Sql ' . $this->conn->error);
+            die('Lỗi trong truy vấn SQL ' . $this->conn->error);
+        }
+        $stmt->execute();
+        if ($stmt->error) {
+            die('Lỗi thực thi SQL: ' . $stmt->error);
+        }
+        $result = $stmt->get_result();
+        return $result;
+    }
+    
+    public function getTaiLieuBymaLoaiTL($sort = '', $order = '', $recordsPerPage = 5, $offset) {
+        $sql = "SELECT *
+                FROM $this->tbltailieu TL
+                INNER JOIN $this->tblloaitailieu LTL ON TL.maLoaiTL = LTL.maLoaiTL
+                INNER JOIN $this->tbldinhdangtl DDTL ON TL.maDD = DDTL.maDD
+                WHERE TL.maLoaiTL = ? AND TL.trangThaiTL = 'daduyet'";
+        $sql .= " GROUP BY TL.maTL";
+        if (!empty($sort) && !empty($order)) {
+            if ($sort == 'ngayDuyetTL') {
+                $sort = 'TL.ngayDuyetTL';
+            }
+            $sql .= " ORDER BY $sort $order";
+        }
+        $sql .= " LIMIT $recordsPerPage OFFSET $offset";
+    
+        $stmt = $this->conn->prepare($sql);
+        if ($stmt === false) {
+            die('Lỗi trong truy vấn SQL ' . $this->conn->error);
         }
         $stmt->bind_param("s", $this->maLoaiTL);
         $stmt->execute();
@@ -88,6 +123,7 @@ class TaiLieu {
         $result = $stmt->get_result();
         return $result;
     }
+    
 
     public function getChiTietTaiLieu() {
         if($this->maTL){

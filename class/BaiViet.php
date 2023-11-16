@@ -121,22 +121,17 @@
 				return $result;	
 			}
 		}
-		public function duyetBaiViet() {
-			if ($this->maBV) {
+		public function duyetBaiViet($maBV, $trangThaiBV) {
+			if ($maBV) {
 				$queryUpdateStatus = "UPDATE tblbaiviet SET ";
-				switch ($this->trangThaiBV) {
-					case 'choduyet':
+				if($trangThaiBV == 'chuaduyet')
 						$queryUpdateStatus .= "trangThaiBV = 'daduyet', ";
-						break;
-					case 'chinhsua':
-						$queryUpdateStatus .= "trangThaiBV = 'dachinhsua', ";
-						break;
-					default:
-						return false;
-				}
-		
-				// Thêm phần cập nhật ngày duyệt
-				$queryUpdateStatus .= "ngayDuyetBV = CURRENT_TIMESTAMP() WHERE maBV = '".$this->maBV."'";
+				elseif($trangThaiBV == 'chinhsua')
+					$queryUpdateStatus .= "trangThaiBV = 'dachinhsua', ";
+				else	
+					return false;
+
+				$queryUpdateStatus .= "ngayDuyetBV = CURRENT_TIMESTAMP() WHERE maBV = '".$maBV."'";
 		
 				$stmt = $this->conn->prepare($queryUpdateStatus);
 				if ($stmt->execute()) {
@@ -144,8 +139,9 @@
 				}
 				return false;
 			}
-			return false; // Trả về false nếu không có $maBV
+			return false; 
 		}
+		
 		
 		public function xoaBaiViet(){
 			if ($this->maBV) {

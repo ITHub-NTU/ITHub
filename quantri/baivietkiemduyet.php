@@ -12,6 +12,10 @@ $tienIch = new TienIch();
 $tblBaiViet = new BaiViet($db);
 include('../inc/header.php');
 include('../inc/navbar.php');
+if(!isset($_SESSION['taiKhoan']))
+{
+header("location: ../nguoidung/dangnhap.php");
+}
 ?>
 
 <ul class="nav nav-tabs">
