@@ -603,6 +603,6 @@ document.getElementById("modalCloseButton").addEventListener("click", function()
 });
 </script>
 
-<?php 
-include('../inc/footer.php');
-?>
+    <?php 
+    include('../inc/footer.php');
+    ?>
