@@ -11,10 +11,10 @@ class TimKiem {
     }	
     public function timkiemtailieuWithPagination($resultsPerPage, $offset) {
         if ($this->search) {
-            $sqlQuery = "SELECT * FROM `tbltailieu` WHERE tenTL LIKE ? LIMIT ?, ?";
+            $sqlQuery = "SELECT * FROM `tbltailieu` WHERE tenTL LIKE ? ORDER BY ngayDuyetTL DESC  LIMIT ?, ? ";
             $this->search = "%".$this->search."%";
         } else {
-            $sqlQuery = "SELECT * FROM `tbltailieu` LIMIT ?, ?";
+            $sqlQuery = "SELECT * FROM `tbltailieu` ORDER BY ngayDuyetTL DESC  LIMIT ?, ?";
         }
     
         $stmt = $this->conn->prepare($sqlQuery);
@@ -36,7 +36,8 @@ class TimKiem {
         } else {
             $sqlQuery = "SELECT bv.*, nd.anhDaiDien, nd.quyen  
                          FROM `tblbaiviet` as bv
-                         JOIN tblnguoidung as nd on bv.taiKhoan = nd.taiKhoan   
+                         JOIN tblnguoidung as nd on bv.taiKhoan = nd.taiKhoan  
+                         ORDER BY bv.ngayDuyetBV DESC 
                          LIMIT ?, ?";
         }
         $stmt = $this->conn->prepare($sqlQuery);
@@ -48,6 +49,13 @@ class TimKiem {
     
     public function demSoLuongTaiLieu($search){
         $sqlQuery = "SELECT * FROM tbltailieu WHERE tenTL LIKE '%".$search."%'";
+        $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->execute();
+            $result = $stmt->get_result();	
+            return $result->num_rows;	
+    }
+    public function demSoLuongBaiViet($search){
+        $sqlQuery = "SELECT * FROM tblbaiviet WHERE tenBV LIKE '%".$search."%'";
         $stmt = $this->conn->prepare($sqlQuery);
             $stmt->execute();
             $result = $stmt->get_result();	

@@ -77,6 +77,7 @@ class TaiLieu {
                 WHERE TL.trangThaiTL = 'daduyet'
                 ";
         $sql .= " GROUP BY TL.maTL";
+        
         if (!empty($sort) && !empty($order)) {
             if ($sort == 'ngayDuyetTL') {
                 $sort = 'TL.ngayDuyetTL';
@@ -109,6 +110,7 @@ class TaiLieu {
             if ($sort == 'ngayDuyetTL') {
                 $sort = 'TL.ngayDuyetTL';
             }
+            
             $sql .= " ORDER BY $sort $order";
         }
         $sql .= " LIMIT $recordsPerPage OFFSET $offset";

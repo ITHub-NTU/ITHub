@@ -10,7 +10,7 @@
 			$this->conn = $db;
 		}	
 		
-		public function layDanhSachBaiViet(){	
+		public function layDanhSachBaiViet($resultsPerPageBV, $offsetBV){	
 			if($this->maCD) {
 				$sqlQuery = "
 					SELECT t.*, c.taiKhoan, c.anhDaiDien
@@ -18,7 +18,9 @@
 					LEFT JOIN ".$this->tblNguoiDung." as c ON t.taiKhoan = c.taiKhoan
 					WHERE t.maCD = '".$this->maCD."'
 					AND (t.trangThaiBV = 'daduyet' OR t.trangThaiBV = 'dachinhsua')
-					ORDER BY t.maBV DESC";
+					
+					ORDER BY t.maBV DESC
+					LIMIT ".$offsetBV.",".$resultsPerPageBV;
 
 				$stmt = $this->conn->prepare($sqlQuery);
 				$stmt->execute();
@@ -363,5 +365,16 @@
 				$tongThaoLuan = $result->fetch_assoc();			
 				return $tongThaoLuan['soLuongThaoLuan'];	
 		}
+		public function laySoLuongBVTheoCD($maCD){
+			$sqlQuery = "SELECT * FROM tblbaiviet WHERE maCD = ?";
+			
+			$stmt = $this->conn->prepare($sqlQuery);
+			$stmt->bind_param("s", $maCD);
+			$stmt->execute();
+			
+			$result = $stmt->get_result();    
+			return $result->num_rows;    
+		}
+		
 	}
 ?>

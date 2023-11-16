@@ -83,9 +83,9 @@ include('../inc/header.php');
 		}
 	?>
 	
-	<div class="card" style="background-color:cadetblue;">
-		<div class="d-flex card-header">
-			<h5 class="" ><?php echo $chuDeBV['tenCD']?> </h5>
+	<div class="card" >
+		<div class="d-flex card-header" style="background-color:cadetblue;">
+			<h5 class=""  ><?php echo $chuDeBV['tenCD']?> </h5>
 			<h5 style="font-weight:unset">&nbsp;[ <?php $soLuong = $tblChuDeBV->laySoLuongNguoiTheoDoiCD($maCD ); 
 						$resultSoLuong = $soLuong->fetch_assoc();
 			echo $resultSoLuong['soLuong']?> người theo dõi ]
@@ -117,27 +117,39 @@ include('../inc/header.php');
 			?>
 		</div>
 	
-	<?php
-		$tblBaiViet->maCD = $_GET['maCD'];
-		$result = $tblBaiViet->layDanhSachBaiViet();
-		$numRows = $result->num_rows;
-		$rowCount = 0;
-		while ($baiViet = $result->fetch_assoc()) {
-			$tblBaiViet->maBV = $baiViet['maBV'];
-			$soLuongThaoLuan = $tblBaiViet->laySoLuongThaoLuan();
-			$thaoLuanMoiNhat = $tblBaiViet->layThaoLuanMoiNhat();
-			if(!empty($baiViet['ngayDangBV'])) {
-				$timestamp = strtotime($baiViet['ngayDangBV']);
-			}else {
-				$timestamp = NULL;
-			}
-			if(!empty($thaoLuanMoiNhat['ngayDangTLBV'])) {
-				$timestamptwo = strtotime($thaoLuanMoiNhat['ngayDangTLBV']);
-			}else {
-				$timestamptwo = NULL;
-			}
-			$rowCount++;
-				$isLast = ($rowCount == $numRows);
+		<?php
+			$tblBaiViet->maCD = $_GET['maCD'];
+			//Phân trang 
+				$resultsPerPageBV = 8;
+				//Lưu biến trang Bài viết
+				if (isset($_GET['pageBV']) && is_numeric($_GET['pageBV'])) {
+					$pageBV = $_GET['pageBV'];
+				} else {
+					$pageBV = 1;
+					$_GET['pageBV'] = 1;
+				}
+				// Tính toán OFFSET cho LIMIT trong truy vấn SQL
+				$offsetBV = ($pageBV - 1) * $resultsPerPageBV;
+
+			$result = $tblBaiViet->layDanhSachBaiViet($resultsPerPageBV, $offsetBV);
+			$numRows = $result->num_rows;
+			$rowCount = 0;
+			while ($baiViet = $result->fetch_assoc()) {
+				$tblBaiViet->maBV = $baiViet['maBV'];
+				$soLuongThaoLuan = $tblBaiViet->laySoLuongThaoLuan();
+				$thaoLuanMoiNhat = $tblBaiViet->layThaoLuanMoiNhat();
+				if(!empty($baiViet['ngayDangBV'])) {
+					$timestamp = strtotime($baiViet['ngayDangBV']);
+				}else {
+					$timestamp = NULL;
+				}
+				if(!empty($thaoLuanMoiNhat['ngayDangTLBV'])) {
+					$timestamptwo = strtotime($thaoLuanMoiNhat['ngayDangTLBV']);
+				}else {
+					$timestamptwo = NULL;
+				}
+				$rowCount++;
+					$isLast = ($rowCount == $numRows);
 
 				if ($isLast) {
 					echo '<div class="card" style="border-top-left-radius: 0; border-top-right-radius: 0">';
@@ -219,7 +231,36 @@ include('../inc/header.php');
 				</div>
 			</div>
 		</div>	
-	<?php } ?>
+		<?php } ?>
+		<!-- Hiển thị phân trang -->
+		<nav aria-label="Page navigation document d-flex ">
+			<ul class="pagination mt-3 justify-content-center ">
+				<?php 
+					$numRowsPage = $tblBaiViet->laySoLuongBVTheoCD($maCD);
+					if($numRowsPage % $resultsPerPageBV == 0){
+						$maxPageBV = $numRowsPage/$resultsPerPageBV;
+					}
+					else
+						$maxPageBV = floor($numRowsPage/$resultsPerPageBV) + 1;
+					if ($pageBV > 1){
+						echo "<li class='page-item'><a class='page-link' class='page-link' href='" .$_SERVER['PHP_SELF']."?maCD=".$maCD."&pageBV=".($pageBV-1)."'>Trước</a></li> "; //gắn thêm nút Back
+					}
+					for ($i=1 ; $i<=$maxPageBV ; $i++)
+					{
+						if ($i == $pageBV)
+						{
+							echo '<li class="page-item"><b class="page-link">Trang'.$i.'</b> </li> '; //trang hiện tại sẽ được bôi đậm
+						}
+						else {
+							echo "<li class='page-item'><a class='page-link'  href='" . $_SERVER['PHP_SELF'] . "?maCD=".$maCD."&pageBV=".($i)."'>Trang " . $i . "</a></li> ";
+						}
+					}
+					if ($pageBV < $maxPageBV) {
+						echo "<li class='page-item'><a class='page-link' href='" . $_SERVER['PHP_SELF'] . "?maCD=".$maCD."&pageBV=".($pageBV+1)."'>Tiếp</a></li>";  //gắn thêm nút Next
+					}
+				?>
+			</ul>
+		</nav>
 	</div>
 </div>
 
