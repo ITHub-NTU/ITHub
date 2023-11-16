@@ -99,16 +99,17 @@
     <div class="container">
     <div class="row align-items-center py-3 px-xl-5">
         <div class="col-lg-3 col-md-3 padding-center-logo">
-            <a href="" class="text-decoration-none re-icon" style="color: black;">
+            <a href="http://localhost/ITHub/trangchu.php" class="text-decoration-none re-icon" style="color: black;">
                 <h1 style="font-weight: bold;" class="m-0"><span class="text-warning">IT</span>HUB</h1>
             </a>
         </div>
         <div class="col-lg-7 col-md-7">
-            <div class="search-container">
-                <input type="text" class="search-input" placeholder="Tìm tài liệu, bài viết...">
-                <a  class="search-button " href=""><i class="fa fa-search"></i></a>
-            </div>
-            
+            <form action="http://localhost/ITHub/timkiem/ketquatimkiem.php" method="get">
+                <div class="search-container">
+                    <input type="text" name="search" class="search-input" value="<?php if(isset($search))  echo $search?>" placeholder="Tìm tài liệu, bài viết...">
+                    <a  class="search-button " ><button type="submit" style="color: initial;background: initial;border: initial;" class="fa fa-search"></button></button></a>
+                </div>
+            </form>
         </div>
         <div class="col-lg-2 col-md-2" style="text-align:right" >
             
@@ -276,7 +277,7 @@
                                 }
                             }
                         ?>
-                        <a href="<?php echo $path?>timkiem.php" class="nav-item nav-item2 nav-link">Tìm kiếm</a>
+                        
                         <a href="#" class="nav-item nav-item2 nav-link">Bài tập cá nhân</a>
                         
                         <a href="#" class="nav-item nav-item2 nav-link">Liên hệ</a>
