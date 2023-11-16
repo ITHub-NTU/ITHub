@@ -11,13 +11,13 @@ $tblNguoiDung = new NguoiDung($db);
 $_SESSION['startCountdown'] = true;
 
 $_SESSION['time'] = isset($_SESSION['time']) ? $_SESSION['time'] : time();
+
 if (isset($_POST["verify"])) {
-    if (isset($_SESSION['time']) && $_SESSION['time'] > 60) {
-        unset($_SESSION['expectedVerificationCode']);
-        unset($_SESSION['time']);
-        $_SESSION['startCountdown'] = false;
-        $verificationMessage = 'Mã xác thực đã hết hạn. Vui lòng gửi lại mã.';
-    } else {
+    $timeElapsed = time() - $_SESSION['time'];
+    $timeRemaining = 60 - $timeElapsed;
+
+    if ($timeElapsed < 60) {
+        // Mã vẫn còn hiệu lực
         if (!empty($_POST["verificationCode"])) {
             if (isset($_SESSION['expectedVerificationCode'])) {
                 $verificationCode = $_POST["verificationCode"];
@@ -36,11 +36,15 @@ if (isset($_POST["verify"])) {
                     $verificationMessage = 'Mã xác nhận không đúng. Vui lòng kiểm tra lại.';
                 }
             } else {
-                $verificationMessage = 'Mã xác thực đã hết hạn. Vui lòng gửi lại mã.';
+                $verificationMessage = 'Mã của bạn đã hết thời hạn.';
             }
         } else {
             $verificationMessage = 'Vui lòng nhập mã xác nhận.';
         }
+    } else {
+        unset($_SESSION['expectedVerificationCode']);
+        unset($_SESSION['time']);
+        $verificationMessage = 'Mã xác thực đã hết hạn. Vui lòng gửi lại mã.';
     }
 }
 
@@ -49,7 +53,7 @@ if (isset($_POST["resendCode"])) {
     $email = $_SESSION['user_email'];
     $tblNguoiDung->setVerificationCode();
     $verificationCode = $_SESSION['expectedVerificationCode'];
-    $result = $tblNguoiDung->sendVerificationEmail($email, $verificationCode); 
+    $result = $tblNguoiDung->sendVerificationEmail($email, $verificationCode);
 
     if ($result === true) {
         header('Location: ./verifycpassword.php');
@@ -57,32 +61,6 @@ if (isset($_POST["resendCode"])) {
     } else {
         $verificationMessage = 'Có lỗi xảy ra trong quá trình xác thực email.';
     }
-} elseif (!empty($_POST["verify"])) {
-    if (!empty($_POST["verificationCode"])) {
-        if (isset($_SESSION['expectedVerificationCode'])) {
-            $verificationCode = $_POST["verificationCode"];
-            $email = $_SESSION['user_email'];
-            
-            if ($verificationCode == $_SESSION['expectedVerificationCode']) { 
-                $result = $tblNguoiDung->updateEmailVerificationStatus($email);
-
-                if ($result === true) {
-                    header('Location: ./changepassword.php');
-                    exit;
-                } else {
-                    $verificationMessage = 'Có lỗi xảy ra trong quá trình xác thực email.';
-                }
-            } else {
-                $verificationMessage = 'Mã xác nhận không đúng. Vui lòng kiểm tra lại.';
-            }
-        } else {
-            $verificationMessage = 'Mã của bạn đã hết thời hạn.';
-        }
-    } else {
-        $verificationMessage = 'Vui lòng nhập mã xác nhận.';
-    }
-} else {
-    $verificationMessage = 'Vui lòng nhập mã xác nhận.';
 }
 
 include '../inc/header.php';
