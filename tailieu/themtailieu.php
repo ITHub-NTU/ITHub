@@ -1,4 +1,4 @@
-﻿<?php 
+<?php 
 include_once '../config/Database.php';
 include_once '../class/LoaiTaiLieu.php';
 include_once '../class/TaiLieu.php';
@@ -41,73 +41,38 @@ if(isset($_SESSION['hoatdong'])|| empty($_SESSION['taiKhoan']))
                 $fileTL = "upload-tailieu/"; // Đường dẫn lưu trữ file trên server
                 $ngayDangTL = $currentDateTime->format('Y-m-d H:i:s');
                 $ngayDuyetTL = null;
-            
-                if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
-                    $file = $_FILES['file']['name'];
-                    $fileTL .= $file;
-            
-                    if (move_uploaded_file($_FILES['file']['tmp_name'], $fileTL)) {
-                        // Lưu thông tin tệp vào cơ sở dữ liệu
-                        if ($tblTaiLieu->themTaiLieu($maTL, $maLoaiTL, $taiKhoan, $maDD, $tenTL, $moTaTL, $fileTL,$anhTL, $trangThaiTL, $ngayDangTL, $ngayDuyetTL)) {
-                            echo '<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="successModalLabel">Thành công!</h5>
-                                          <input type="button" class="btn btn-secondary" value="X" data-bs-dismiss="modal" aria-label="Close">
-                                    </div>
-                                    <div class="modal-body">
-                                        Tài liệu đã được tải lên và lưu vào cơ sở dữ liệu thành công.Chờ duyệt tài liệu
-                                    </div>
-                                </div>
-                            </div>
-                        </div>';
-                           
-                        } else {
-                            echo '<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="successModalLabel">Thành công</h5>
-                                          <input type="button" class="btn btn-secondary" value="X" data-bs-dismiss="modal" aria-label="Close">
-                                    </div>
-                                    <div class="modal-body">
-                                        Lỗi tải tệp
-                                    </div>
-                                </div>
-                            </div>
-                        </div>';
+                if (isset($_FILES['anhTL']) && $_FILES['anhTL']['error'] === UPLOAD_ERR_OK) {
+                    $anhTL = $_FILES['anhTL']['name'];
+                    $pathToSave = "../image/" . $anhTL;
+        
+                    if (move_uploaded_file($_FILES['anhTL']['tmp_name'], $pathToSave)) {
+                        if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
+                            $file = $_FILES['file']['name'];
+                            $fileTL .= $file;            
+                            if (move_uploaded_file($_FILES['file']['tmp_name'], $fileTL)) {
+                                // Lưu thông tin tệp vào cơ sở dữ liệu
+                                $tblTaiLieu->themTaiLieu($maTL, $maLoaiTL, $taiKhoan, $maDD, $tenTL, $moTaTL, $fileTL, $trangThaiTL, $ngayDangTL, $ngayDuyetTL,$anhTL);   
+                                
+                            }
                         }
-                    } else {
-                        echo '<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="successModalLabel">Thành công</h5>
-                                      <input type="button" class="btn btn-secondary" value="X" data-bs-dismiss="modal" aria-label="Close">
-                                </div>
-                                <div class="modal-body">
-                                    Có lỗi trong quá trình tải lên
-                                </div>
-                            </div>
-                        </div>
-                    </div>';
                     }
-                } 
+                }
+             
                 echo '<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="successModalLabel">Thành công!</h5>
-                                          <input type="button" class="btn btn-secondary" value="Đóng" data-bs-dismiss="modal" aria-label="Close">
-                                    </div>
-                                    <div class="modal-body">
-                                        Tài liệu đã được tải lên và lưu vào cơ sở dữ liệu thành công.Chờ duyệt tài liệu
-                                    </div>
-                                </div>
-                            </div>
-                        </div>';
-                         $tblThongBao->themTBTL($taiKhoan, '', 'admin', $maLoaiTL, $maTL);
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="successModalLabel">Thành công!</h5>
+                              <input type="button" class="btn btn-secondary" value="X" data-bs-dismiss="modal" aria-label="Close">
+                        </div>
+                        <div class="modal-body">
+                            Tài liệu đã được tải lên và lưu vào cơ sở dữ liệu thành công.Chờ duyệt tài liệu
+                        </div>
+                    </div>
+                </div>
+            </div>';
+            $tblThongBao->themTBTL($taiKhoan, '', 'admin', $maLoaiTL, $maTL); 
+               
             }
         }
     }else {
@@ -146,8 +111,12 @@ include('../inc/header.php');
                     <form method="post" class="dropzone dz-clickable" action="#" enctype="multipart/form-data">
                         <input type="text" class="form-control mb-3 fs-2" placeholder="Tựa đề tài liệu" name="tenTL" aria-label="Tựa đề tài liệu" required>
                         <input type="text" class="form-control mb-3 fs-2" placeholder="Mô tả" name="moTaTL" aria-label="Mô tả" required>
-                        <div class="form-group">
-                            <label for="maDD">Chọn kiểu tài liệu:</label>
+                        <div>
+                            <label for="anhTL">Ảnh tài liệu</label>
+                            <input class="form-control" type="file" id="anhTL" required name="anhTL" accept="image/*">
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="maDD">Chọn kiểu tài liệu</label>
                             <select class="form-control" id="maDD" name="maDD" required>
                                 <?php
                                 // $result contains the data from your SQL query
@@ -184,7 +153,7 @@ include('../inc/header.php');
     // Sau khi xử lý thành công khi tệp được tải lên và lưu vào cơ sở dữ liệu
     // Kích hoạt modal thông báo thành công
     document.addEventListener('DOMContentLoaded', function () {
-        <?php if ($tblTaiLieu->themTaiLieu($maTL, $maLoaiTL, $taiKhoan, $maDD, $tenTL, $moTaTL, $fileTL, $trangThaiTL, $ngayDangTL, $ngayDuyetTL)) { ?>
+        <?php if ($tblTaiLieu->themTaiLieu($maTL, $maLoaiTL, $taiKhoan, $maDD, $tenTL, $moTaTL, $fileTL, $trangThaiTL, $ngayDangTL, $ngayDuyetTL,$anhTL)) { ?>
             $('#successModal').modal('show');
         <?php } ?>
     });

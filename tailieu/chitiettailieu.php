@@ -43,35 +43,39 @@ if(isset($_SESSION['hoatdong']))
                 $ngayDangTL = $currentDateTime->format('Y-m-d H:i:s');
             
                 $fileTL = "upload-tailieu/"; // Đường dẫn lưu trữ file trên server
-            
-                if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
-                    $file = $_FILES['file']['name'];
-                    $fileTL .= $file;
-            
-                    if (is_uploaded_file($_FILES['file']['tmp_name'])) {
-                        $taiLieu->chinhSuaTaiLieu($taiLieuMaTL, $maLoaiTL, $taiKhoan, $maDD, $tenTL, $moTaTL, $fileTL, $trangThaiTL,$ngayDangTL, $ngayDuyetTL);
-                        $tblThongBao->themTBTL($taiKhoan, '', 'admin', $maLoaiTL, $taiLieuMaTL);
-                        echo '<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="successModalLabel">Thành công</h5>
-                                      <input type="button" class="btn btn-secondary" value="X" data-bs-dismiss="modal" aria-label="Close">
+                
+                if (isset($_FILES['anhTL']) && $_FILES['anhTL']['error'] === UPLOAD_ERR_OK) {
+                    $anhTL = $_FILES['anhTL']['name'];
+                    $pathToSave = "../image/" . $anhTL;
+        
+                    if (move_uploaded_file($_FILES['anhTL']['tmp_name'], $pathToSave)) {
+                        if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
+                            $file = $_FILES['file']['name'];
+                            $fileTL .= $file;
+                    
+                            if (is_uploaded_file($_FILES['file']['tmp_name'])) {
+                                $taiLieu->chinhSuaTaiLieu($taiLieuMaTL, $maLoaiTL, $taiKhoan, $maDD, $tenTL, $moTaTL, $fileTL, $trangThaiTL,$ngayDangTL, $ngayDuyetTL,$anhTL);
+                                $tblThongBao->themTBTL($taiKhoan, '', 'admin', $maLoaiTL, $taiLieuMaTL);
+                                echo '<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="successModalLabel">Thành công</h5>
+                                              <input type="button" class="btn btn-secondary" value="X" data-bs-dismiss="modal" aria-label="Close">
+                                        </div>
+                                        <div class="modal-body">
+                                            Tài liệu đã được chỉnh sửa và lưu vào cơ sở dữ liệu thành công. Vui lòng chờ duyệt tài liệu. 
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="modal-body">
-                                    Tài liệu đã được chỉnh sửa và lưu vào cơ sở dữ liệu thành công. Vui lòng chờ duyệt tài liệu. 
-                                </div>
-                            </div>
-                        </div>
-                    </div>';
-                     
+                            </div>';
+                             
+                            }
+                        } 
                     }
-                    else {
-                        echo "lỗi";
-                    }
-                } else {
-                    echo "có lỗi trong xử lý tệp";
                 }
+
+              
             }
         }
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -290,6 +294,10 @@ if (isset($_GET['maLoaiTL'])) {
                                                     <input class="form-control mb-3" name="tenTL" type="text" required placeholder="Tên tài liệu" value="<?php echo $chiTietTaiLieu['tenTL']?>">
                                                     </div>
                                                     <div class="form-group mb-3">
+                                                        <label for="anhTL">Ảnh tài liệu</label>
+                                                        <input class="form-control" type="file" required id="anhTL" name="anhTL" accept="image/*">
+                                                    </div>
+                                                    <div class="form-group mb-3">
                                                         <select class="form-control" id="maDD" name="maDD" required>
                                                             <?php
                                                             echo "<option value='" . $chiTietTaiLieu['maDD'] . "'>" .  $chiTietTaiLieu['tenDD'] . "</option>";
@@ -314,11 +322,11 @@ if (isset($_GET['maLoaiTL'])) {
                                                             ?>
                                                         </select>
                                                     </div>
-
+                                                   
                                                     <div>
                                                     <input class="form-control mb-3" name="moTaTL" type="text" required placeholder="Mô tả tài liệu" value="<?php echo $chiTietTaiLieu['moTaTL']?>">
                                                     </div>
-                                               
+                                                   
                                                     <div>
                                                         <input type="file" id="newFile" name="file" style="display: none;" required accept=".pdf, .doc, .docx, .pptx"> <!-- Đặt accept để chỉ cho phép tải lên các loại tệp cụ thể-->
                                                         <label for="newFile" class="btn btn-primary mb-3">Chọn tệp</label>
@@ -341,7 +349,13 @@ if (isset($_GET['maLoaiTL'])) {
                         <div class="row border border-1 rounded-2 p-2  ms-1 me-1">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <p><h6>Người đăng</h6> <a class="text-decoration-none" href="#"> <?php echo $chiTietTaiLieu['taiKhoan']; ?></a></p>
+                                    <p><h6>Người đăng</h6> <div class="col-lg-3">  <a href="../nguoidung/trangbanbe.php?taiKhoanBanBe=<?php echo $chiTietTaiLieu['taiKhoan'];?>" class="me-4"style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration:none;color:black">
+                                    <?php
+                                    echo'
+                                    <img style="width: 30px; height: 30px; object-fit: cover;border: 3px solid" class="user-avatar rounded-circle" src="'.$path.'image/'.$chiTietTaiLieu['anhDaiDien'].'" alt="User Avatar">';
+                                    ?>
+                                    <?php echo $chiTietTaiLieu['taiKhoan']; ?></a>
+                                        </div></p>
                                 </div>
                             </div>
                             <div class="row">
@@ -354,13 +368,23 @@ if (isset($_GET['maLoaiTL'])) {
                                     <p><h6>Mô tả </h6><?php echo $chiTietTaiLieu['moTaTL']; ?></p>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <object data="<?php echo $chiTietTaiLieu['fileTL']; ?>" type="application/pdf" width="100%" height="600">
-                                        <p>Không thể hiển thị tệp PDF. <a href="<?php echo $chiTietTaiLieu['fileTL']; ?>">Tải về</a> thay vào đó.</p>
-                                    </object>
-                                </div>
-                            </div>
+                            <?php
+                            if (pathinfo($chiTietTaiLieu['fileTL'], PATHINFO_EXTENSION) === 'pdf') {
+                                echo '
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <object data="' . $chiTietTaiLieu['fileTL'] . '" type="application/pdf" width="100%" height="600">
+                                            <p>Không thể hiển thị tệp PDF. <a href="' . $chiTietTaiLieu['fileTL'] . '">Tải về</a> thay vào đó.</p>
+                                        </object>
+                                    </div>
+                                </div>';
+                            }
+                            else{
+                                echo '<p>Không thể hiển thị tệp. <a href="' . $chiTietTaiLieu['fileTL'] . '">Tải về</a> thay vào đó.</p>
+                                ';
+                            }
+                            ?>
+                            
                         </div>
                     </div>
                 </div>
