@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\class",
+    "\\tailieu"
   ],
-  "SelectedNode": "\\trangchu.php",
+  "SelectedNode": "\\class\\ThongBao.php",
   "PreviewInSolutionExplorer": false
 }
