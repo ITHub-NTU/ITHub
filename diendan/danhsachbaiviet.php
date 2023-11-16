@@ -150,9 +150,9 @@ include('../inc/header.php');
 					<div class="row my-auto " style="text-align:left;">
 						<div class="col-md-3 my-auto">
 							<img src="../image/<?php echo $baiViet['anhDaiDien'];?>" class=" m-3 d-block" style="width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 50%;" alt="...">
+						height: 80px;
+						object-fit: cover;
+						border-radius: 50%;" alt="...">
 						</div>
 						<div class="col-md-9 my-auto">
 							<div class="row">
