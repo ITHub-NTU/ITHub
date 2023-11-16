@@ -1,4 +1,6 @@
 <?php
+if(!isset($_SESSION['taiKhoan']) || empty($_SESSION['taiKhoan']))
+header("Location: ../nguoidung/dangnhap.php");
 include_once '../config/Database.php';
 include_once '../class/ChuDeBV.php';
 include_once '../class/BaiViet.php';

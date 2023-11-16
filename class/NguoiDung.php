@@ -313,18 +313,14 @@ class NguoiDung {
     }
 
     public function logOut(){
-        $currentPage = basename($_SERVER['PHP_SELF']);
+        $currentPage = $_SERVER['REQUEST_URI'];
         $taiKhoan = $_SESSION['taiKhoan'];
         session_unset();
         session_destroy();
         $sql = "UPDATE " . $this->tblNguoiDung . " SET trangThai = 'dunghoatdong' WHERE taiKhoan = ?";
-
-
         $stmt = $this->conn->prepare($sql);
     
         if ($stmt) {
-            
-    
             $stmt->bind_param("s", $taiKhoan);
             $stmt->execute();
     

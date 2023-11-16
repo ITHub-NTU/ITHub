@@ -110,6 +110,8 @@ if (isset($_POST['thaoluan'])) {
       header('Location: 404notfound.php');
     }
   }
+
+  
 ?>
 <style>
   svg{
@@ -190,7 +192,10 @@ if (isset($_POST['thaoluan'])) {
 </script>
 <div class="col-md-9">
   <div class="card">
-    <h5 class="card-header"><?php echo $chiTietBaiViet['tenBV']; ?></h5>
+    <h5 class="card-header d-flex">
+      <div><?php echo $chiTietBaiViet['tenBV']; ?></div>
+      
+    </h5>
     <div class="row g-0">
         <div class="col-md-3 card" style="border-top-right-radius: 0; border-bottom-right-radius: 0; border-top-left-radius: 0">
             <img src="../image/<?php if(isset( $chiTietBaiViet['anhDaiDien'])) echo $chiTietBaiViet['anhDaiDien'];  ?>" style="width: 80px;
@@ -222,11 +227,12 @@ if (isset($_POST['thaoluan'])) {
               <tbody>
                 <tr>
                   <td class="row">
+                   
                     <div class="col-9 d-flex">
                       <?php echo 
                             $tienIch->formatTimeAgo(strtotime($chiTietBaiViet['ngayDuyetBV']));
                             if($chiTietBaiViet['trangThaiBV'] =='dachinhsua'){
-                              echo ' <div style="padding: 3px 6px; margin: 0 5px; border-radius: 4px; background-color: gray; width: fit-content; color: white">Đã chỉnh sửa</div>';
+                              echo ' <div style="margin-left: 5px; text-decoration: underline">Đã chỉnh sửa</div>';
                             }
                       ; ?>
                       

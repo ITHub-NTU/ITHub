@@ -1,4 +1,5 @@
 <?php
+
 include_once '../config/Database.php';
 include_once '../class/ChuDeBV.php';
 include_once '../class/BaiViet.php';
@@ -85,9 +86,9 @@ include('../inc/header.php');
 	<div class="card" style="background-color:cadetblue;">
 		<div class="d-flex card-header">
 			<h5 class="" ><?php echo $chuDeBV['tenCD']?> </h5>
-			<h5><?php $soLuong = $tblChuDeBV->laySoLuongNguoiTheoDoiCD($maCD ); 
+			<h5 style="font-weight:unset">&nbsp;[ <?php $soLuong = $tblChuDeBV->laySoLuongNguoiTheoDoiCD($maCD ); 
 						$resultSoLuong = $soLuong->fetch_assoc();
-			echo $resultSoLuong['soLuong']?> người theo dõi
+			echo $resultSoLuong['soLuong']?> người theo dõi ]
 			</h5>
 			<?php 
 				if(isset($_SESSION['taiKhoan'])){

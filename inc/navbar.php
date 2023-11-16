@@ -268,27 +268,11 @@
                         <?php 
                             if(isset($_SESSION['taiKhoan'])){
                                 $conn = new mysqli('localhost','root',"","ithub");
-                                $queryRole = "SELECT quyen FROM `tblnguoidung`";
+                                $queryRole = "SELECT quyen FROM `tblnguoidung` WHERE taiKhoan = '".$_SESSION['taiKhoan']."'";
                                 $resultRole = $conn->query($queryRole);
                                 $rowRole = $resultRole -> fetch_assoc();
                                 if($rowRole['quyen'] == 'quantrivien'){
-                                    $username = $_SESSION['taiKhoan'];
-
-                                    $queryRoleBV = "SELECT maQuanTri FROM `TblQuanTriBV` WHERE maQuanTri = '$username'";
-                                    $resultRoleBV = $conn->query($queryRoleBV);
-                                    
-                                    $queryRoleTL = "SELECT maQuanTri FROM `TblQuanTriTL` WHERE maQuanTri = '$username'";
-                                    $resultRoleTL = $conn->query($queryRoleTL);
-                                    if ($resultRoleBV && $resultRoleTL) {
-                                        if ($resultRoleBV->num_rows > 0 ) {
-                                            echo '<a href="'.$path.'quantri/baivietkiemduyet.php" class="nav-item nav-item2 nav-link">Quản trị</a>';
-                                        } elseif ($resultRoleTL->num_rows > 0) {
-                                            echo '<a href="'.$path.'quantri/tailieukiemduyet.php" class="nav-item nav-item2 nav-link">Quản trị</a>';
-                                        }
-                                    } else {
-                                        echo "Lỗi truy vấn SQL: " . $conn->error;
-                                    }
-                                    
+                                    echo '<a href="'.$path.'quantri/baivietkiemduyet.php" class="nav-item nav-item2 nav-link">Quản trị</a>';   
                                 }
                             }
                         ?>

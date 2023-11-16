@@ -31,14 +31,14 @@ include("../inc/navbar.php");
       if ($tblBaiViet->duyetBaiViet()) {
           header('Location: ../quantri/baivietkiemduyet.php');
       } else {
-          echo "Lỗi trong quá trình duyệt bài viết: " . $db->error;
+          header('Location: ../quantri/baivietkiemduyet.php');
       }
   }    
   if(isset($_POST['xoa_baiviet'])){
     if ($tblBaiViet->xoaBaiViet()) {
         header("Location: baivietkiemduyet.php"); 
     } else {
-        echo "Lỗi trong quá trình xóa bài viết: " . $db->error;
+      header('Location: ../quantri/baivietkiemduyet.php');
     }
   }
   
