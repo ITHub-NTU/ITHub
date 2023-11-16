@@ -456,7 +456,7 @@
                         $anhTB = '../image/hqtcsdl.jpg';
                         $notifications[] = array(
                             'taiKhoan' => $taiKhoan,
-                            'anhTB' => $anhTB,
+                           
                             'iconTB' => $iconTB,
                             'linkTB' => $linkTB,
                             'noiDungTB' => $noiDungTB,

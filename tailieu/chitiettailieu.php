@@ -50,6 +50,7 @@ if(isset($_SESSION['hoatdong']))
             
                     if (is_uploaded_file($_FILES['file']['tmp_name'])) {
                         $taiLieu->chinhSuaTaiLieu($taiLieuMaTL, $maLoaiTL, $taiKhoan, $maDD, $tenTL, $moTaTL, $fileTL, $trangThaiTL,$ngayDangTL, $ngayDuyetTL);
+                        $tblThongBao->themTBTL($taiKhoan, '', 'admin', $maLoaiTL, $taiLieuMaTL);
                         echo '<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
