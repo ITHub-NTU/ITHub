@@ -46,6 +46,13 @@ include($path."inc/header.php");
             border-radius: 50px;
            
             }
+            .overlay {
+    position: absolute;
+    top: 75%;
+    left: 18%;
+    mix-blend-mode: overlay;
+    padding: 10px;
+}
     </style>
 <body>
     <?php include($path."inc/navbar.php"); ?>
@@ -61,17 +68,17 @@ include($path."inc/header.php");
                 </div>
                 <div class="carousel-item">
                 <div style="position: relative;">
-                <img src="image/tailieu.png" class="d-block w-100" alt="tài liệu">
-                    <div style="position: absolute; top: 75%; left: 18%; mix-blend-mode: overlay; padding: 10px;">
-                        <a href="../ITHub/tailieu/danhsachtailieu.php" class="btn btn-light" >Truy cập ngay</a>
+                    <img src="image/tailieu.png" class="d-block w-100" alt="tài liệu">
+                    <div class="overlay">
+                        <a href="../ITHub/tailieu/danhsachtailieu.php" class="btn btn-light">Truy cập ngay</a>
                     </div>
                 </div>
                 </div>
                 <div class="carousel-item">
                 <div style="position: relative;">
                 <img src="image/baiviet.png" class="d-block w-100" alt="tài liệu">
-                    <div style="position: absolute; top: 75%; left: 18%; mix-blend-mode: overlay; padding: 10px;">
-                        <a href="../ITHub/tailieu/danhsachtailieu.php" class="btn btn-light" >Truy cập ngay</a>
+                <div class="overlay">
+                        <a href="../ITHub/tailieu/danhsachtailieu.php" class="btn btn-light lg">Truy cập ngay</a>
                     </div>
                 </div>
                 </div> 
@@ -86,15 +93,15 @@ include($path."inc/header.php");
             </div>
         </br>
             <div class="row bg-secondary rounded-pill">
-            <div class="col-lg-3 btn btn-secondary"><a href="#section1" style="color:white">Tài liệu mới nhất</a>
+                <div class="col-lg-3 btn btn-secondary "><a href="#section1" style="color:white">Tài liệu mới nhất</a>
+                </div>
+                <div class="col-lg-3 btn btn-secondary "><a href="#section2" style="color:white">Bài viết mới nhất</a>
+                </div>
+                <div class="col-lg-3 btn btn-secondary "><a href="#section3" style="color:white">Tài liệu yêu thích</a>
+                </div>
+                <div class="col-lg-3 btn btn-secondary"><a href="#section4" style="color:white">Bài viết yêu thích</a>
+                </div>
             </div>
-            <div class="col-lg-3 btn btn-secondary"><a href="#section2" style="color:white">Bài viết mới nhất</a>
-            </div>
-            <div class="col-lg-3 btn btn-secondary"><a href="#section3" style="color:white">Tài liệu yêu thích</a>
-            </div>
-            <div class="col-lg-3 btn btn-secondary"><a href="#section4" style="color:white">Bài viết yêu thích</a>
-            </div>
-        </div>
         </div>
       
        
@@ -117,7 +124,12 @@ include($path."inc/header.php");
                         <div class="col-lg-2 me-2" >
                         <a href="<?php echo $chitiettailieuURL; ?>"  style="--bs-link-hover-color-rgb: 25, 135, 84;color:black">
                         <div class="card p-2 rounded-2" style="width: 12rem;">
-                            <img src="image/macdinh.png" class="card-img-top bg-image hover-zoom" alt="...">
+                           
+                            <?php if (!empty($taiLieuMoiNhat['anhTL'])) : ?>
+                                        <img class="card-img-top bg-image hover-zoom"  src="image/<?php echo $taiLieuMoiNhat['anhTL']; ?>" alt="Image">
+                                    <?php else : ?>
+                                        <img class="card-img-top bg-image hover-zoom"  src="image/macdinh.jpg" alt="Default Image">
+                                    <?php endif; ?>
                             <div class="card-body">
                                 <h5 class="card-title"> <h5 class="fw-medium" style="color:black"><span><i id="fa-picture-o" aria-hidden="true"></i></span><?php echo $taiLieuMoiNhat['tenTL']; ?></h5>
                                 <?php
@@ -203,7 +215,12 @@ include($path."inc/header.php");
                         <div class="col-lg-2 me-2" >
                         <a href="<?php echo $chitiettailieuURL; ?>"  style="--bs-link-hover-color-rgb: 25, 135, 84;color:black">
                         <div class="card p-2 rounded-2 mb-3" style="width: 12rem;">
-                            <img src="image/macdinh.png" class="card-img-top bg-image hover-zoom" alt="...">
+                             
+                        <?php if (!empty($taiLieuMoiNhat['anhTL'])) : ?>
+                                        <img class="card-img-top bg-image hover-zoom"  src="image/<?php echo $taiLieuMoiNhat['anhTL']; ?>" alt="Image">
+                                    <?php else : ?>
+                                        <img class="card-img-top bg-image hover-zoom"  src="image/macdinh.jpg" alt="Default Image">
+                                    <?php endif; ?>
                             <div class="card-body">
                                 <h5 class="card-title"> <h5 class="fw-medium mb-2 mt-3" style="color:black"><span><i id="fa-picture-o" aria-hidden="true"></i></span><?php echo $taiLieuYeuThich['tenTL']; ?></h5></h5>
                                 <?php
