@@ -85,7 +85,7 @@ include('../inc/navbar.php');
             $anhTL = $taiLieu['anhTL'];
             $tenDD = $taiLieu['tenDD'];
         ?>
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-md-10 pt-4">
                 <a class="text-decoration-none text-black" href="../quantri/kiemduyet.php?maTL=<?php echo $maTL; ?>" title="<?php echo $tenTL; ?>">         
                     <div class="card mb-3">
@@ -115,7 +115,7 @@ include('../inc/navbar.php');
                     </div>
                 </a>
             </div>
-          <div class="col-md-2 my-auto">
+          <div class="col-md-2 my-auto d-flex justify-content-center align-items-center">
           
             <a href="kiemduyet.php?maTL=<?php echo $maTL?>"><div class="btn btn-success">Kiểm duyệt</div></a>
             

@@ -35,10 +35,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $imageFileType = strtolower(pathinfo($originalFileName, PATHINFO_EXTENSION));
 
             if ($imageFileType != "jpg" && $imageFileType != "jpeg" && $imageFileType != "png" && $imageFileType != "gif") {
-                $errorMessage[] = "Chỉ cho phép tải lên các tệp ảnh có định dạng JPG, JPEG, PNG.";
+                $errorMessage[] = "Chỉ cho phép tải lên các tệp ảnh có định dạng JPG, JPEG, PNG, GIF.";
                 $uploadOk = 0;
-            } elseif ($_FILES["anhDaiDien"]["size"] > 2 * 1024 * 1024) {
-                $errorMessage[] = "Tệp ảnh quá lớn. Giới hạn là 2MB.";
+            } elseif ($_FILES["anhDaiDien"]["size"] > 5 * 1024 * 1024) {
+                $errorMessage[] = "Tệp ảnh quá lớn. Giới hạn là 5MB.";
                 $uploadOk = 0;
             }
 
@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (file_exists($fileToDelete)) {
                 unlink($fileToDelete);
             } else {
-                $errorMessage[] = "File ảnh cũ không tồn tại.";
+                // $errorMessage[] = "File ảnh cũ không tồn tại.";
             }
 
             if ($uploadOk == 1) {
