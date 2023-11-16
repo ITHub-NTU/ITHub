@@ -112,8 +112,6 @@ include('../inc/navbar.php');
             ?>
             </div>
         </div>
-
-
         <ul class="nav nav-tabs">
             <li class="nav-item">
                 <button id="baiVietButton" class="nav-link active" >Bài viết</button >
@@ -155,7 +153,7 @@ include('../inc/navbar.php');
                         
                         <div class="col-md-12 justify-content-center">
                             <a class="text-decoration-none" href="../diendan/chitietbaiviet.php?maBV=<?php echo $maBV; ?>" title="<?php echo $tenBV; ?>">
-                                <div style="margin-left: 20px" class="card mt-3 ">
+                                <div style="margin-left: 20px" class="card mt-3 mb-3">
                                     <div class="row g-0 justify-content-center">
                                         <div class="col-2">
                                             <img src="../image/<?php echo $anhDaiDien; ?>" class="img-thumbnail d-block" style="width: 5em; " alt="...">
@@ -292,7 +290,7 @@ include('../inc/navbar.php');
                         
                         <div class="col-md-12">
                         <a class="text-decoration-none" href="../diendan/chitietbaiviet.php?maBV=<?php echo $maBV; ?>" title="<?php echo $tenBV; ?>">
-                            <div style="margin-left: 20px" class="card mt-3">
+                            <div style="margin-left: 20px" class="card mt-3 mb-3">
                                 <div class="row g-0 justify-content-center">
                                     <div class="col-2">
                                         <img src="../image/<?php echo $anhDaiDien; ?>" class="img-thumbnail d-block" style="width: 4em;" alt="...">
@@ -550,7 +548,6 @@ $.ajax({
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    // Lắng nghe sự kiện click trên các button
 document.getElementById("baiVietButton").addEventListener("click", function() {
 
     document.getElementById("baiVietSection").classList.remove("d-none");
@@ -560,27 +557,21 @@ document.getElementById("baiVietButton").addEventListener("click", function() {
 });
 
 document.getElementById("taiLieuButton").addEventListener("click", function() {
-    // Hiển thị phần tài liệu
     document.getElementById("taiLieuSection").classList.remove("d-none");
-    // Ẩn các phần còn lại nếu có
     document.getElementById("baiVietSection").classList.add("d-none");
     document.getElementById("baiVietYeuThichSection").classList.add("d-none");
     document.getElementById("taiLieuYeuThichSection").classList.add("d-none");
 });
 
 document.getElementById("baiVietYTButton").addEventListener("click", function() {
-    // Hiển thị phần bài viết yêu thích
     document.getElementById("baiVietYeuThichSection").classList.remove("d-none");
-    // Ẩn các phần còn lại nếu có
     document.getElementById("baiVietSection").classList.add("d-none");
     document.getElementById("taiLieuSection").classList.add("d-none");
     document.getElementById("taiLieuYeuThichSection").classList.add("d-none");
 });
 
 document.getElementById("taiLieuYTButton").addEventListener("click", function() {
-    // Hiển thị phần tài liệu yêu thích
     document.getElementById("taiLieuYeuThichSection").classList.remove("d-none");
-    // Ẩn các phần còn lại nếu có
     document.getElementById("baiVietSection").classList.add("d-none");
     document.getElementById("taiLieuSection").classList.add("d-none");
     document.getElementById("baiVietYeuThichSection").classList.add("d-none");
@@ -588,10 +579,8 @@ document.getElementById("taiLieuYTButton").addEventListener("click", function() 
 
 $(document).ready(function() {
     $('.nav-link').click(function() {
-        // Xóa class 'active' từ tất cả các nút
         $('.nav-link').removeClass('active');
         
-        // Thêm class 'active' vào nút được nhấn
         $(this).addClass('active');
     });
 });
