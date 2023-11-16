@@ -1,4 +1,4 @@
-﻿<?php include_once '../config/Database.php'; ?>
+<?php include_once '../config/Database.php'; ?>
 <?php include_once '../class/TaiLieu.php'; ?>
 <?php include_once '../class/LoaiTaiLieu.php'; ?>
     <?php
@@ -26,6 +26,16 @@
         $taiKhoan = null;  
     }
   
+     // Số lượng tài liệu trên mỗi trang
+     $recordsPerPage = 4;
+
+     // Trang hiện tại, mặc định là trang 1
+      $trangHienTai = isset($_GET['page']) ? $_GET['page'] : 1;
+ 
+     // Tính toán OFFSET dựa trên trang hiện tại
+     $offset = ( $trangHienTai - 1) * $recordsPerPage;
+ 
+    
 
     // lấy dữ liệu dưới để kiểm tra rồi sắp xếp
     $sort = isset($_GET['sort']) ? $_GET['sort'] : '';
@@ -35,15 +45,26 @@
     if (isset($_GET['maLoaiTL'])) {
         $maLoaiTL = $_GET['maLoaiTL'];
         $taiLieu->maLoaiTL = $maLoaiTL;
-        $taiLieus = $taiLieu->getTaiLieuBymaLoaiTL($sort, $order);
+        $taiLieus = $taiLieu->getTaiLieuBymaLoaiTL($sort, $order,$recordsPerPage, $offset);
         $chon = 'maLoaiTL';
         $selectedCategory = $maLoaiTL;
+         // Đếm tổng số tài liệu
+     $tongTaiLieu = $taiLieu->countTotalTaiLieu($maLoaiTL);
+ 
+     // Tính số trang dựa trên tổng số tài liệu và số lượng tài liệu trên mỗi trang
+     $tongTrang = ceil($tongTaiLieu / $recordsPerPage);
     } else {
         $chon = '';
-        $taiLieus = $taiLieu->getTaiLieu($sort, $order);
+        $taiLieus = $taiLieu->getTaiLieu($sort, $order, $recordsPerPage, $offset);
+        $maLoaiTL = null;
+         // Đếm tổng số tài liệu
+     $tongTaiLieu = $taiLieu->countTotalTaiLieu($maLoaiTL);
+    
+     // Tính số trang dựa trên tổng số tài liệu và số lượng tài liệu trên mỗi trang
+     $tongTrang = ceil($tongTaiLieu / $recordsPerPage);
         
     }
-    
+ 
 
     include('../inc/header.php');
     ?>
@@ -84,7 +105,8 @@
                                     </svg>
                                 </th>       
                             </tr>
-                            <tr>    
+                            <tr>
+                               
                                 <th>
                                     <a class="text-secondary icon-link icon-link-hover text-decoration-none m-2 me-5" href="?<?php echo $chon?>=<?php echo $selectedCategory; ?>&sort=tenTL&order=<?php echo ($sort == 'tenTL' && $order == 'ASC') ? 'DESC' : 'ASC'; ?>" id="sort-tenTL">Tên tài liệu
                                         <?php if ($sort == 'tenTL') : ?>
@@ -136,6 +158,7 @@
                                         <?php endif; ?>
                                     </a>
                                 </th>
+                              
                             </tr>
                             </div>
                         </div>
@@ -257,10 +280,30 @@
                     <?php endforeach; ?>
                 <?php else : ?>
                     <p>Không tìm thấy tài liệu.</p>
-                <?php endif; ?>
+                <?php endif; 
+                  echo '<ul class="pagination">';
+                  // Nút back
+                  if ( $trangHienTai > 1) {
+                      echo '<li class="page-item"><a class="page-link" href="?page=' . ( $trangHienTai - 1) . '">Back</a></li>';
+                  }
+                  
+                  for ($i = 1; $i <= $tongTrang; $i++) {
+                      $activeClass = ($i ==  $trangHienTai) ? 'active' : '';
+                      echo '<li class="page-item ' . $activeClass . '"><a class="page-link" href="?'.$chon.'='.$selectedCategory.'&page=' . $i . '">' . ($i ==  $trangHienTai ? '<strong>' . $i . '</strong>' : $i) . '</a></li>';
+                  }
+                  
+                  // Nút next
+                  if ( $trangHienTai < $tongTrang) {
+                      echo '<li class="page-item"><a class="page-link" href="?page=' . ( $trangHienTai + 1) . '">Next</a></li>';
+                  }
+                  
+                  echo '</ul>';
+                ?>
+
                 </div>
             </div>
         </div>
+        <?php include('../inc/footer.php'); ?>
         
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -280,4 +323,3 @@
         
     </script>
 
-<?php include('../inc/footer.php'); ?>
