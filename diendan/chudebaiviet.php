@@ -1,5 +1,4 @@
 <?php
-ob_start();
 include_once '../config/Database.php';
 include_once '../class/ChuDeBV.php';
 include_once '../class/BaiViet.php';

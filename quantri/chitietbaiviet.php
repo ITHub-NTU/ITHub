@@ -3,7 +3,6 @@ ob_start();
 include_once '../config/Database.php';
 include_once '../class/ChuDeBV.php';
 include_once '../class/BaiViet.php';
-//----------------------------------------
 include_once '../class/TienIch.php';
 include_once '../class/ThongBao.php';
 $database = new Database();
@@ -12,7 +11,7 @@ $tblChuDeBV = new ChuDeBV($db);
 $tblThongBao = new ThongBao($db);
 $tienIch = new TienIch();
 $tblBaiViet = new BaiViet($db);
-//----------------------------------------
+
 if(!isset($_SESSION['taiKhoan']))
 {
 header("location: ../nguoidung/dangnhap.php");
@@ -33,10 +32,11 @@ include("../inc/navbar.php");
     $maBV = $_POST['maBV'];
   }
   $baiViet = $tblBaiViet->layBaiViet();
+  $maCD = $baiViet['maCD'];
   $tblBaiViet->trangThaiBV = $baiViet['trangThaiBV'];
   if(isset($_POST['duyet_baiviet']) ||isset( $_POST['maBV'])){
       if ($tblBaiViet->duyetBaiViet($_POST['maBV'], $baiViet['trangThaiBV'])) {
-          $tblThongBao->themTBBV($taiKhoan,'admin', $maCD, $maBV);
+          $tblThongBao->themTBBV($taiKhoan,'duyetbaiviet', $maCD, $maBV);
           header('Location: ../quantri/baivietkiemduyet.php');
       } else {
           echo $baiViet['trangThaiBV'];

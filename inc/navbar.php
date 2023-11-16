@@ -275,7 +275,9 @@
                                 if($rowRole['quyen'] == 'quantrivien'){
                                     echo '<a href="'.$path.'quantri/baivietkiemduyet.php" class="nav-item nav-item2 nav-link">Quản trị</a>';   
                                 }
+                                
                             }
+                            
                         ?>
                         
                         <a href="#" class="nav-item nav-item2 nav-link">Bài tập cá nhân</a>
