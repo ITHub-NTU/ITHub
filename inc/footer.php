@@ -3,7 +3,7 @@
     <div class="container-fluid bg-dark text-white border-top py-4 px-sm-3 px-md-5" style="border-color: rgba(256, 256, 256, .1) !important; margin-top:2em">
         <div class="row">
             <div class="col-lg-6 text-center text-md-left mb-3 mb-md-0">
-                <p class="m-0 text-white">&copy; <a style="text-decoration: none; color: white" href="#">Domain Name</a>. All Rights Reserved. Designed by <a style="text-decoration: none; color: white" href="https://htmlcodex.com">HTML Codex</a>
+                <p class="m-0 text-white">&copy;IT-Hub Kết nối - Chia sẻ - Học hỏi
                 </p>
             </div>
             <div class="col-lg-6 text-center text-md-right">

@@ -57,40 +57,41 @@
             color: #ffc107;
         }
         /* Responsive design */
-        @media (max-width: 768px) {
-            .search-container {
-                max-width: 95%; 
-                margin-top: 10px;
-                margin: 0 auto; /* Căn giữa */
-            }
-            .padding-center-logo{
-                margin-left: 120px;
-                margin-bottom: 10px;
-            }
+        @media (max-width: 600px) {
             .navbar-expand-lg .navbar-collapse {
                 position: fixed;
                 background-color: white; /* Màu nền của navbar toggle */
-                top: 0;
                 left: -100%; /* Di chuyển nó ra ngoài màn hình bên trái */
-                height: 100%;
-                width: 50%;
-                transition: left 0.3s ease-in-out; /* Tạo hiệu ứng di chuyển mượt mà */
+                height:100vh;
+                width: 250px;
+                transition: left 0.1s ease-in-out; /* Tạo hiệu ứng di chuyển mượt mà */
                 z-index: 1000; /* Đảm bảo nó ở trên trang web */
                 padding: 10px;
             }
-
+            
             .navbar-collapse.show {
-                left: 0; /* Hiển thị navbar toggle khi được mở */
+                left: 0; 
+            }
+            
+            .res-moblie{
+                display: flex;
+                justify-content: center;
             }
             .navbar-toggler {
                 position: absolute!important;
-                top: -370%;
+                top: -205%;
                 right: 85%;
             }
             .notification-item:hover {
                 background-color: rgba(0, 0, 0, 0.15);
             }
+            .search-container {
+            position: relative;
+            max-width: 100%; /* Điều chỉnh chiều rộng tối đa */
+            padding-bottom: 10px;
         }
+        }
+        
     </style>
 </head>
 
@@ -98,12 +99,12 @@
     <!-- Topbar Start -->
     <div class="container">
     <div class="row align-items-center py-3 px-xl-5">
-        <div class="col-lg-3 col-md-3 padding-center-logo">
+        <div class="col-lg-3 col-xs-12 padding-center-logo res-moblie">
             <a href="http://localhost/ITHub/trangchu.php" class="text-decoration-none re-icon" style="color: black;">
                 <h1 style="font-weight: bold;" class="m-0"><span class="text-warning">IT</span>HUB</h1>
             </a>
         </div>
-        <div class="col-lg-7 col-md-7">
+        <div class="col-lg-7 col-xs-12 ">
             <form action="http://localhost/ITHub/timkiem/ketquatimkiem.php" method="get">
                 <div class="search-container">
                     <input type="text" name="search" class="search-input" value="<?php if(isset($search))  echo $search?>" placeholder="Tìm tài liệu, bài viết...">
@@ -111,7 +112,7 @@
                 </div>
             </form>
         </div>
-        <div class="col-lg-2 col-md-2" style="text-align:right" >
+        <div class="col-lg-2 col-md-2 " style="text-align:right" >
             
             <?php 
                 $currentPage = basename($_SERVER['PHP_SELF']);
@@ -254,7 +255,7 @@
 
 <!-- Navbar Start -->
 <div class="container">
-<div class="container-fluid" style="margin-bottom: 10px;">
+<div class="container-fluid">
     <div class="row border-top px-xl-5 pt-2">
         <div style="font-size: 20px;" class="col-lg-10  offset-lg-1" >
             <nav class="navbar navbar-expand-lg py-3 py-lg-0 px-0">
@@ -279,7 +280,6 @@
                             }
                             
                         ?>
-                        
                         <a href="#" class="nav-item nav-item2 nav-link">Bài tập cá nhân</a>
                         
                         <a href="#" class="nav-item nav-item2 nav-link">Liên hệ</a>
@@ -298,7 +298,7 @@
         var screenWidth = $(window).width();
 
         // Kiểm tra kích thước màn hình và xử lý sự kiện click
-        if (screenWidth <= 800) {
+        if (screenWidth <= 600) {
             $('.navbar-toggler').click(function () {
                 $('.navbar-collapse').toggleClass('show');
             });
@@ -328,7 +328,6 @@
         }
     });
 });
-
 
 </script>
 <?php
