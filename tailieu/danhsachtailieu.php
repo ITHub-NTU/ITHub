@@ -202,10 +202,10 @@
                             <div class="row">
                                 <div class="col-lg-3 text-center">
                                     <?php if (!empty($taiLieu['anhTL'])) : ?>
-                                        <img class="border border-3 rounded-4 m-3" style="width: 150px; height: 150px;" src="../image/macdinh.png" alt="Image" class="img-responsive">
-                                        <!-- "img/<?php echo $taiLieu['anhTL']; ?>" -->
+                                        <img class="border border-3 rounded-4 m-3" style="width: 150px; height: 150px;" src="../image/<?php echo $taiLieu['anhTL']; ?>" alt="Image" class="img-responsive">
+                            
                                     <?php else : ?>
-                                        <img class="border border-3 rounded-4 m-3" style="width: 150px; height: 150px;" src="../image/macdinh.png" alt="Default Image" class="img-responsive">
+                                        <img class="border border-3 rounded-4 m-3" style="width: 150px; height: 150px;" src="../image/macdinh.jpg" alt="Default Image" class="img-responsive">
                                     <?php endif; ?>
                                 </div>
                                 
