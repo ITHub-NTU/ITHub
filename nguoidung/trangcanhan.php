@@ -155,16 +155,16 @@ include('../inc/navbar.php');
                             <a class="text-decoration-none" href="../diendan/chitietbaiviet.php?maBV=<?php echo $maBV; ?>" title="<?php echo $tenBV; ?>">
                                 <div style="margin-left: 20px" class="card mt-3 mb-3">
                                     <div class="row g-0 justify-content-center">
-                                        <div class="col-2">
+                                        <div class="col-2 mt-3">
                                             <img src="../image/<?php echo $anhDaiDien; ?>" class="img-thumbnail d-block" style="width: 5em; " alt="...">
                                             <p style="color: blue; margin-left: 5px"><?php echo $taiKhoanBV; ?></p>
                                         </div>
                                         <div class="col-10">
                                             <div class="row justify-content-center">
-                                                <div class="col-10">
+                                                <div class="col-9">
                                                     <?php echo $tenBV; ?>
                                                 </div>
-                                                <div class="col-2 d-flex">
+                                                <div class="col-3 d-flex">
                                                     <form name="deleteBV" method="post">
                                                         <input type="hidden" name="maBV" value="<?php echo $maBV; ?>">
                                                         <button type="submit" name="deleteBV" class="btn btn-danger mt-4">
@@ -298,13 +298,13 @@ include('../inc/navbar.php');
                                     </div>
                                     <div class="col-10">
                                         <div class="row justify-content-center">
-                                            <div class="col-10">
+                                            <div class="col-9">
                                                     <?php echo $tenBV; ?>
                                             </div>
-                                            <div class="col-2 d-flex">
-                                                <form name="deleteBV" method="post">
-                                                    <input type="hidden" name="maBV" value="<?php echo $maBV; ?>">
-                                                    <button type="submit" name="deleteBV" class="btn btn-danger mt-4">
+                                            <div class="col-3 d-flex">
+                                                <form name="deleteBVYT" method="post">
+                                                    <input type="hidden" name="maBVYT" value="<?php echo $maBV; ?>">
+                                                    <button type="submit" name="deleteBVYT" class="btn btn-danger mt-4">
                                                         <i class="fas fa-trash-alt"></i> 
                                                     </button>
                                                 </form>
@@ -375,7 +375,7 @@ include('../inc/navbar.php');
                                 </div>
                                 <div class="row d-flex justify-content-center align-items-center"> 
                                     <form name="deleteTLYT" method="post">
-                                        <input type="hidden" name="maTL" value="<?php echo $maTL; ?>">
+                                        <input type="hidden" name="maTLYT" value="<?php echo $maTL; ?>">
                                         <div class="d-flex justify-content-center align-items-center"> 
                                             <button type="submit" name="deleteTLYT" class="btn btn-danger mb-3">
                                                 <i class="fas fa-trash-alt"></i> 
