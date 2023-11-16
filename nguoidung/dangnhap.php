@@ -19,21 +19,31 @@ if(!empty($_POST["login"]) && !empty($_POST["taiKhoan"]) && !empty($_POST["matKh
         $_SESSION['hoatdong'] = 'hoatdong';
         $_SESSION['taiKhoan'] = $_POST["taiKhoan"];
         $_SESSION['pass'] = $_POST["matKhau"];
-        switch ($tblNguoiDung->quyen) {
-            case 'quantrivien':
-                $tblNguoiDung->accountOnline($_POST["taiKhoan"]);
-                header("Location: ../trangchu.php");
-                break;
-            case 'nguoidung':
-                $tblNguoiDung->accountOnline($_POST["taiKhoan"]);
-                header("Location: ../trangchu.php");
-                break;
-            case 'nguoidungbichan':
-                $loginMessage = "Người dùng đã bị chặn";
+        switch ($tblNguoiDung->xacThuc){
+            case 'chuaxacminh':
+                $loginMessage = "Người dùng chưa xác minh";
                 session_unset();
                 session_destroy();
                 break;
+            case 'daxacminh':
+                switch ($tblNguoiDung->quyen) {
+                    case 'quantrivien':
+                        $tblNguoiDung->accountOnline($_POST["taiKhoan"]);
+                        header("Location: ../trangchu.php");
+                        break;
+                    case 'nguoidung':
+                        $tblNguoiDung->accountOnline($_POST["taiKhoan"]);
+                        header("Location: ../trangchu.php");
+                        break;
+                    case 'nguoidungbichan':
+                        $loginMessage = "Người dùng đã bị chặn";
+                        session_unset();
+                        session_destroy();
+                        break;
+                }
         }
+        
+        
     } else {
         $loginMessage = 'Đăng nhập không hợp lệ! Vui lòng thử lại.';
     }

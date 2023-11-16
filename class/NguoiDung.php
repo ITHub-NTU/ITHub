@@ -70,6 +70,7 @@ class NguoiDung {
                     $_SESSION["hoND"] = $user['hoND'];	
                     $_SESSION["tenND"] = $user['tenND'];
                     $this->quyen = $user['quyen'];
+                    $this->xacThuc = $user['xacThuc'];  
 
                     if (!empty($_POST["rememberMe"])) {
                         setcookie("taiKhoan", $this->taiKhoan, time() + 3600 * 24 * 7, "/");
