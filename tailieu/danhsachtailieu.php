@@ -1,14 +1,10 @@
 <?php include_once '../config/Database.php'; ?>
 <?php include_once '../class/TaiLieu.php'; ?>
 <?php include_once '../class/LoaiTaiLieu.php'; ?>
-<?php include_once '../class/ThongBao.php'; ?>
     <?php
     $database = new Database();
     $db = $database->getConnection();
     $taiLieu = new TaiLieu($db);
-    $taiLieu = new TaiLieu($db);
-    $tblThongBao = new ThongBao($db);
-
     // Kiểm tra tài khoản có hoạt động hoặc bận và tài khoản đã đăng xuất chưa
     if(isset($_SESSION['hoatdong']))
     {
@@ -20,12 +16,8 @@
                 $maTL = $_POST['maTL'];
                 $yeuThich = $_POST['yeuThich'];
                 $taiKhoan = $_POST['taiKhoan'];
-                $taiLieuMaTL = $maTL;
-                $taiLieu->maTL = $taiLieuMaTL; 
-                $chiTietTaiLieu = $taiLieu->layTaiLieu();
                 // Thêm thông tin yêu thích vào cơ sở dữ liệu
                 $themXoaTLYeuThich = $taiLieu->changeTLYeuThich($yeuThich, $taiKhoan,$maTL);
-                $tblThongBao->themTBTL($chiTietTaiLieu['taiKhoan'], $taiKhoan, 'yeuthichtailieu', $chiTietTaiLieu['maLoaiTL'], $maTL);
             } 
         }
     }else{
@@ -180,7 +172,7 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h1 class="modal-title fs-5" id="exampleModalLabel">Đăng tài liệu vào chủ đề...</h1>
-                                    <button type="button" class="btn-close" data-bs-dimdiss="modal" aria-label="Close"></button>
+                                    <input type="button" class="btn btn-secondary" value="X" data-bs-dismiss="modal" aria-label="Close">
                                 </div>
                                 <div class="modal-body">
                                     <ul class="list-group">
@@ -225,7 +217,12 @@
                                     <p class="fw-normal mb-2 mt-2" ><?php echo $taiLieu['moTaTL']; ?></p>
                                     </div>
                                     <div class="row">
-                                        <div class="col"> <a href="#"><i class="fa fa-user text-body-secondary me-5" aria-hidden="true"> <?php echo $taiLieu['taiKhoan']; ?></i></a>
+                                        <div class="col">  <a href="nguoidung/trangcanhan.php" class="me-4"style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration:none;color:black">
+                                    <?php
+                                    echo'
+                                    <img style="width: 30px; height: 30px; object-fit: cover;border: 3px solid" class="user-avatar rounded-circle" src="'.$path.'image/'.$taiLieu['anhDaiDien'].'" alt="User Avatar">';
+                                    ?>
+                                    <?php echo $taiLieu['taiKhoan']; ?></a>
                                         </div>
                                         <div class="col"> <a href="#"><i class="fa fa-calendar text-body-secondary me-5" aria-hidden="true"> <?php echo date('d-m-Y', strtotime($taiLieu['ngayDuyetTL'])); ?></i></a>
                                         </div>
