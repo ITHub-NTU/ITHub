@@ -27,6 +27,7 @@ class NguoiDung {
     private $tblQuanTriTL = 'tblquantritl';
     private $tblTLYeuThich = 'tbltlyeuthich';
     private $tblBVYeuThich = 'tblbvyeuthich';
+    private $tblChanTinNhan = 'tblchantinnhan';
 	private $conn;
     public $expectedVerificationCode;
 
@@ -626,6 +627,53 @@ class NguoiDung {
         } else {
             return false;
         }
+    }
+
+    public function chanTinNhanNguoiDung($tenTinNhan, $nguoiChan, $nguoiBiChan, $hanhDong) {
+        if ($hanhDong == 'chan') {
+            $query = "
+                INSERT INTO `tblchantinnhan` (`maChanTN`, `tenTN`, `nguoiChan`, `nguoiBiChan`) 
+                VALUES (NULL, ?, ?, ?)
+            ";
+    
+            $stmt = $this->conn->prepare($query);
+
+            $stmt->bind_param("sss", $tenTinNhan, $nguoiChan, $nguoiBiChan);
+    
+            if ($stmt->execute()) {
+                return true;
+            }
+            return false;
+        } else {
+            $query = "
+                DELETE FROM `tblchantinnhan`
+                WHERE `tenTN` = ? AND `nguoiChan` = ? AND `nguoiBiChan` = ?
+            ";
+    
+            $stmt = $this->conn->prepare($query);
+    
+            $stmt->bind_param("sss", $tenTinNhan, $nguoiChan, $nguoiBiChan);
+    
+            if ($stmt->execute()) {
+                return true;
+            }
+            return false;
+        }
+    }
+    
+
+    public function kiemTraTrangThaiChan($tenTinNhan) {
+        $query = "
+    SELECT *
+    FROM `tblchantinnhan`
+    WHERE `tenTN` = ?
+    ";
+
+    $stmt = $this->conn->prepare($query);
+    $stmt->bind_param('s', $tenTinNhan);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result;
     }
 }
 ?>
