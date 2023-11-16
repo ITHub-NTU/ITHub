@@ -1,23 +1,29 @@
 <?php include_once '../config/Database.php'; ?>
 <?php include_once '../class/TaiLieu.php'; ?>
 <?php include_once '../class/LoaiTaiLieu.php'; ?>
+<?php include_once '../class/ThongBao.php'; ?>
     <?php
     $database = new Database();
     $db = $database->getConnection();
     $taiLieu = new TaiLieu($db);
+    $tblThongBao = new ThongBao($db);
     // Kiểm tra tài khoản có hoạt động hoặc bận và tài khoản đã đăng xuất chưa
     if(isset($_SESSION['hoatdong']))
     {
         $chDangNhap = true;
         $taiKhoan = $_SESSION['taiKhoan'];  
+
             //Thêm và xóa tài liệu yêu thích
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if(isset($_POST['maTL']) and isset($_POST['yeuThich']) and isset($_POST['taiKhoan'])){
                 $maTL = $_POST['maTL'];
                 $yeuThich = $_POST['yeuThich'];
                 $taiKhoan = $_POST['taiKhoan'];
+                $taiLieu->maTL = $maTL; 
+                $chiTietTaiLieu = $taiLieu->layTaiLieu();
                 // Thêm thông tin yêu thích vào cơ sở dữ liệu
                 $themXoaTLYeuThich = $taiLieu->changeTLYeuThich($yeuThich, $taiKhoan,$maTL);
+                $tblThongBao->themTBTL($chiTietTaiLieu['taiKhoan'], $taiKhoan, 'yeuthichtailieu', $chiTietTaiLieu['maLoaiTL'], $maTL);
             } 
         }
     }else{
