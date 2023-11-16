@@ -11,20 +11,17 @@ class TimKiem {
     }	
     public function timkiemtailieuWithPagination($resultsPerPage, $offset) {
         if ($this->search) {
-            $sqlQuery = "SELECT * FROM `tbltailieu` WHERE tenTL LIKE '%" . $this->search . "%' LIMIT ?, ?";
+            $sqlQuery = "SELECT * FROM `tbltailieu` WHERE tenTL LIKE ? LIMIT ?, ?";
+            $this->search = "%".$this->search."%";
         } else {
             $sqlQuery = "SELECT * FROM `tbltailieu` LIMIT ?, ?";
         }
     
         $stmt = $this->conn->prepare($sqlQuery);
-        
-        // Bắt đầu binding các tham số
-        if ($this->search) {
+        if($this->search)
             $stmt->bind_param("sii", $this->search, $offset, $resultsPerPage);
-        } else {
+        else
             $stmt->bind_param("ii", $offset, $resultsPerPage);
-        }
-        
         $stmt->execute();
         $result = $stmt->get_result();
         
@@ -32,36 +29,25 @@ class TimKiem {
     }
     public function timkiembaivietWithPagination($resultsPerPage, $offset) {
         if ($this->search) {
-            $sqlQuery = "SELECT * FROM `tblbaiviet` WHERE tenBV LIKE '%" . $this->search . "%' LIMIT ?, ?";
+            $sqlQuery = "SELECT bv.*, nd.anhDaiDien, nd.quyen 
+                         FROM `tblbaiviet` as bv
+                         JOIN tblnguoidung as nd on bv.taiKhoan = nd.taiKhoan  
+                         WHERE tenBV LIKE '%" . $this->search . "%' LIMIT ?, ?";
         } else {
-            $sqlQuery = "SELECT * FROM `tblbaiviet` LIMIT ?, ?";
+            $sqlQuery = "SELECT bv.*, nd.anhDaiDien, nd.quyen  
+                         FROM `tblbaiviet` as bv
+                         JOIN tblnguoidung as nd on bv.taiKhoan = nd.taiKhoan   
+                         LIMIT ?, ?";
         }
-    
         $stmt = $this->conn->prepare($sqlQuery);
-        
-        // Bắt đầu binding các tham số
-        if ($this->search) {
-            $stmt->bind_param("sii", $this->search, $offset, $resultsPerPage);
-        } else {
-            $stmt->bind_param("ii", $offset, $resultsPerPage);
-        }
-        
+        $stmt->bind_param("ii", $offset, $resultsPerPage);
         $stmt->execute();
         $result = $stmt->get_result();
         return $result;
     }
-    public function timkiembaiviet(){
-        if($this->search){
-            $sqlQuery = "SELECT * FROM tblbaiviet WHERE tenBV LIKE '%".$this->search."%'";
-
-            $stmt = $this->conn->prepare($sqlQuery);
-				$stmt->execute();
-				$result = $stmt->get_result();			
-				return $result;	
-        }
-    }
-    public function demSoLuongTaiLieu(){
-        $sqlQuery = "SELECT * FROM tbltailieu";
+    
+    public function demSoLuongTaiLieu($search){
+        $sqlQuery = "SELECT * FROM tbltailieu WHERE tenTL LIKE '%".$search."%'";
         $stmt = $this->conn->prepare($sqlQuery);
             $stmt->execute();
             $result = $stmt->get_result();	
