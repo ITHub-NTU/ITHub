@@ -573,6 +573,16 @@ class NguoiDung {
         }
     }
 
+    public function chanUser($taiKhoan) {
+        $banQuery = "UPDATE " . $this->tblNguoiDung . " SET quyen = 'nguoidungbichan' WHERE taiKhoan = ?";
+        $stmt = $this->conn->prepare($banQuery);
+        $stmt->bind_param("s", $taiKhoan);
     
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 ?>
