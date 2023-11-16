@@ -569,7 +569,6 @@ class NguoiDung {
         }
     }
 
-<<<<<<< HEAD
     public function layThongTinQuanTriTrucTuyen($tenBangQT) {
         $sqlQuery = " 
                 SELECT DISTINCT s.* FROM ".$this->tblNguoiDung." s
@@ -616,12 +615,11 @@ class NguoiDung {
             $tongTaiKhoan = $result->fetch_assoc();			
             return $tongTaiKhoan['soLuongTK'];	
     }
-=======
+
     public function chanUser($taiKhoan) {
         $banQuery = "UPDATE " . $this->tblNguoiDung . " SET quyen = 'nguoidungbichan' WHERE taiKhoan = ?";
         $stmt = $this->conn->prepare($banQuery);
         $stmt->bind_param("s", $taiKhoan);
->>>>>>> d3c57a0c81248665648d9c4d64e2f23ad0caaf54
     
         if ($stmt->execute()) {
             return true;
