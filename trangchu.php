@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 $currentPage = basename($_SERVER['PHP_SELF']);
 if($currentPage == 'trangchu.php') {
     $path = '../ITHub/';
@@ -106,19 +106,17 @@ include($path."inc/header.php");
                 <div class="d-flex" style="
                         flex-wrap: nowrap;
                         overflow-x: auto; 
-                        padding-bottom: 20px; 
-                        
-                    ">
-                   
+                        padding-bottom: 20px;  ">       
                     <?php
+                 
                     foreach ($dsTaiLieuMoiNhat as $taiLieuMoiNhat) :?>
                     <?php
                         $currentDomain = $_SERVER['HTTP_HOST'];
                         $chitiettailieuURL = "http://".$currentDomain."/ITHUB/tailieu/chitiettailieu.php?maTL=".$taiLieuMoiNhat['maTL'];
                         ?>
-                        <div class="col-lg-3" >
+                        <div class="col-lg-2 me-2" >
                         <a href="<?php echo $chitiettailieuURL; ?>"  style="--bs-link-hover-color-rgb: 25, 135, 84;color:black">
-                        <div class="card p-2 rounded-2" style="width: 16rem;">
+                        <div class="card p-2 rounded-2" style="width: 12rem;">
                             <img src="image/macdinh.png" class="card-img-top bg-image hover-zoom" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title"> <h5 class="fw-medium" style="color:black"><span><i id="fa-picture-o" aria-hidden="true"></i></span><?php echo $taiLieuMoiNhat['tenTL']; ?></h5>
@@ -126,14 +124,16 @@ include($path."inc/header.php");
                                 $toanBoNoiDung = $taiLieuMoiNhat['moTaTL'];;
                                 $summary = substr($toanBoNoiDung, 0, 50);
                                 $readmore = '...';
-                                echo "<p class='full-content' style='display: none'>" . $toanBoNoiDung. "</p>";
                                 echo "<p class='summary'>" . $summary . $readmore . "</p><br/>";
                                 ?>
                               
-                                <a href="nguoidung/trangcanhan.php" class="me-4"style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration:none;color:black"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle text-body-secondary" viewBox="0 0 16 16">
-                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                                </svg><?php echo $taiLieuMoiNhat['taiKhoan']; ?></a>
+                                <a href="nguoidung/trangcanhan.php" class="me-4"style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration:none;color:black">
+                                <?php
+                                echo'
+                                <img style="width: 30px; height: 30px; object-fit: cover;border: 3px solid" class="user-avatar rounded-circle" src="'.$path.'image/'.$taiLieuMoiNhat['anhDaiDien'].'" alt="User Avatar">';
+                                ?>
+                                <?php echo $taiLieuMoiNhat['taiKhoan']; ?></a>
+                                
                                 <i class="fa fa-calendar text-body-secondary me-5" aria-hidden="true">  <?php echo date('d-m-Y', strtotime($taiLieuMoiNhat['ngayDuyetTL'])); ?></i>
                             
                             </div>
@@ -157,23 +157,24 @@ include($path."inc/header.php");
                     $currentDomain = $_SERVER['HTTP_HOST'];
                     $chitietbaivietURL = "http://".$currentDomain."/ITHUB/diendan/chitietbaiviet.php?maBV=".$baiVietMoiNhat['maBV'];
                 ?>
-                 <div class="col-lg-3 mb-3" >
+                 <div class="col-lg-2 me-2" >
                  <a href="<?php echo  $chitietbaivietURL; ?>"  style="--bs-link-hover-color-rgb: 25, 135, 84; color:black">
-                        <div class="card p-2 rounded-2 mt-2" style="width: 16rem;">
+                        <div class="card p-2 rounded-2 mt-2" style="width: 12rem;">
                                <h5 class="fw-medium mb-2 mt-3"><span><i id="fa-picture-o" aria-hidden="true"></i></span><?php echo $baiVietMoiNhat['tenBV']; ?></h5>
                             <div id="partialContent">
                                 <?php
                             $toanBoNoiDung = $baiVietMoiNhat['noiDungBV'];
-                                $summary = substr($toanBoNoiDung, 0, 100);
-                                $readmore = '...';
-                                echo "<p class='full-content' style='display: none'>" . $toanBoNoiDung. "</p>";
+                                $summary = substr($toanBoNoiDung, 0, 50);
+                              
                                 echo "<p class='summary'>" . $summary . $readmore . "</p><br/>";
                                 ?>
                             </div>
-                            <a href="nguoidung/trangcanhan.php" class="me-4"style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration:none;color:black"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle text-body-secondary" viewBox="0 0 16 16">
-                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                                </svg><?php echo $baiVietMoiNhat['taiKhoan']; ?></a>
+                            <a href="nguoidung/trangcanhan.php" class="me-4"style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration:none;color:black">
+                            <?php
+                                echo'
+                                <img style="width: 30px; height: 30px; object-fit: cover;border: 3px solid  " class="user-avatar rounded-circle" src="'.$path.'image/'.$baiVietMoiNhat['anhDaiDien'].'" alt="User Avatar">';
+                                ?>
+                            <?php echo $baiVietMoiNhat['taiKhoan']; ?></a>
                                 <i class="fa fa-calendar text-body-secondary me-5" aria-hidden="true">  <?php echo date('d-m-Y', strtotime($baiVietMoiNhat['ngayDuyetBV'])); ?></i>
                             
                         </div>
@@ -199,9 +200,9 @@ include($path."inc/header.php");
                         $currentDomain = $_SERVER['HTTP_HOST'];
                         $chitiettailieuURL = "http://".$currentDomain."/ITHUB/tailieu/chitiettailieu.php?maTL=".$taiLieuYeuThich['maTL'];
                         ?>
-                        <div class="col-lg-3" >
+                        <div class="col-lg-2 me-2" >
                         <a href="<?php echo $chitiettailieuURL; ?>"  style="--bs-link-hover-color-rgb: 25, 135, 84;color:black">
-                        <div class="card p-2 rounded-2 mb-3" style="width: 16rem;">
+                        <div class="card p-2 rounded-2 mb-3" style="width: 12rem;">
                             <img src="image/macdinh.png" class="card-img-top bg-image hover-zoom" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title"> <h5 class="fw-medium mb-2 mt-3" style="color:black"><span><i id="fa-picture-o" aria-hidden="true"></i></span><?php echo $taiLieuYeuThich['tenTL']; ?></h5></h5>
@@ -209,14 +210,16 @@ include($path."inc/header.php");
                                 $toanBoNoiDung = $taiLieuYeuThich['moTaTL'];;
                                 $summary = substr($toanBoNoiDung, 0, 50);
                                 $readmore = '...';
-                                echo "<p class='full-content' style='display: none'>" . $toanBoNoiDung. "</p>";
                                 echo "<p class='summary'>" . $summary . $readmore . "</p><br/>";
                                 ?>
                               
-                                <a href="nguoidung/trangcanhan.php" class="me-4"style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration:none;color:black"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle text-body-secondary" viewBox="0 0 16 16">
-                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                                </svg><?php echo $taiLieuYeuThich['taiKhoan']; ?></a>
+                                <a href="nguoidung/trangcanhan.php" class="me-4"style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration:none;color:black">
+                                <?php
+                                echo'
+                                <img style="width: 30px; height: 30px; object-fit: cover;border: 3px solid  " class="user-avatar rounded-circle" src="'.$path.'image/'.$taiLieuYeuThich['anhDaiDien'].'" alt="User Avatar">';
+                                ?>
+                                </svg><?php echo $taiLieuYeuThich['taiKhoan'];
+                                 ?></a>
                                 <i class="fa fa-calendar text-body-secondary me-5" aria-hidden="true">  <?php echo date('d-m-Y', strtotime($taiLieuYeuThich['ngayDuyetTL'])); ?></i>
                             
                             </div>
@@ -238,23 +241,25 @@ include($path."inc/header.php");
                     $currentDomain = $_SERVER['HTTP_HOST'];
                     $chitietbaivietURL = "http://".$currentDomain."/ITHUB/diendan/chitietbaiviet.php?maBV=".$baiVietYeuThich['maBV'];
                 ?>
-                 <div class="col-lg-3 mb-3" id="section2">
+                 <div class="col-lg-2 me-2" id="section2">
                  <a href="<?php echo  $chitietbaivietURL; ?>"  style="--bs-link-hover-color-rgb: 25, 135, 84; color:black">
-                        <div class="card p-2 rounded-2 mt-2" style="width: 16rem;">
+                        <div class="card p-2 rounded-2 mt-2" style="width: 12rem;">
                                <h5 class="fw-medium mb-2 mt-3"><span><i id="fa-picture-o" aria-hidden="true"></i></span><?php echo $baiVietYeuThich['tenBV']; ?></h5>
                             <div id="partialContent">
                                 <?php
                             $toanBoNoiDung = $baiVietYeuThich['noiDungBV'];
                                 $summary = substr($toanBoNoiDung, 0, 100);
                                 $readmore = '...';
-                                echo "<p class='full-content' style='display: none'>" . $toanBoNoiDung. "</p>";
+                             
                                 echo "<p class='summary'>" . $summary . $readmore . "</p><br/>";
                                 ?>
                             </div>
-                            <a href="nguoidung/trangcanhan.php" class="me-4"style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration:none;color:black"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle text-body-secondary" viewBox="0 0 16 16">
-                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                                </svg><?php echo $baiVietYeuThich['taiKhoan']; ?></a>
+                            <a href="nguoidung/trangcanhan.php" class="me-4"style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration:none;color:black">
+                            <?php
+                                echo'
+                                <img style="width: 30px; height: 30px; object-fit: cover;border: 3px solid  " class="user-avatar rounded-circle" src="'.$path.'image/'.$baiVietYeuThich['anhDaiDien'].'" alt="User Avatar">';
+                                ?>
+                                <?php echo $baiVietYeuThich['taiKhoan']; ?></a>
                                 <i class="fa fa-calendar text-body-secondary me-5" aria-hidden="true">  <?php echo date('d-m-Y', strtotime($baiVietYeuThich['ngayDuyetBV'])); ?></i>
                             
                         </div>
