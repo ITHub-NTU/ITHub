@@ -58,7 +58,7 @@
         $taiLieus = $taiLieu->getTaiLieu($sort, $order, $recordsPerPage, $offset);
         $maLoaiTL = null;
          // Đếm tổng số tài liệu
-     //$tongTaiLieu = $taiLieu->countTotalTaiLieu($maLoaiTL);
+     $tongTaiLieu = $taiLieu->countTotalTaiLieu($maLoaiTL);
     
      // Tính số trang dựa trên tổng số tài liệu và số lượng tài liệu trên mỗi trang
      $tongTrang = ceil($tongTaiLieu / $recordsPerPage);
