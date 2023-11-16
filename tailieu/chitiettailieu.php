@@ -349,7 +349,13 @@ if (isset($_GET['maLoaiTL'])) {
                         <div class="row border border-1 rounded-2 p-2  ms-1 me-1">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <p><h6>Người đăng</h6> <a class="text-decoration-none" href="#"> <?php echo $chiTietTaiLieu['taiKhoan']; ?></a></p>
+                                    <p><h6>Người đăng</h6> <div class="col-lg-3">  <a href="../nguoidung/trangbanbe.php?taiKhoanBanBe=<?php echo $chiTietTaiLieu['taiKhoan'];?>" class="me-4"style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration:none;color:black">
+                                    <?php
+                                    echo'
+                                    <img style="width: 30px; height: 30px; object-fit: cover;border: 3px solid" class="user-avatar rounded-circle" src="'.$path.'image/'.$chiTietTaiLieu['anhDaiDien'].'" alt="User Avatar">';
+                                    ?>
+                                    <?php echo $chiTietTaiLieu['taiKhoan']; ?></a>
+                                        </div></p>
                                 </div>
                             </div>
                             <div class="row">
@@ -362,13 +368,23 @@ if (isset($_GET['maLoaiTL'])) {
                                     <p><h6>Mô tả </h6><?php echo $chiTietTaiLieu['moTaTL']; ?></p>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <object data="<?php echo $chiTietTaiLieu['fileTL']; ?>" type="application/pdf" width="100%" height="600">
-                                        <p>Không thể hiển thị tệp PDF. <a href="<?php echo $chiTietTaiLieu['fileTL']; ?>">Tải về</a> thay vào đó.</p>
-                                    </object>
-                                </div>
-                            </div>
+                            <?php
+                            if (pathinfo($chiTietTaiLieu['fileTL'], PATHINFO_EXTENSION) === 'pdf') {
+                                echo '
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <object data="' . $chiTietTaiLieu['fileTL'] . '" type="application/pdf" width="100%" height="600">
+                                            <p>Không thể hiển thị tệp PDF. <a href="' . $chiTietTaiLieu['fileTL'] . '">Tải về</a> thay vào đó.</p>
+                                        </object>
+                                    </div>
+                                </div>';
+                            }
+                            else{
+                                echo '<p>Không thể hiển thị tệp. <a href="' . $chiTietTaiLieu['fileTL'] . '">Tải về</a> thay vào đó.</p>
+                                ';
+                            }
+                            ?>
+                            
                         </div>
                     </div>
                 </div>
