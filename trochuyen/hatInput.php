@@ -65,7 +65,7 @@
                     }
                     $getImg = $tblNguoiDung->getUserInfoByTaiKhoan($finalName);
                     $anhDaiDien = $getImg['anhDaiDien'];
-                    $folder = "img/";
+                    $folder = "../image/";
 
                     if (file_exists($folder . $anhDaiDien)) {
                         $folder .= $anhDaiDien;

@@ -34,7 +34,7 @@
                 $getDate = substr($data['date'],0,-3);
                 $getImg = $tblNguoiDung->getUserInfoByTaiKhoan($gettaiKhoan);
                 $anhDaiDien = $getImg['anhDaiDien'];
-                $folder = "img/";
+                $folder = "../image/";
 
                 if (file_exists($folder . $anhDaiDien)) {
                     $folder .= $anhDaiDien;
