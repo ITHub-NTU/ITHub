@@ -217,7 +217,7 @@
                                     <p class="fw-normal mb-2 mt-2" ><?php echo $taiLieu['moTaTL']; ?></p>
                                     </div>
                                     <div class="row">
-                                        <div class="col-lg-3">  <a href="nguoidung/trangcanhan.php" class="me-4"style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration:none;color:black">
+                                        <div class="col-lg-3">  <a href="../nguoidung/trangbanbe.php?taiKhoanBanBe=<?php echo $taiLieu['taiKhoan'];?>" class="me-4"style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration:none;color:black">
                                     <?php
                                     echo'
                                     <img style="width: 30px; height: 30px; object-fit: cover;border: 3px solid" class="user-avatar rounded-circle" src="'.$path.'image/'.$taiLieu['anhDaiDien'].'" alt="User Avatar">';
