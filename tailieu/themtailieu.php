@@ -1,4 +1,4 @@
-﻿<?php 
+<?php 
 include_once '../config/Database.php';
 include_once '../class/LoaiTaiLieu.php';
 include_once '../class/TaiLieu.php';
@@ -48,8 +48,12 @@ if(isset($_SESSION['hoatdong'])|| empty($_SESSION['taiKhoan']))
             
                     if (move_uploaded_file($_FILES['file']['tmp_name'], $fileTL)) {
                         // Lưu thông tin tệp vào cơ sở dữ liệu
+<<<<<<< HEAD
                         if ($tblTaiLieu->themTaiLieu($maTL, $maLoaiTL, $taiKhoan, $maDD, $tenTL, $moTaTL, $fileTL, $trangThaiTL, $ngayDangTL, $ngayDuyetTL)) {
                             $tblThongBao->themTBTL($taiKhoan, '', 'admin', $maLoaiTL, $maTL);
+=======
+                        if ($tblTaiLieu->themTaiLieu($maTL, $maLoaiTL, $taiKhoan, $maDD, $tenTL, $moTaTL, $fileTL,$anhTL, $trangThaiTL, $ngayDangTL, $ngayDuyetTL)) {
+>>>>>>> 65b6bf9018909ce59a34b93d3ad49dc860fab7b2
                             echo '<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
@@ -167,6 +171,7 @@ include('../inc/header.php');
                             </div>
                             <h5 class="text-secondary">Thả tài liệu tại đây hoặc nhấn vào để đăng tải </h5>
                         </div>
+                       
                         <div class="text-center mt-4">
                             <input type="submit" value="Đăng tài liệu" class="btn btn-dark my-3">
                         </div>
@@ -177,7 +182,8 @@ include('../inc/header.php');
     </div> <!-- end col -->
 </div> <!-- end row -->
 <!-- dropzone js -->
-<script src="../js/dropzone.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
     // Sau khi xử lý thành công khi tệp được tải lên và lưu vào cơ sở dữ liệu
     // Kích hoạt modal thông báo thành công

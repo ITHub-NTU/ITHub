@@ -66,7 +66,7 @@ include('../inc/navbar.php');
 <section class="mh-100 gradient-custom-2">
 <div class="container py-5 h-100">
 <div class="row d-flex justify-content-center align-items-center h-100">
-    <div class="col col-md-9">
+    <div class="col-md-9">
     <div class="card">
         <div class="rounded-top text-white d-flex flex-row custom-bg" >
         <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">

@@ -128,10 +128,9 @@ include('../inc/header.php');
 									</div>';
 									} else {
 										$queryBVMN = "
-											SELECT bv.*, cd.tenCD
+											SELECT bv.*
 											FROM tblbaiviet bv
-											JOIN tblchudebv cd ON bv.maCD = cd.maCD
-											WHERE bv.trangThaiBV = 'daduyet' or bv.trangThaiBV = 'dachinhsua'
+											WHERE bv.trangThaiBV = 'daduyet' or bv.trangThaiBV = 'dachinhsua' AND bv.maCD = '".$chuDeBV['maCD']."'
 											ORDER BY bv.ngayDuyetBV DESC LIMIT 1;";
 										$resultBVMN = $db->query($queryBVMN);
 										$chiTietBaiViet = $resultBVMN->fetch_assoc();
