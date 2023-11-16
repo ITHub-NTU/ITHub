@@ -73,10 +73,10 @@ include('../inc/navbar.php');
             <img src="../image/<?php echo $anhDaiDien?>"                          
             alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
             style="width: 150px; height: 150px; object-fit: cover; z-index: 1">
-            <button type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark"
-            style="z-index: 1;">
-            <a class="text-decoration-none" href="chinhsuathongtin.php">Chỉnh sửa</a>
+            <button type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark" style="z-index: 1;" onclick="window.location.href = 'chinhsuathongtin.php';">
+            Chỉnh sửa
             </button>
+
         </div>
         <div class="ms-3" style="margin-top: 170px;">
             <?php   
@@ -603,6 +603,6 @@ document.getElementById("modalCloseButton").addEventListener("click", function()
 });
 </script>
 
-<?php 
-include('../inc/footer.php');
-?>
+    <?php 
+    include('../inc/footer.php');
+    ?>
