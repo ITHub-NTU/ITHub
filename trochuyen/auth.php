@@ -8,6 +8,6 @@
     if(isset($_SESSION['taiKhoan']) and !empty($_SESSION['taiKhoan'])){
         $taiKhoan = $_SESSION['taiKhoan'];
     } else{
-        header($path."nguoidung/dangnhap.php");
+        header("location:".$path."nguoidung/dangnhap.php");
     }
 ?>
