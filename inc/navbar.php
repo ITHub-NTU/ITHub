@@ -297,7 +297,6 @@
     $(document).ready(function () {
         var screenWidth = $(window).width();
 
-        // Kiểm tra kích thước màn hình và xử lý sự kiện click
         if (screenWidth <= 600) {
             $('.navbar-toggler').click(function () {
                 $('.navbar-collapse').toggleClass('show');

@@ -50,6 +50,14 @@ include('../inc/header.php');
 	
 	
 ?>
+<link rel="stylesheet" href="../inc/main.css">
+<style>
+	.m-ltb-auto{
+		margin-left: auto;
+		margin-top: auto;
+		margin-bottom: auto;
+	}
+</style>
 <div class="col-md-9">
 	<?php 
 		
@@ -63,11 +71,11 @@ include('../inc/header.php');
 					<div class="card  mb-2" style="background-color: #DADDE1;">
 						<div class="card-body">
 							<div class="row">
-								<div class="col-10">
+								<div class="col-md-7 col-xs-6">
 									<div style="font-weight: bold">Bài viết đang chờ</div>
 									<div>'.$soLuong.' bài viết</div>
 								</div>
-								<div class="col-2 m-auto">
+								<div  class="col-md-5 col-xs-6 m-auto d-flex justify-content-end">
 									<form method="get" action="quanlibaivietchoduyet.php">
 										<input name="maCDBV" hidden value="'.$maCD.'"/>
 										<button type="submit" class="btn btn-primary">Quản lí bài viết</button>
@@ -84,24 +92,26 @@ include('../inc/header.php');
 	?>
 	
 	<div class="card" >
-		<div class="d-flex card-header" style="background-color:cadetblue;">
+		<div class="d-flex card-header " style="background-color:cadetblue;">
+			<div>
 			<h5 class=""  ><?php echo $chuDeBV['tenCD']?> </h5>
-			<h5 style="font-weight:unset">&nbsp;[ <?php $soLuong = $tblChuDeBV->laySoLuongNguoiTheoDoiCD($maCD ); 
+			<h5 style="font-weight:unset; font-size: 16px">[ <?php $soLuong = $tblChuDeBV->laySoLuongNguoiTheoDoiCD($maCD ); 
 						$resultSoLuong = $soLuong->fetch_assoc();
 			echo $resultSoLuong['soLuong']?> người theo dõi ]
 			</h5>
+			</div>
 			<?php 
 				if(isset($_SESSION['taiKhoan'])){
 					if($theodoi){
 						echo '
-						<form method="post" style="margin-left: auto">
+						<form method="post" class="m-ltb-auto" >
 							<button class="btn btn-success " value ="'.$maCD.'" name="theodoichude">Hủy theo dõi</button>
 						</form>
 						';
 					}
 					else{
 						echo '
-						<form method="post" style="margin-left: auto">
+						<form method="post" class="m-ltb-auto" >
 							<button class="btn btn-success " value ="'.$maCD.'" name="theodoichude">Theo dõi</button>
 						</form>
 						';
@@ -109,7 +119,7 @@ include('../inc/header.php');
 				}
 				else{
 					echo '
-						<form method="post" style="margin-left: auto">
+						<form method="post" class="m-ltb-auto">
 							<button class="btn btn-success " value ="'.$maCD.'" name="theodoichude">Theo dõi</button>
 						</form>
 						';
@@ -158,15 +168,15 @@ include('../inc/header.php');
 				}
 		?>
 			<div class="row">
-				<div class="col-md-6 my-auto text-center">
+				<div class="col-md-6 col-xs-12 my-auto ">
 					<div class="row my-auto " style="text-align:left;">
-						<div class="col-md-3 my-auto">
+						<div class="col-md-3 col-xs-6 ">
 							<img src="../image/<?php echo $baiViet['anhDaiDien'];?>" class=" m-3 d-block" style="width: 80px;
-						height: 80px;
-						object-fit: cover;
-						border-radius: 50%;" alt="...">
+								height: 80px;
+								object-fit: cover;
+								border-radius: 50%;" alt="...">
 						</div>
-						<div class="col-md-9 my-auto">
+						<div class="col-md-9 col-xs-6 my-auto">
 							<div class="row">
 								<a class="text-decoration-none" href="chitietbaiviet.php?maBV=<?php echo $baiViet['maBV'];?>" title="">
 									<?php
@@ -188,7 +198,7 @@ include('../inc/header.php');
 						</div>
 					</div>
 				</div>
-				<div class="col-md-6 my-auto">
+				<div class="col-md-6 col-xs-12 my-auto">
 					<div class="row">
 						<div class="col-md-3 text-center my-auto">
 							<p>Bình luận</p>
