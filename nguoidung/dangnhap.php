@@ -43,6 +43,7 @@ if(!empty($_POST["login"]) && !empty($_POST["taiKhoan"]) && !empty($_POST["matKh
                 }
         }
         
+
         
     } else {
         $loginMessage = 'Đăng nhập không hợp lệ! Vui lòng thử lại.';

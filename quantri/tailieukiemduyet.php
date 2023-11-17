@@ -130,15 +130,19 @@ include('../inc/navbar.php');
       
     ?>
     </div>
-    <div class="card col-md-3">
+    <div class="card col-md-3 ">
     <?php 
       $resultDSTL =  $tblQuanTriTaiLieu->layDSChuDeTLQT($taiKhoan);
       while($danhSachTL = $resultDSTL->fetch_assoc()){
     ?>
       <a href="../tailieu/danhsachtailieu.php?maLoaiTL=<?php echo $danhSachTL['maLoaiTL']?>" class="text-decoration-none">
         <div class="row p-3">
-          <img src="../image/images.png" alt="" class="col-md-5" style="width: 40%">
-          <h5 style="line-height: 4;margin-bottom: 0px; white-space: nowrap" class="col-md-7 d-flex" ><?php echo $danhSachTL['tenLoaiTL']?></h5>
+          <div class="col-5 col-md-5">
+            <img src="../image/images.png" alt="" style="width: 100%;">
+          </div>
+          <div class="col-7 col-md-7 d-flex justify-content-center align-items-center">
+            <h5 style="line-height: 1.2; white-space: normal;"><?php echo $danhSachTL['tenLoaiTL']?></h5>
+          </div>
         </div>
       </a>
   <?php }?>
