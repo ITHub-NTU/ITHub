@@ -73,9 +73,11 @@ class TaiLieu {
                 FROM $this->tbltailieu TL
                 INNER JOIN $this->tblloaitailieu LTL ON TL.maLoaiTL = LTL.maLoaiTL
                 INNER JOIN $this->tbldinhdangtl DDTL ON TL.maDD = DDTL.maDD
+                INNER JOIN $this->tblnguoidung NG ON TL.taiKhoan = NG.taiKhoan
                 WHERE TL.trangThaiTL = 'daduyet'
                 ";
         $sql .= " GROUP BY TL.maTL";
+        
         if (!empty($sort) && !empty($order)) {
             if ($sort == 'ngayDuyetTL') {
                 $sort = 'TL.ngayDuyetTL';
@@ -101,12 +103,14 @@ class TaiLieu {
                 FROM $this->tbltailieu TL
                 INNER JOIN $this->tblloaitailieu LTL ON TL.maLoaiTL = LTL.maLoaiTL
                 INNER JOIN $this->tbldinhdangtl DDTL ON TL.maDD = DDTL.maDD
+                INNER JOIN $this->tblnguoidung NG ON TL.taiKhoan = NG.taiKhoan
                 WHERE TL.maLoaiTL = ? AND TL.trangThaiTL = 'daduyet'";
         $sql .= " GROUP BY TL.maTL";
         if (!empty($sort) && !empty($order)) {
             if ($sort == 'ngayDuyetTL') {
                 $sort = 'TL.ngayDuyetTL';
             }
+            
             $sql .= " ORDER BY $sort $order";
         }
         $sql .= " LIMIT $recordsPerPage OFFSET $offset";
@@ -131,6 +135,7 @@ class TaiLieu {
                     FROM $this->tbltailieu TL
                     INNER JOIN $this->tblloaitailieu LTL ON TL.maLoaiTL = LTL.maLoaiTL
                     INNER JOIN $this->tbldinhdangtl DDTL ON TL.maDD = DDTL.maDD
+                    INNER JOIN $this->tblnguoidung NG ON TL.taiKhoan = NG.taiKhoan
                     WHERE TL.maTL = '".$this->maTL."'";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
@@ -152,12 +157,12 @@ class TaiLieu {
     // 	return false;
     // }
     //PhuongHa thêm tài liệu
-    public function themTaiLieu($maTL, $maLoaiTL, $taiKhoan, $maDD, $tenTL, $moTaTL, $fileTL, $trangThaiTL, $ngayDangTL, $ngayDuyetTL) {
-        $query = "INSERT INTO " . $this->tbltailieu . " (maTL, maLoaiTL, taiKhoan, maDD, tenTL, moTaTL, fileTL, trangThaiTL, ngayDangTL, ngayDuyetTL) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public function themTaiLieu($maTL, $maLoaiTL, $taiKhoan, $maDD, $tenTL, $moTaTL, $fileTL, $trangThaiTL, $ngayDangTL, $ngayDuyetTL,$anhTL) {
+        $query = "INSERT INTO " . $this->tbltailieu . " (maTL, maLoaiTL, taiKhoan, maDD, tenTL, moTaTL, fileTL, trangThaiTL, ngayDangTL, ngayDuyetTL, anhTL) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("ssssssssss", $maTL, $maLoaiTL, $taiKhoan, $maDD, $tenTL, $moTaTL, $fileTL, $trangThaiTL,$ngayDangTL, $ngayDuyetTL);
+        $stmt->bind_param("sssssssssss", $maTL, $maLoaiTL, $taiKhoan, $maDD, $tenTL, $moTaTL, $fileTL, $trangThaiTL,$ngayDangTL, $ngayDuyetTL,$anhTL);
 
         
         if ($stmt->execute()) {

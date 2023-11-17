@@ -124,18 +124,29 @@
             $friendEmail = $data['email'];
             $tableName = "ithub";
             $ifExists = false;
+            $ifExists2 = false;
             $target = $friendUsername."_".$taiKhoan;
             $findTable = "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'ithub' AND TABLE_NAME = '$target'";
             $findResult = $db->query($findTable);
-            
+
             if ($friendUsername != $taiKhoan && $friendUsername != 'quantrivien') {
                 if (mysqli_num_rows($findResult) > 0) {
                     $ifExists = true;
                 }
             }
 
-            if (!$ifExists && $friendUsername != $taiKhoan && $friendUsername != 'quantrivien') {
-              $folder = "img/user.jpg";
+            $target2 = $taiKhoan."_".$friendUsername;
+            $findTable2 = "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'ithub' AND TABLE_NAME = '$target2'";
+            $findResult2 = $db->query($findTable2);
+            
+            if ($friendUsername != $taiKhoan && $friendUsername != 'quantrivien') {
+                if (mysqli_num_rows($findResult2) > 0) {
+                    $ifExists2 = true;
+                }
+            }
+
+            if (!$ifExists2 && !$ifExists && $friendUsername != $taiKhoan && $friendUsername != 'quantrivien' && $taiKhoan == $taiKhoan) {
+              $folder = "../image/".$data['anhDaiDien'];
               if ($count >= 3) {
                 $colClass = 'col-lg-4';
               } elseif ($count == 2) {

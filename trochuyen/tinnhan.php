@@ -82,7 +82,7 @@
 	}
 	$getImg = $tblNguoiDung->getUserInfoByTaiKhoan($taiKhoan);
 	$anhDaiDien = $getImg['anhDaiDien'];
-	$folder = "img/";
+	$folder = "../image/";
 
 	if (file_exists($folder . $anhDaiDien)) {
 		$folder .= $anhDaiDien;
@@ -116,7 +116,7 @@
 
 	$getImgFriend = $tblNguoiDung->getUserInfoByTaiKhoan($finalName);
 	$anhDaiDienFriend = $getImgFriend['anhDaiDien'];
-	$friendImg = "img/";
+	$friendImg = "../image/";
 
 	if (file_exists($friendImg . $anhDaiDienFriend)) {
 		$friendImg .= $anhDaiDienFriend;

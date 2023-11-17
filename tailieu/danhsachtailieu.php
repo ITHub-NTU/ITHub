@@ -1,23 +1,29 @@
 <?php include_once '../config/Database.php'; ?>
 <?php include_once '../class/TaiLieu.php'; ?>
 <?php include_once '../class/LoaiTaiLieu.php'; ?>
+<?php include_once '../class/ThongBao.php'; ?>
     <?php
     $database = new Database();
     $db = $database->getConnection();
     $taiLieu = new TaiLieu($db);
+    $tblThongBao = new ThongBao($db);
     // Kiểm tra tài khoản có hoạt động hoặc bận và tài khoản đã đăng xuất chưa
     if(isset($_SESSION['hoatdong']))
     {
         $chDangNhap = true;
         $taiKhoan = $_SESSION['taiKhoan'];  
+
             //Thêm và xóa tài liệu yêu thích
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if(isset($_POST['maTL']) and isset($_POST['yeuThich']) and isset($_POST['taiKhoan'])){
                 $maTL = $_POST['maTL'];
                 $yeuThich = $_POST['yeuThich'];
                 $taiKhoan = $_POST['taiKhoan'];
+                $taiLieu->maTL = $maTL; 
+                $chiTietTaiLieu = $taiLieu->layTaiLieu();
                 // Thêm thông tin yêu thích vào cơ sở dữ liệu
                 $themXoaTLYeuThich = $taiLieu->changeTLYeuThich($yeuThich, $taiKhoan,$maTL);
+                $tblThongBao->themTBTL($chiTietTaiLieu['taiKhoan'], $taiKhoan, 'yeuthichtailieu', $chiTietTaiLieu['maLoaiTL'], $maTL);
             } 
         }
     }else{
@@ -124,23 +130,7 @@
                                         <?php endif; ?>
                                     </a>
                                 </th>
-                                <th>
-                                    <a class="text-secondary icon-link icon-link-hover text-decoration-none m-2 me-5" href="?<?php echo $chon?>=<?php echo $selectedCategory; ?>&sort=taiKhoan&order=<?php echo ($sort == 'taiKhoan' && $order == 'ASC') ? 'DESC' : 'ASC'; ?>" id="sort-taiKhoan">Tên tài khoản
-                                        <?php if ($sort == 'taiKhoan') : ?>
-                                            <?php if ($order == 'ASC') : ?>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sort-alpha-down" viewBox="0 0 16 16">
-                                                    <path fill-rule="evenodd" d="M10.082 5.629 9.664 7H8.598l1.789-5.332h1.234L13.402 7h-1.12l-.419-1.371h-1.781zm1.57-.785L11 2.687h-.047l-.652 2.157h1.351z"/>
-                                                    <path d="M12.96 14H9.028v-.691l2.579-3.72v-.054H9.098v-.867h3.785v.691l-2.567 3.72v.054h2.645V14zM4.5 2.5a.5.5 0 0 0-1 0v9.793l-1.146-1.147a.5.5 0 0 0-.708.708l2 1.999.007.007a.497.497 0 0 0 .7-.006l2-2a.5.5 0 0 0-.707-.708L4.5 12.293V2.5z"/>
-                                                </svg>
-                                            <?php else : ?>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sort-alpha-up" viewBox="0 0 16 16">
-                                                    <path fill-rule="evenodd" d="M10.082 5.629 9.664 7H8.598l1.789-5.332h1.234L13.402 7h-1.12l-.419-1.371h-1.781zm1.57-.785L11 2.687h-.047l-.652 2.157h1.351z"/>
-                                                    <path d="M12.96 14H9.028v-.691l2.579-3.72v-.054H9.098v-.867h3.785v.691l-2.567 3.72v.054h2.645V14zm-8.46-.5a.5.5 0 0 1-1 0V3.707L2.354 4.854a.5.5 0 0 1-.708.708l2-1.999.007-.007a.498.498 0 0 1 .7.006l2 2a.5.5 0 0 1-.707.708L4.5 3.707V13.5z"/>
-                                                </svg>
-                                            <?php endif; ?>
-                                        <?php endif; ?>
-                                    </a>
-                                </th>
+                              
                                 <th>
                                     <a class="text-secondary icon-link icon-link-hover text-decoration-none m-2" href="?<?php echo $chon?>=<?php echo $selectedCategory; ?>&sort=ngayDangTL&order=<?php echo ($sort == 'ngayDangTL' && $order == 'ASC') ? 'DESC' : 'ASC'; ?>" id="sort-ngayDangTL">Ngày đăng
                                         <?php if ($sort == 'ngayDangTL') : ?>
@@ -172,7 +162,7 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h1 class="modal-title fs-5" id="exampleModalLabel">Đăng tài liệu vào chủ đề...</h1>
-                                    <button type="button" class="btn-close" data-bs-dimdiss="modal" aria-label="Close"></button>
+                                    <input type="button" class="btn btn-secondary" value="X" data-bs-dismiss="modal" aria-label="Close">
                                 </div>
                                 <div class="modal-body">
                                     <ul class="list-group">
@@ -198,14 +188,14 @@
                 <?php if ($taiLieus !== null) : ?>
                     <?php foreach ($taiLieus as $taiLieu) : ?>
                         <?php if ($taiLieu['trangThaiTL'] == 'daduyet' ) : ?>
-                        <div class="section-card border border-1 rounded-2 mt-2">
+                        <div class="card-body border border-1 rounded-2 mt-2" style="padding-bottom:0; font-weight:bold">
                             <div class="row">
                                 <div class="col-lg-3 text-center">
                                     <?php if (!empty($taiLieu['anhTL'])) : ?>
-                                        <img class="border border-3 rounded-4 m-3" style="width: 150px; height: 150px;" src="../image/macdinh.png" alt="Image" class="img-responsive">
-                                        <!-- "img/<?php echo $taiLieu['anhTL']; ?>" -->
+                                        <img class="border border-3 rounded-4 m-3" style="width: 150px; height: 150px;" src="../image/<?php echo $taiLieu['anhTL']; ?>" alt="Image" class="img-responsive">
+                            
                                     <?php else : ?>
-                                        <img class="border border-3 rounded-4 m-3" style="width: 150px; height: 150px;" src="../image/macdinh.png" alt="Default Image" class="img-responsive">
+                                        <img class="border border-3 rounded-4 m-3" style="width: 150px; height: 150px;" src="../image/macdinh.jpg" alt="Default Image" class="img-responsive">
                                     <?php endif; ?>
                                 </div>
                                 
@@ -217,14 +207,19 @@
                                     <p class="fw-normal mb-2 mt-2" ><?php echo $taiLieu['moTaTL']; ?></p>
                                     </div>
                                     <div class="row">
-                                        <div class="col"> <a href="#"><i class="fa fa-user text-body-secondary me-5" aria-hidden="true"> <?php echo $taiLieu['taiKhoan']; ?></i></a>
+                                        <div class="col-lg-3">  <a href="../nguoidung/trangbanbe.php?taiKhoanBanBe=<?php echo $taiLieu['taiKhoan'];?>" class="me-4"style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration:none;color:black">
+                                    <?php
+                                    echo'
+                                    <img style="width: 30px; height: 30px; object-fit: cover;border: 3px solid" class="user-avatar rounded-circle" src="'.$path.'image/'.$taiLieu['anhDaiDien'].'" alt="User Avatar">';
+                                    ?>
+                                    <?php echo $taiLieu['taiKhoan']; ?></a>
                                         </div>
-                                        <div class="col"> <a href="#"><i class="fa fa-calendar text-body-secondary me-5" aria-hidden="true"> <?php echo date('d-m-Y', strtotime($taiLieu['ngayDuyetTL'])); ?></i></a>
+                                        <div class="col-xl-3"> <a href="#"><i class="fa fa-calendar text-body-secondary me-5" aria-hidden="true"> <?php echo date('d-m-Y', strtotime($taiLieu['ngayDuyetTL'])); ?></i></a>
                                         </div>
                                        
-                                        <div class="col"><a href="#"><i class="fa fa-book text-body-secondary me-5" aria-hidden="true"> <?php echo $taiLieu['tenLoaiTL']; ?></i></a>
+                                        <div class="col-xl-3"><a href="#"><i class="fa fa-book text-body-secondary me-5" aria-hidden="true"> <?php echo $taiLieu['tenLoaiTL']; ?></i></a>
                                         </div>
-                                        <div class="col"><a href="#"><i class="fa fa-folder text-body-secondary " aria-hidden="true"> <?php echo $taiLieu['tenDD']; ?></i></a>
+                                        <div class="col-xl-3"><a href="#"><i class="fa fa-folder text-body-secondary " aria-hidden="true"> <?php echo $taiLieu['tenDD']; ?></i></a>
                                         </div>
                                     </div>
                                     <div class="d-flex mb-3 mt-3">  

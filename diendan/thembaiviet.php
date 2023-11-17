@@ -4,6 +4,8 @@ include_once '../class/ChuDeBV.php';
 include_once '../class/BaiViet.php';
 include_once '../class/ThongBao.php';
 include_once '../class/TienIch.php';
+if(!isset($_SESSION['taiKhoan']) || empty($_SESSION['taiKhoan']))
+		  	header("Location: ../nguoidung/dangnhap.php");
 $database = new Database();
 $db = $database->getConnection();
 $tienIch = new TienIch();

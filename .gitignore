@@ -5,6 +5,7 @@
 /.vs/ITHub/v17/Browse.VC.opendb
 /.vs/ITHub/FileContentIndex
 /.vs/ITHub/v17/Browse.VC.db
+<<<<<<< HEAD
 /.vs/ProjectSettings.json
 /.vs/slnx.sqlite
 /.vs/ITTHubForum/v17/.wsuo
@@ -39,3 +40,18 @@
 /.gitignore
 /.vs/ITHub/v17/Browse.VC.db-wal
 /.vs/ITHub/v17/Browse.VC.db-shm
+=======
+/.vs/ITHub/v17
+/.vs/commit/FileContentIndex
+*.suo
+/.vs/ITHub-commit/FileContentIndex
+*.wsuo
+*.vsidx
+/.vs/ITHub-main/FileContentIndex
+/.vs/ITHubcommit/FileContentIndex
+/.vs/slnx.sqlite
+*.lock
+/.vs/VSWorkspaceState.json
+/.gitignore
+/.gitignore
+>>>>>>> a9a101beebcc7334ef33bbdb5362ba675c63f948

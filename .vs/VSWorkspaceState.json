@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+<<<<<<< HEAD
+    ""
+  ],
+=======
+    "",
+    "\\databasesqlite",
+    "\\inc",
+    "\\tailieu",
+    "\\trochuyen\\img"
+  ],
+  "SelectedNode": "\\databasesqlite\\ithub.sql",
+>>>>>>> 7395be84bf0d65baca836db296343e37339fb402
+  "PreviewInSolutionExplorer": false
+}

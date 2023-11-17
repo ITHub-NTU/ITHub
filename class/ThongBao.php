@@ -449,14 +449,11 @@
                         $stmtCountTL->execute();
                         $resultCountTL = $stmtCountTL->get_result();
                         $count = $resultCountTL->fetch_assoc();
-                        $soLuongTLChuaDuyet = $count['soLuongTLChuaDuyet'];
+                        $soLuongTLChuaDuyet = $count['soLuongTLChuaDuyet'] + 1;
                         $noiDungTB = "Bạn có <strong>" . $soLuongTLChuaDuyet . "</strong> tài liệu mới cần duyệt trong chủ đề <strong>" . $loaiTaiLieu['tenLoaiTL'] . "</strong>";
-        
                         $taiKhoan = $quanTriTL['maQuanTri'];
-                        $anhTB =  $loaiTaiLieu['anhLoaiTL'];
                         $notifications[] = array(
                             'taiKhoan' => $taiKhoan,
-                            'anhTB' => $anhTB,
                             'iconTB' => $iconTB,
                             'linkTB' => $linkTB,
                             'noiDungTB' => $noiDungTB,
@@ -476,7 +473,8 @@
                         if (!$stmtUpdate->execute()) {
                         }
                     } else {
-                        $insertQuery = "INSERT INTO " . $this->tblThongBao . "(`maTB`, `taiKhoan`,`anhTB`, `iconTB`, `linkTB`, `noiDungTB`, `ngayDangTB`, `trangThaiTB`, `trangThaiXemTB`) VALUES (NULL, '$notification[taiKhoan]', '$notification[anhTB]', '$notification[iconTB]', '$notification[linkTB]', '$notification[noiDungTB]', current_timestamp(), '0', '0');";
+                        $insertQuery = "
+                            INSERT INTO " . $this->tblThongBao . "(`maTB`, `taiKhoan`,`anhTB`, `iconTB`, `linkTB`, `noiDungTB`, `ngayDangTB`, `trangThaiTB`, `trangThaiXemTB`) VALUES (NULL, '$notification[taiKhoan]', 'hqtcsdl.png', '$notification[iconTB]', '$notification[linkTB]', '$notification[noiDungTB]', current_timestamp(), '0', '0');";
                         $stmt = $this->conn->prepare($insertQuery);
             
                         if (!$stmt->execute()) {
@@ -498,9 +496,8 @@
                 $loaiTaiLieu = $resultLTL->fetch_assoc();
                 $noiDungTB = "Tài liệu của bạn đã được đăng trong chủ đề <strong>" . $loaiTaiLieu['tenLoaiTL'] . "</strong>";
                 $taiKhoan = $taiKhoanDangBai;
-                $anhTB = $loaiTaiLieu['anhLoaiTL'];
                 $insertQuery = "INSERT INTO " . $this->tblThongBao . "(`maTB`, `taiKhoan`, `anhTB`, `iconTB`, `linkTB`, `noiDungTB`, `ngayDangTB`, `trangThaiTB`, `trangThaiXemTB`) 
-                            VALUES (NULL, '$taiKhoan', '$anhTB', '$iconTB', '$linkTB', '$noiDungTB', current_timestamp(), '0', '0');";
+                            VALUES (NULL, '$taiKhoan', 'hqtcsdl.jpg', '$iconTB', '$linkTB', '$noiDungTB', current_timestamp(), '0', '0');";
                             
                 $stmt = $this->conn->prepare($insertQuery);
 
@@ -544,10 +541,8 @@
                         $noiDungTB = "Bạn có <strong>" . $soLuongTLVP . "</strong> tài liệu vi phạm mới cần kiểm tra trong chủ đề <strong>" . $loaiTaiLieu['tenLoaiTL'] . "</strong>";
         
                         $taiKhoan = $quanTriTL['maQuanTri'];
-                        $anhTB =  $loaiTaiLieu['anhLoaiTL'];
                         $notifications[] = array(
                             'taiKhoan' => $taiKhoan,
-                            'anhTB' => $anhTB,
                             'iconTB' => $iconTB,
                             'linkTB' => $linkTB,
                             'noiDungTB' => $noiDungTB,
