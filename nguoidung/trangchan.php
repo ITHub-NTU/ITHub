@@ -5,7 +5,9 @@ include_once '../class/NguoiDung.php';
 $database = new Database();
 $db = $database->getConnection();
 $tblNguoiDung = new NguoiDung($db);
-
+if(!(isset($_SESSION['taiKhoan']))){
+    header('Location:./dangnhap.php');
+}
 
 include('../inc/header.php');
 include('../inc/navbar.php');

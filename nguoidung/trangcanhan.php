@@ -1,55 +1,55 @@
-    <?php
-    include_once '../config/Database.php';
-    include_once '../class/NguoiDung.php';
-    include_once '../class/BaiViet.php';
-    include_once '../class/TienIch.php';
+<?php
+include_once '../config/Database.php';
+include_once '../class/NguoiDung.php';
+include_once '../class/BaiViet.php';
+include_once '../class/TienIch.php';
 
-    $database = new Database();
-    $db = $database->getConnection();
-    $tblNguoiDung = new NguoiDung($db);
+$database = new Database();
+$db = $database->getConnection();
+$tblNguoiDung = new NguoiDung($db);
 
-    if(!(isset($_SESSION['taiKhoan']))){
-    header('Location:./dangnhap.php');
-    }
+if(!(isset($_SESSION['taiKhoan']))){
+header('Location:./dangnhap.php');
+}
 
-    $modalMessage ='';
-    $taiKhoan = $_SESSION['taiKhoan'];
-    $userInfo = $tblNguoiDung->getUserInfoFromDatabase();
+$modalMessage ='';
+$taiKhoan = $_SESSION['taiKhoan'];
+$userInfo = $tblNguoiDung->getUserInfoFromDatabase();
 
-    if ($userInfo) {
-        $taiKhoan = $userInfo['taiKhoan'];
-        $email = $userInfo['email'];
-        $hoND = $userInfo['hoND'];
-        $tenND = $userInfo['tenND'];
-        $quyen = $userInfo['quyen'];
-        $ngaySinh = $userInfo['ngaySinh'];
-        $anhDaiDien = $userInfo['anhDaiDien'];
+if ($userInfo) {
+    $taiKhoan = $userInfo['taiKhoan'];
+    $email = $userInfo['email'];
+    $hoND = $userInfo['hoND'];
+    $tenND = $userInfo['tenND'];
+    $quyen = $userInfo['quyen'];
+    $ngaySinh = $userInfo['ngaySinh'];
+    $anhDaiDien = $userInfo['anhDaiDien'];
 
-        if ($quyen === 'nguoidung') {
-            $quyen = 'Người dùng';
-        } elseif ($quyen === 'quantrivien') {
-            $quyen = 'Quản trị viên';
-        } else {
-            $quyen = 'Người dùng bị chặn';
-        }
-
-        $ngaySinh = date('d/m/Y', strtotime($ngaySinh));
+    if ($quyen === 'nguoidung') {
+        $quyen = 'Người dùng';
+    } elseif ($quyen === 'quantrivien') {
+        $quyen = 'Quản trị viên';
     } else {
-        echo "Không tìm thấy thông tin người dùng.";
+        $quyen = 'Người dùng bị chặn';
     }
 
-    if (isset($_SESSION['taiKhoan'])) {
-        $countFriends = $tblNguoiDung->countFriends($taiKhoan) - 1;
-        $countFriends = max(0, $countFriends);
-        $taiKhoan = $_SESSION['taiKhoan'];
-        $tblNguoiDung->taiKhoan = $taiKhoan;
-        $resultBV = $tblNguoiDung->layDanhSachBaiVietCuaNguoiDung();
-        $countBaiViet = mysqli_num_rows($resultBV);
-        $resultTL = $tblNguoiDung->layDanhSachTaiLieuCuaNguoiDung();
-        $countTaiLieu = mysqli_num_rows($resultTL);
-        $resultTLYT = $tblNguoiDung->layDanhSachTaiLieuYeuThichCuaNguoiDung();
-        $resultBVYT = $tblNguoiDung->layDanhSachBaiVietYeuThichCuaNguoiDung();
-    }
+    $ngaySinh = date('d/m/Y', strtotime($ngaySinh));
+} else {
+    echo "Không tìm thấy thông tin người dùng.";
+}
+
+if (isset($_SESSION['taiKhoan'])) {
+    $countFriends = $tblNguoiDung->countFriends($taiKhoan) - 1;
+    $countFriends = max(0, $countFriends);
+    $taiKhoan = $_SESSION['taiKhoan'];
+    $tblNguoiDung->taiKhoan = $taiKhoan;
+    $resultBV = $tblNguoiDung->layDanhSachBaiVietCuaNguoiDung();
+    $countBaiViet = mysqli_num_rows($resultBV);
+    $resultTL = $tblNguoiDung->layDanhSachTaiLieuCuaNguoiDung();
+    $countTaiLieu = mysqli_num_rows($resultTL);
+    $resultTLYT = $tblNguoiDung->layDanhSachTaiLieuYeuThichCuaNguoiDung();
+    $resultBVYT = $tblNguoiDung->layDanhSachBaiVietYeuThichCuaNguoiDung();
+}
 
 
 
