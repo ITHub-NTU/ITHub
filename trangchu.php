@@ -53,7 +53,7 @@ include($path."inc/header.php");
     </style>
 <body>
     <?php include($path."inc/navbar.php"); ?>
-    <div class="row">
+    <div class="row" style="margin-left:0px; margin-right:0px;">
         <div id="carouselExampleCaptions" class="carousel slide ">
             <div class="carousel-inner rounded-4">
                 <div class="carousel-item active">
@@ -127,7 +127,7 @@ include($path."inc/header.php");
                                         <?php endif; ?>
                                 <div class="card-body">
                                     <h5 class="card-title" style="height: 50px;-webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;  white-space: normal; word-wrap: break-word"><?php echo  $taiLieuMoiNhat['tenTL']?></h5>
-                                    <p class="card-text" style="height:100px ;-webkit-line-clamp: 3; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;  white-space: normal; word-wrap: break-word"><?php echo  $taiLieuMoiNhat['moTaTL']?></p>
+                                    <p class="card-text" style="height:100px ;-webkit-line-clamp: 4; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;  white-space: normal; word-wrap: break-word"><?php echo  $taiLieuMoiNhat['moTaTL']?></p>
                                     <a href="nguoidung/trangbanbe.php?taiKhoanBanBe=<?php echo $taiLieuMoiNhat['taiKhoan'];?>" class="me-4"style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration:none;color:black">
                                     <?php
                                     echo'
@@ -161,7 +161,7 @@ include($path."inc/header.php");
                             <div class="card" style="width: 200px;">
                                 <div class="card-body">
                                     <h5 class="card-title" style="height: 50px;-webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;  white-space: normal; word-wrap: break-word"><?php echo  $baiVietMoiNhat['tenBV']?></h5>
-                                    <p class="card-text" style="height:100px ;-webkit-line-clamp: 3; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;  white-space: normal; word-wrap: break-word"><?php echo  $baiVietMoiNhat['noiDungBV']?></p>
+                                    <p class="card-text" style="height:100px ;-webkit-line-clamp: 4; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;  white-space: normal; word-wrap: break-word"><?php echo  $baiVietMoiNhat['noiDungBV']?></p>
                                     <a href="nguoidung/trangbanbe.php?taiKhoanBanBe=<?php echo $baiVietMoiNhat['taiKhoan'];?>" class="me-4"style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration:none;color:black">
                                     <?php
                                     echo'
@@ -203,7 +203,7 @@ include($path."inc/header.php");
                                         <?php endif; ?>
                                 <div class="card-body">
                                     <h5 class="card-title" style="height: 50px;-webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;  white-space: normal; word-wrap: break-word"><?php echo  $taiLieuYeuThich['tenTL']?></h5>
-                                    <p class="card-text" style="height:100px ;-webkit-line-clamp: 3; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;  white-space: normal; word-wrap: break-word"><?php echo  $taiLieuYeuThich['moTaTL']?></p>
+                                    <p class="card-text" style="height:100px ;-webkit-line-clamp: 4; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;  white-space: normal; word-wrap: break-word"><?php echo  $taiLieuYeuThich['moTaTL']?></p>
                                     <a href="nguoidung/trangbanbe.php?taiKhoanBanBe=<?php echo $taiLieuYeuThich['taiKhoan'];?>" class="me-4"style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration:none;color:black">
                                     <?php
                                     echo'
@@ -236,7 +236,7 @@ include($path."inc/header.php");
                             <div class="card" style="width: 200px;">
                                 <div class="card-body">
                                     <h5 class="card-title" style="height: 50px;-webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;  white-space: normal; word-wrap: break-word"><?php echo  $baiVietYeuThich['tenBV']?></h5>
-                                    <p class="card-text" style="height:100px ;-webkit-line-clamp: 3; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;  white-space: normal; word-wrap: break-word"><?php echo  $baiVietYeuThich['noiDungBV']?></p>
+                                    <p class="card-text" style="height:100px ;-webkit-line-clamp: 4; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;  white-space: normal; word-wrap: break-word"><?php echo  $baiVietYeuThich['noiDungBV']?></p>
                                     <a href="nguoidung/trangbanbe.php?taiKhoanBanBe=<?php echo $baiVietYeuThich['taiKhoan'];?>" class="me-4"style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration:none;color:black">
                                     <?php
                                     echo'
