@@ -87,7 +87,7 @@ include('../inc/header.php');
 				</div>
 				<div class="col-lg-4 col-sm-10 col-m-10 pl-5">
 					<div >
-						<div>
+						<div style="display: flex; align-items: center;" >
 							<a class="text-decoration-none tenCD" href="danhsachbaiviet.php?maCD=<?php echo $chuDeBV['maCD'];?>" title="">
 								<?php
 								$tenCD = $chuDeBV['tenCD'];
@@ -104,23 +104,33 @@ include('../inc/header.php');
 				</div>
 				<div class="col-lg-7 col-sm-12 ">
 					<div class="row">
-						<div class="col-lg-4 col-sm-3 col-m-4">
-							<div>
+						<div class="col-lg-3 col-sm-2 col-m-3 p-d-0">
+							<div style="display: flex; justify-content: center;">
 								Bài viết
 							</div>
-							<div>
+							<div style="display: flex; justify-content: center;">
 								<a class="text-decoration-none" href="danhsachbaiviet.php?maCD=<?php echo $chuDeBV['maCD'];?>" title="">
 									<?php echo $soLuongBaiViet; ?>      
 								</a>
 							</div>
 						</div>
-						<div class="col-lg-8 col-sm-9 col-m-8">
-							<?php if($timestamptwo != NULL){ 
+						<div class="col-lg-3 col-sm-2 col-m-3 p-d-0" >
+							<div style="display: flex; justify-content: center;">
+								Thảo luận
+							</div>
+							<div style="display: flex; justify-content: center;">
+								<a class="text-decoration-none" href="danhsachbaiviet.php?maCD=<?php echo $chuDeBV['maCD'];?>" title="">
+									<?php echo $soLuongThaoLuan; ?>     
+								</a>
+							</div>
+						</div>
+						<div  class="col-lg-6 col-sm-9 col-m-6 m-img-10 ">
+							<?php if($timestamp  != NULL){ 
 								echo '
 									<div style="display: flex">
-										<div style="width: 66%; text-align: right; padding-right: 5px">
-											<a class="text-decoration-none" href="chitietbaiviet.php?maBV='.$baiViet['maBV'].'#comment-'.$thaoLuanMoiNhat['maTLBV'].'" title="">
-											'.$tienIch->formatTimeAgo($timestamptwo).'
+										<div class="w-67" style="width: 78%; text-align: right; padding-right: 5px">
+											<a class="text-decoration-none" href="chitietbaiviet.php?maBV='.$thaoLuanMoiNhat['maBV'].'#comment-'.$thaoLuanMoiNhat['tenBaiViet'].'" title="">
+											'.$tienIch->formatTimeAgo($timestamp).'
 											</a>
 											<div>
 												<a class="text-decoration-none">
@@ -128,7 +138,7 @@ include('../inc/header.php');
 												.'</a>
 											</div>
 										</div>
-										<div style="width: 33%">
+										<div style="width: 18%">
 											<img src="../image/'.$thaoLuanMoiNhat['anhDaiDien'].'" style="width: 50px;object-fit: cover;border-radius: 50%;" alt="...">
 										</div>
 									</div>
