@@ -373,7 +373,7 @@ if (isset($_GET['maLoaiTL'])) {
                                 </div>';
                             }
                             else{
-                                echo '<p>Không thể hiển thị tệp. <a href="' . $chiTietTaiLieu['fileTL'] . '">Tải về</a> thay vào đó.</p>
+                                echo '<p>Lỗi trong quá trình tải tệp. Xin vui lòng <a href="' . $chiTietTaiLieu['fileTL'] . '">Tải về</a></p>
                                 ';
                             }
                             ?>
