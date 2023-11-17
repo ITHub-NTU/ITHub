@@ -5,6 +5,42 @@
 /.vs/ITHub/v17/Browse.VC.opendb
 /.vs/ITHub/FileContentIndex
 /.vs/ITHub/v17/Browse.VC.db
+<<<<<<< HEAD
+/.vs/ProjectSettings.json
+/.vs/slnx.sqlite
+/.vs/ITTHubForum/v17/.wsuo
+/.vs/ITHubcommit/v17/.wsuo
+/.vs/ITTHubForum/FileContentIndex/6185d912-b79e-4730-8004-9da552b77de2.vsidx
+/.vs/ITTHubForum/FileContentIndex/7344b914-60e2-49bd-9af4-335b814546f0.vsidx
+/.vs/VSWorkspaceState.json
+/.vs/ITTHubForum/FileContentIndex/read.lock
+/.vs/ITHubcommit/FileContentIndex/read.lock
+/.vs/ITHubcommit/FileContentIndex/f94ee83a-9540-4d92-87c9-a85c16343d23.vsidx
+/.vs/ITHubcommit/FileContentIndex/252a23b9-1690-4962-bbc5-c7c115fe770b.vsidx
+/.vs/ITHubcommit/FileContentIndex/b76681c0-fb40-4f36-a2cb-aa9f209625b0.vsidx
+/.vs/commit/FileContentIndex/0be72521-63be-46a8-afce-54ba34947b18.vsidx
+/.vs/commit/FileContentIndex/3dea4d32-5bc9-4998-901d-1578f53445a9.vsidx
+/.vs/commit/FileContentIndex/9a7ecb87-af26-4d79-a811-def312d5ec9f.vsidx
+/.vs/commit/FileContentIndex/read.lock
+/.vs/commit/FileContentIndex/7e9a2d0f-0c4b-40f5-9ced-2382724b775f.vsidx
+/.vs/commit/v17/.suo
+/.vs/ITHub/v17/.wsuo
+/.vs/ITHub-commit/FileContentIndex/d83b2360-f045-4044-a745-b58b3e9767c1.vsidx
+/.vs/ITHub-commit/FileContentIndex/read.lock
+/.vs/ITHub-commit/v17/.wsuo
+/.vs/ITHub-main/FileContentIndex/3c6b797e-cf01-4174-88db-7196c809f903.vsidx
+/.vs/ITHub-main/FileContentIndex/4a13ebdc-bb76-4b90-a493-014e740932ee.vsidx
+/.vs/ITHub-main/FileContentIndex/ba598742-d20e-45e1-b9ea-b0e98ea0638b.vsidx
+/.vs/ITHub-main/FileContentIndex/read.lock
+/.vs/ITHub-main/v17/.wsuo
+/.vs/ITHubcommit/FileContentIndex/f83b3835-072a-4d76-ade9-df9ebe6866bb.vsidx
+/.gitignore
+/.vs/slnx.sqlite-journal
+/.gitignore
+/.gitignore
+/.vs/ITHub/v17/Browse.VC.db-wal
+/.vs/ITHub/v17/Browse.VC.db-shm
+=======
 /.vs/ITHub/v17
 /.vs/commit/FileContentIndex
 *.suo
@@ -18,3 +54,4 @@
 /.vs/VSWorkspaceState.json
 /.gitignore
 /.gitignore
+>>>>>>> a9a101beebcc7334ef33bbdb5362ba675c63f948
