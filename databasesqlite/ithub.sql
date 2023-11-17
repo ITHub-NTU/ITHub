@@ -262,7 +262,9 @@ CREATE TABLE `tbltailieu` (
 INSERT INTO `tbltailieu` (`maTL`, `maLoaiTL`, `taiKhoan`, `maDD`, `tenTL`, `moTaTL`, `fileTL`, `ngayDangTL`, `ngayDuyetTL`, `anhTL`, `trangThaiTL`) VALUES
 ('TL00000001', 'PLTL000001', 'kabee', 'DD00000002', 'Giáo trình hệ quản trị cơ sở dữ liệu', 'Các trúc này bao gồm ít nhất một tập tin dữ liệu (data file) và một tập tin viết thao tác (transaction log file). Hiểu cách thức Microsoft SQL Server.', 'hqtcsdl.pdf', '2023-09-21 08:45:23', '2023-10-08 08:50:23', 'hqtcsdl.jpg', 'daduyet'),
 ('TL00000002', 'PLTL000002', 'kabee', 'DD00000002', 'Hướng dẫn lập trình Python', 'Hướng dẫn lập trình Python từ cơ bản đến nâng cao. Bao gồm ví dụ và bài tập thực hành.', 'python.pdf', '2023-09-21 08:45:23', '2023-10-08 08:50:23', 'python.jpg', 'daduyet'),
-('TL00000003', 'PLTL000003', 'kabee', 'DD00000002', 'Đồ án môn Toán rời rạc', 'Bài tập và đồ án môn Toán rời rạc cho sinh viên ngành Công nghệ thông tin.', 'trr.pdf', '2023-09-21 08:45:23', '2023-10-08 08:50:23', 'trr.jpg', 'daduyet');
+('TL00000003', 'PLTL000003', 'kabee', 'DD00000002', 'Đồ án môn Toán rời rạc', 'Bài tập và đồ án môn Toán rời rạc cho sinh viên ngành Công nghệ thông tin.', 'trr.pdf', '2023-09-21 08:45:23', '2023-10-08 08:50:23', 'trr.jpg', 'daduyet'),
+('TL00000004', 'PLTL000001', 'phuongha', 'DD00000002', 'Bài giảng kiểm thử phần mềm', 'Tài liệu kiểm thử phần mềm giúp các bạn hiểu rõ về Blackbox testing và Whitebox Testing', 'ktpm.pdf', '2023-11-17 21:32:30', NULL, 'ktpm.jpg', 'daduyet'),
+('TL00000005', 'PLTL000002', 'phuongha', 'DD00000002', 'Bài tập Kiểm thử phần mềm', 'Tất cả các nội dung bài tập môn kiểm thử phần mềm', 'btktpm.pdf', '2023-11-17 21:32:30', NULL, 'btktpm.pdf', 'daduyet');
 
 -- --------------------------------------------------------
 
