@@ -11,8 +11,9 @@ $tienIch = new TienIch($db);
 
 $msg ="";
     if(!(isset($_SESSION['taiKhoan']))){
-        header('Location:./dangnhap.php');
+        header('Location: ../nguoidung/dangnhap.php');
     }
+    
     if (isset($_SESSION['taiKhoan'])) {
         $taiKhoan = $_SESSION['taiKhoan'];
         $result = $tblQuanTriTaiLieu->layLoaiTaiLieuCuaAdmin($taiKhoan);

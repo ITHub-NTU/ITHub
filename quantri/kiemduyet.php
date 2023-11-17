@@ -15,7 +15,7 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
 
 $msg ="";
     if(!(isset($_SESSION['taiKhoan']))){
-        header('Location:./dangnhap.php');
+        header('Location: ../nguoidung/dangnhap.php');
     }
     
     if (isset($_SESSION['taiKhoan'])) {
