@@ -55,6 +55,8 @@ include('../inc/header.php');
   }
   if(isset($_SESSION['taiKhoanDuocPhanHoi'])) {
     $taiKhoanDuocPhanHoi = $_SESSION['taiKhoanDuocPhanHoi'];
+  } else {
+      $taiKhoanDuocPhanHoi = '';
   }
   
 // Them thao luan

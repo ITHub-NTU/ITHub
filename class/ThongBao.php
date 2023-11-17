@@ -367,7 +367,7 @@
                 $resultTK = $stmtTK->get_result();
                 $chiTietTK = $resultTK->fetch_assoc();
                 $anhTB = $chiTietTK['anhDaiDien'];
-                $taiKhoan = $taiKhoanDuocPhanHoi;
+                $taiKhoan = $taiKhoanDangBai;
                 $insertQuery = "INSERT INTO " . $this->tblThongBao . "(`maTB`, `taiKhoan`, `anhTB`, `iconTB`, `linkTB`, `noiDungTB`, `ngayDangTB`, `trangThaiTB`, `trangThaiXemTB`) 
                             VALUES (NULL, '$taiKhoan', '$anhTB', '$iconTB', '$linkTB', '$noiDungTB', current_timestamp(), '0', '0');";
                             
