@@ -112,7 +112,7 @@
             $findResult = $db->query($findTable);
             
 
-            $folder = "img/user.jpg";
+            $folder = "../image/".$data['anhDaiDien'];
               if ($count >= 3) {
                 $colClass = 'col-lg-4';
               } elseif ($count == 2) {

@@ -68,7 +68,7 @@ include '../inc/navbar.php';
 ?>
 <body>
 <form method="POST" action="">
-    <section class="vh-100 bg-white">
+    <section class="mh-100 bg-white">
     <div class="container py-5 px-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
