@@ -210,7 +210,7 @@ include('../inc/header.php');
 							<?php if($timestamptwo != NULL){ 
 								echo '
 									<div style="display: flex">
-										<div style="width: 66%; text-align: right; padding-right: 5px">
+										<div style="width: 82%; text-align: right; padding-right: 5px">
 											<a class="text-decoration-none" href="chitietbaiviet.php?maBV='.$baiViet['maBV'].'#comment-'.$thaoLuanMoiNhat['maTLBV'].'" title="">
 											'.$tienIch->formatTimeAgo($timestamptwo).'
 											</a>
@@ -220,7 +220,7 @@ include('../inc/header.php');
 												.'</a>
 											</div>
 										</div>
-										<div style="width: 33%">
+										<div style="width: 18%">
 											<img src="../image/'.$thaoLuanMoiNhat['anhDaiDien'].'" style="width: 50px;object-fit: cover;border-radius: 50%;" alt="...">
 										</div>
 									</div>
