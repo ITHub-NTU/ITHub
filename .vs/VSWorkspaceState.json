@@ -1,8 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\tailieu"
+    "\\databasesqlite",
+    "\\inc",
+    "\\tailieu",
+    "\\trochuyen\\img"
   ],
-  "SelectedNode": "\\databasesqlite",
+  "SelectedNode": "\\databasesqlite\\ithub.sql",
   "PreviewInSolutionExplorer": false
 }
