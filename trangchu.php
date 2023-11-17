@@ -161,7 +161,7 @@ include($path."inc/header.php");
                             <div class="card" style="width: 200px;">
                                 <div class="card-body">
                                     <h5 class="card-title" style="height: 50px;-webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;  white-space: normal; word-wrap: break-word"><?php echo  $baiVietMoiNhat['tenBV']?></h5>
-                                    <p class="card-text" style="height:100px ;-webkit-line-clamp: 4; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;  white-space: normal; word-wrap: break-word"><?php echo  $baiVietMoiNhat['noiDungBV']?></p>
+                                    <div class="card-text" style="height:100px ;-webkit-line-clamp: 4; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;  white-space: normal; word-wrap: break-word"><?php echo  $baiVietMoiNhat['noiDungBV']?></div>
                                     <a href="nguoidung/trangbanbe.php?taiKhoanBanBe=<?php echo $baiVietMoiNhat['taiKhoan'];?>" class="me-4"style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration:none;color:black">
                                     <?php
                                     echo'
