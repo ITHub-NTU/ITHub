@@ -275,25 +275,31 @@
                     <?php endforeach; ?>
                 <?php else : ?>
                     <p>Không tìm thấy tài liệu.</p>
-                <?php endif; 
-                  echo '<ul class="pagination">';
-                  // Nút back
-                  if ( $trangHienTai > 1) {
-                      echo '<li class="page-item"><a class="page-link" href="?page=' . ( $trangHienTai - 1) . '">Back</a></li>';
-                  }
-                  
-                  for ($i = 1; $i <= $tongTrang; $i++) {
-                      $activeClass = ($i ==  $trangHienTai) ? 'active' : '';
-                      echo '<li class="page-item ' . $activeClass . '"><a class="page-link" href="?'.$chon.'='.$selectedCategory.'&page=' . $i . '">' . ($i ==  $trangHienTai ? '<strong>' . $i . '</strong>' : $i) . '</a></li>';
-                  }
-                  
-                  // Nút next
-                  if ( $trangHienTai < $tongTrang) {
-                      echo '<li class="page-item"><a class="page-link" href="?page=' . ( $trangHienTai + 1) . '">Next</a></li>';
-                  }
-                  
-                  echo '</ul>';
-                ?>
+                <?php endif; ?>
+                <!-- Phân trang -->
+                <div class="text-center mt-3">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            <?php
+                            // Nút back
+                            if ($trangHienTai > 1) {
+                                echo '<li class="page-item"><a class="page-link" href="?'.$chon.'='.$selectedCategory.'&page=' . ($trangHienTai - 1) . '">Previous</a></li>';
+                            }
+
+                            // Các trang
+                            for ($i = 1; $i <= $tongTrang; $i++) {
+                                $activeClass = ($i ==  $trangHienTai) ? 'active' : '';
+                                echo '<li class="page-item ' . $activeClass . '"><a class="page-link" href="?'.$chon.'='.$selectedCategory.'&page=' . $i . '">' . $i . '</a></li>';
+                            }
+
+                            // Nút next
+                            if ($trangHienTai < $tongTrang) {
+                                echo '<li class="page-item"><a class="page-link" href="?'.$chon.'='.$selectedCategory.'&page=' . ($trangHienTai + 1) . '">Next</a></li>';
+                            }
+                            ?>
+                        </ul>
+                    </nav>
+                </div>
 
                 </div>
             </div>
