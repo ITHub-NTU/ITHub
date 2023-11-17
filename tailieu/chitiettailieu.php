@@ -56,19 +56,7 @@ if(isset($_SESSION['hoatdong']))
                             if (is_uploaded_file($_FILES['file']['tmp_name'])) {
                                 $taiLieu->chinhSuaTaiLieu($taiLieuMaTL, $maLoaiTL, $taiKhoan, $maDD, $tenTL, $moTaTL, $fileTL, $trangThaiTL,$ngayDangTL, $ngayDuyetTL,$anhTL);
                                 $tblThongBao->themTBTL($taiKhoan, '', 'admin', $maLoaiTL, $taiLieuMaTL);
-                                echo '<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="successModalLabel">Thành công</h5>
-                                              <input type="button" class="btn btn-secondary" value="X" data-bs-dismiss="modal" aria-label="Close">
-                                        </div>
-                                        <div class="modal-body">
-                                            Tài liệu đã được chỉnh sửa và lưu vào cơ sở dữ liệu thành công. Vui lòng chờ duyệt tài liệu. 
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>';
+                                header("location:danhsachtailieu.php");
                              
                             }
                         } 
@@ -294,9 +282,14 @@ if (isset($_GET['maLoaiTL'])) {
                                                     <input class="form-control mb-3" name="tenTL" type="text" required placeholder="Tên tài liệu" value="<?php echo $chiTietTaiLieu['tenTL']?>">
                                                     </div>
                                                     <div class="form-group mb-3">
-                                                        <label for="anhTL">Ảnh tài liệu</label>
-                                                        <input class="form-control" type="file" required id="anhTL" name="anhTL" accept="image/*">
+                                                    <label for="newAnh" class="btn btn-primary mb-3">Chọn ảnh</label>
+                                                        <input  type="file" style="display: none;" required id="newAnh" name="anhTL" require accept="image/*">
+
+                                                        <p class="form-control" id="currentAnh"> <?php echo $chiTietTaiLieu['anhTL'] ?> </p>
+                                                       
                                                     </div>
+                                                    
+                                                   
                                                     <div class="form-group mb-3">
                                                         <select class="form-control" id="maDD" name="maDD" required>
                                                             <?php
@@ -380,7 +373,7 @@ if (isset($_GET['maLoaiTL'])) {
                                 </div>';
                             }
                             else{
-                                echo '<p>Không thể hiển thị tệp. <a href="' . $chiTietTaiLieu['fileTL'] . '">Tải về</a> thay vào đó.</p>
+                                echo '<p>Lỗi trong quá trình tải tệp. Xin vui lòng <a href="' . $chiTietTaiLieu['fileTL'] . '">Tải về</a></p>
                                 ';
                             }
                             ?>
@@ -395,13 +388,13 @@ if (isset($_GET['maLoaiTL'])) {
                 document.getElementById('currentFileName').innerText = fileName;
                 document.getElementById('currentFileName').setAttribute('href', this.value);
             });
+
             // Sau khi xử lý thành công khi tệp được tải lên và lưu vào cơ sở dữ liệu
-    // Kích hoạt modal thông báo thành công
-    document.addEventListener('DOMContentLoaded', function () {
-    <?php if ($taiLieu->chinhSuaTaiLieu($taiLieuMaTL, $maLoaiTL, $taiKhoan, $maDD, $tenTL, $moTaTL, $fileTL, $trangThaiTL,$ngayDangTL, $ngayDuyetTL)) { ?>
-            $('#successModal').modal('show');
-        <?php } ?>
-    });
+            document.getElementById('newAnh').addEventListener('change', function() {
+                var anh = this.value.split('\\').pop();
+                document.getElementById('currentAnh').innerText = anh;
+                document.getElementById('currentAnh').setAttribute('href', this.value);
+            });
             </script>
            
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
