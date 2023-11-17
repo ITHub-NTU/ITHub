@@ -167,75 +167,67 @@ include('../inc/header.php');
 					echo '<div class="card" style="border-radius:unset">';
 				}
 		?>
-			<div class="row">
-				<div class="col-md-6 col-xs-12 my-auto ">
-					<div class="row my-auto " style="text-align:left;">
-						<div class="col-md-3 col-xs-6 ">
-							<img src="../image/<?php echo $baiViet['anhDaiDien'];?>" class=" m-3 d-block" style="width: 80px;
-								height: 80px;
+			<div class="row p-2">
+				<div class="col-lg-1 col-sm-2 col-m-2">
+					<img src="../image/<?php echo $baiViet['anhDaiDien'];?>" style="width: 60px;
+								height: 60px;
 								object-fit: cover;
 								border-radius: 50%;" alt="...">
+				</div>
+				<div class="col-lg-6 col-sm-10 col-m-10 pl-5">
+					<div >
+						<div>
+							<a class="text-decoration-none" href="chitietbaiviet.php?maBV=<?php echo $baiViet['maBV'];?>" title="">
+								<?php
+								$tenBV = $baiViet['tenBV'];
+								$maxTitleLength = 2 * 100;
+								if (strlen($tenBV) > $maxTitleLength) {
+									$tenBV = substr($tenBV, 0, $maxTitleLength) . '...';
+								}
+								echo $tenBV;
+								?>
+							</a>
 						</div>
-						<div class="col-md-9 col-xs-6 my-auto">
-							<div class="row">
-								<a class="text-decoration-none" href="chitietbaiviet.php?maBV=<?php echo $baiViet['maBV'];?>" title="">
-									<?php
-									$tenBV = $baiViet['tenBV'];
-									$maxTitleLength = 2 * 100;
-									if (strlen($tenBV) > $maxTitleLength) {
-										$tenBV = substr($tenBV, 0, $maxTitleLength) . '...';
-									}
-									echo $tenBV;
-									?>
-								</a>
-								<label>
-									<?php echo $tienIch->formatTimeAgo($timestamp) ?> 
-									<a class="text-decoration-none">
-										<?php echo $baiViet['taiKhoan'] ?>
-									</a>
-								</label>
-							</div>
+						<div>
+							<?php echo $tienIch->formatTimeAgo($timestamp) ?> 
+							<a class="text-decoration-none">
+								<?php echo $baiViet['taiKhoan'] ?>
+							</a>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-6 col-xs-12 my-auto">
+				<div class="col-lg-5 col-sm-12 ">
 					<div class="row">
-						<div class="col-md-3 text-center my-auto">
-							<p>Bình luận</p>
-							<p>Lượt xem</p>
+						<div class="col-lg-4 col-sm-3 col-m-4">
+							<div>
+								Bình luận: <?php echo $soLuongThaoLuan;?>
+							</div>
+							<div>
+								Lượt xem: <?php echo $baiViet['luotXem'];?>
+							</div>
 						</div>
-						<div class="col-md-3 text-center my-auto">
-							<p><?php echo $soLuongThaoLuan;?></p>
-							<p><?php echo $baiViet['luotXem'];?></p>
-						</div>
-						<div class="col-md-6 my-auto text-center">
-							<div class="row my-auto">
-								<?php if($timestamptwo != NULL){ 
-									echo '
-								<div class="col-md-6 my-auto">
-									<div class="row" style="text-align:right;">
-										<a class="text-decoration-none" href="chitietbaiviet.php?maBV='.$baiViet['maBV'].'#comment-'.$thaoLuanMoiNhat['maTLBV'].'" title="">
-										'.$tienIch->formatTimeAgo($timestamptwo).'
-										</a>
-										<label>
-											<a class="text-decoration-none">
-												'.$thaoLuanMoiNhat['taiKhoan']
-											.'</a>
-										</label>
+						<div class="col-lg-8 col-sm-9 col-m-8">
+							<?php if($timestamptwo != NULL){ 
+								echo '
+									<div style="display: flex">
+										<div style="width: 66%; text-align: right; padding-right: 5px">
+											<a class="text-decoration-none" href="chitietbaiviet.php?maBV='.$baiViet['maBV'].'#comment-'.$thaoLuanMoiNhat['maTLBV'].'" title="">
+											'.$tienIch->formatTimeAgo($timestamptwo).'
+											</a>
+											<div>
+												<a class="text-decoration-none">
+													'.$thaoLuanMoiNhat['taiKhoan']
+												.'</a>
+											</div>
+										</div>
+										<div style="width: 33%">
+											<img src="../image/'.$thaoLuanMoiNhat['anhDaiDien'].'" style="width: 50px;object-fit: cover;border-radius: 50%;" alt="...">
+										</div>
 									</div>
-								</div>
-								<div class="col-md-6 my-auto">
-									<img src="../image/'.$thaoLuanMoiNhat['anhDaiDien']
-									.'" class=" d-block" style="width: 80px;
-										height: 80px;
-										object-fit: cover;
-										border-radius: 50%;" alt="...">
-								</div>
 								';
 								} else {
 									echo 'Chưa có bình luận nào';
 								} ?> 
-							</div>
 						</div>
 					</div>
 				</div>
