@@ -12,6 +12,9 @@ $tblChuDeBV = new ChuDeBV($db);
 $tblTienIch = new TienIch();
 $tblBaiViet = new BaiViet($db);
 $tblQuanTriTaiLieu = new QuanTriTaiLieu($db);
+if(!(isset($_SESSION['taiKhoan']))){
+  header('Location:./dangnhap.php');
+}
 
 if (isset($_SESSION['taiKhoan'])) {
   $taiKhoan = $_SESSION['taiKhoan'];

@@ -14,7 +14,10 @@ $tblTaiLieu = new TaiLieu($db);
 date_default_timezone_set('Asia/Ho_Chi_Minh'); 
 
 $msg ="";
-
+    if(!(isset($_SESSION['taiKhoan']))){
+        header('Location:./dangnhap.php');
+    }
+    
     if (isset($_SESSION['taiKhoan'])) {
         $taiKhoan = $_SESSION['taiKhoan'];
         $tblQuanTriTaiLieu->taiKhoan = $taiKhoan;
