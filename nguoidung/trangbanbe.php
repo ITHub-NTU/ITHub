@@ -9,6 +9,9 @@ $database = new Database();
 $db = $database->getConnection();
 $tblNguoiDung = new NguoiDung($db);
 
+if(!(isset($_SESSION['taiKhoan']))){
+    header('Location:./dangnhap.php');
+}
 
 if(!(isset($_GET['taiKhoanBanBe']))){
     header('Location: ../trangchu.php');
