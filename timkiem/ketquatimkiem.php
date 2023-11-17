@@ -149,7 +149,7 @@ include("../inc/navbar.php");
             </div>
             <?php 
                     }
-                } else echo 'Không có kết quả tìm kiếm tài liệu cho từ khóa: '.$search;}
+                } else echo '<div class="h5 text-align-center mt-2">Không có kết quả tìm kiếm tài liệu cho từ khóa: '.$search.'</div>';}
             ?>
             <!-- Hiển thị phân trang -->
             <nav aria-label="Page navigation document d-flex ">
@@ -214,7 +214,7 @@ include("../inc/navbar.php");
         </div>
         <?php 
                 }
-            } else echo 'Không có kết quả tìm kiếm bài viết cho từ khóa: '.$search;}
+            } else echo '<div class="h5 text-align-center mt-2 " style="padding-left: 20px">Không có kết quả tìm kiếm bài viết cho từ khóa: '.$search.'</div>';}
         ?>
         <!-- Hiển thị phân trang -->
         <nav aria-label="Page navigation document d-flex ">
