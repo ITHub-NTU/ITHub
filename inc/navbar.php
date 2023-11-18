@@ -282,7 +282,7 @@
                         ?>
                         <a href="#" class="nav-item nav-item2 nav-link">Bài tập cá nhân</a>
                         
-                        <a href="<?php echo $path?>/trochuyen/tinnhan.php" class="nav-item nav-item2 nav-link">Liên hệ</a>
+                        <a href="<?php echo $path?>trochuyen/tinnhan.php" class="nav-item nav-item2 nav-link">Liên hệ</a>
                     </div>
                     
                 </div>

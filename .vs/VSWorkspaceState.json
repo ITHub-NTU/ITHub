@@ -3,8 +3,11 @@
     "",
     "\\databasesqlite",
     "\\diendan",
-    "\\tailieu"
+    "\\image",
+    "\\tailieu",
+    "\\trochuyen",
+    "\\trochuyen\\img"
   ],
-  "SelectedNode": "\\diendan\\chitietbaiviet.php",
+  "SelectedNode": "\\image",
   "PreviewInSolutionExplorer": false
 }

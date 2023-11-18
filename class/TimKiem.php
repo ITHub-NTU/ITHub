@@ -11,10 +11,10 @@ class TimKiem {
     }	
     public function timkiemtailieuWithPagination($resultsPerPage, $offset) {
         if ($this->search) {
-            $sqlQuery = "SELECT * FROM `tbltailieu` WHERE tenTL LIKE ? ORDER BY ngayDuyetTL DESC  LIMIT ?, ? ";
+            $sqlQuery = "SELECT * FROM `tbltailieu` WHERE tenTL LIKE ? AND trangThaiTL = 'daduyet' ORDER BY ngayDuyetTL DESC  LIMIT ?, ? ";
             $this->search = "%".$this->search."%";
         } else {
-            $sqlQuery = "SELECT * FROM `tbltailieu` ORDER BY ngayDuyetTL DESC  LIMIT ?, ?";
+            $sqlQuery = "SELECT * FROM `tbltailieu` WHERE trangThaiTL = 'daduyet' ORDER BY ngayDuyetTL DESC  LIMIT ?, ?";
         }
     
         $stmt = $this->conn->prepare($sqlQuery);
@@ -32,7 +32,8 @@ class TimKiem {
             $sqlQuery = "SELECT bv.*, nd.anhDaiDien, nd.quyen 
                          FROM `tblbaiviet` as bv
                          JOIN tblnguoidung as nd on bv.taiKhoan = nd.taiKhoan  
-                         WHERE tenBV LIKE '%" . $this->search . "%' LIMIT ?, ?";
+                         WHERE tenBV LIKE '%" . $this->search . "%' 
+                         AND (trangThaiBV = 'daduyet' OR trangThaiBV = 'dachinhsua' ) LIMIT ?, ?";
         } else {
             $sqlQuery = "SELECT bv.*, nd.anhDaiDien, nd.quyen  
                          FROM `tblbaiviet` as bv
